@@ -10,7 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import projeto.controller.VeiculoController;
+import projeto.model.Cor;
 import projeto.model.Grupo;
+import projeto.model.Marca;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -69,11 +71,23 @@ public class VeiculoView extends JFrame implements ActionListener {
 	private JButton btnSalvar;
 	
 	private ArrayList<Grupo> grupos;
+	private ArrayList<Marca> marcas;
+	private ArrayList<Cor> cores;
 	
-	private ResourceBundle bundle = null;
+    // Internacionalização
+    private ResourceBundle bundle = null;
+    private String idioma = null;
+
+    public VeiculoView(String idioma) {
+    	StartLocale locale = new StartLocale(idioma);
+    	
+        this.bundle = locale.getLocale();
+        this.idioma = idioma;
+    }
 	
 	
-	public void exibirFrame(String idioma, String estados[], int anos[], ArrayList<Grupo> grupos) {
+	public void exibirFrame(String estados[], int anos[], 
+			                ArrayList<Grupo> grupos, ArrayList<Marca> marcas, ArrayList<Cor> cores) {
 		
     	StartLocale locale = new StartLocale(idioma);
         bundle = locale.getLocale();
@@ -139,7 +153,8 @@ public class VeiculoView extends JFrame implements ActionListener {
         
         comboAno = new JComboBox<Integer>();
         comboAno.setPreferredSize(new Dimension(100, 25));
-        
+
+        // Listar Anos na combo
         for (int i=0; i<anos.length; i++) {
         	comboAno.addItem(anos[i]);
         }
@@ -147,9 +162,23 @@ public class VeiculoView extends JFrame implements ActionListener {
         
         comboMarca = new JComboBox<String>();
         comboMarca.setPreferredSize(new Dimension(100, 25));
+
+        // Listar marcas na combo
+        for (int i=0; i<marcas.size(); i++) {
+        	comboMarca.addItem(marcas.get(i).getNome());
+        }        
+        this.marcas = marcas;
+        
         
         comboCor = new JComboBox<String>();
         comboCor.setPreferredSize(new Dimension(100, 25));
+    
+        // Listar cores na combo
+        for (int i=0; i<cores.size(); i++) {
+        	comboCor.addItem(cores.get(i).getNome());
+        }        
+        this.cores = cores;
+        
         
         textTarifaAluguel = new JTextField();
         textTarifaAluguel.setPreferredSize(new Dimension(200, 25));
@@ -160,10 +189,13 @@ public class VeiculoView extends JFrame implements ActionListener {
         comboGrupo = new JComboBox<String>();
         comboGrupo.setPreferredSize(new Dimension(200, 25));
         
+        // Listar grupos na combo
         for (int i=0; i<grupos.size(); i++) {
         	comboGrupo.addItem(grupos.get(i).getNome());
         }        
-        this.grupos = grupos;       
+        this.grupos = grupos;    
+        
+        
         
         checkAcessorioGPS = new JCheckBox(bundle.getString("CHECKBOX_ACESSORIO_GPS"));
         checkAcessorioGPS.setPreferredSize(new Dimension(200, 25));
@@ -362,15 +394,20 @@ public class VeiculoView extends JFrame implements ActionListener {
 		
 		if (e.getSource() == btnCadastrar) {
 			int idGrupoSelecionado = grupos.get(comboGrupo.getSelectedIndex()).getIdGrupo();
-			
+			int idMarcaSelecionada = marcas.get(comboMarca.getSelectedIndex()).getIdMarca();
+			int idCorSelecionada   = cores.get(comboCor.getSelectedIndex()).getIdCor();
 
-			VeiculoController ctlVeiculo = new VeiculoController();
-			boolean cadastrou = ctlVeiculo.inserir(textChassi.getText(),               textPlaca.getText(), 
-					                               textCidade.getText(),               (String)comboEstado.getSelectedItem(), 
-					                               textModelo.getText(),               textFabricante.getText(), 
-					                               (int)comboAno.getSelectedItem(),    (String)comboMarca.getSelectedItem(), 
-					                               (String)comboCor.getSelectedItem(), textTarifaAluguel.getText(), 
-					                               textKmRodado.getText(),             idGrupoSelecionado);
+			// Caso o usuário deixe o campo em branco, o padrão é zero para evitar erro
+			String kmRodado = textKmRodado.getText().isEmpty() ? "0" : textKmRodado.getText();
+			
+			boolean cadastrou = VeiculoController.inserir(
+				      				textChassi.getText(),               textPlaca.getText(), 
+	                                textCidade.getText(),               (String)comboEstado.getSelectedItem(), 
+	                                textModelo.getText(),               textFabricante.getText(), 
+	                                (int)comboAno.getSelectedItem(),    (String)comboMarca.getSelectedItem(), 
+	                                (String)comboCor.getSelectedItem(), textTarifaAluguel.getText(), 
+	                                Double.parseDouble(kmRodado),       idGrupoSelecionado,
+	                                idMarcaSelecionada,                 idCorSelecionada);
 	
 			if (cadastrou) {
 				JOptionPane.showMessageDialog(null, "Veículo cadastrado com sucesso!");

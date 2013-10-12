@@ -7,56 +7,47 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class Grupo {
+public class Cor {
 
-	private int idGrupo;
+	private int idCor;
 	private String nome;
-	private String sigla;
 	
 	
-	public int getIdGrupo() {
-		return idGrupo;
+	public int getIdCor() {
+		return idCor;
 	}
 
 	public String getNome() {
 		return nome;
 	}
-
-	public String getSigla() {
-		return sigla;
-	}
-
-	public void setIdGrupo(int idGrupo) {
-		this.idGrupo = idGrupo;
+	
+	public void setIdCor(int idCor) {
+		this.idCor = idCor;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public void setSigla(String sigla) {
-		this.sigla = sigla;
-	}
-	
-	public Grupo(int idGrupo, String nome) {
-		setIdGrupo(idGrupo);
+	public Cor(int idCor, String nome) {
+		setIdCor(idCor);
 		setNome(nome);
 	}
 	
-	public Grupo(int idGrupo) {
-		setIdGrupo(idGrupo);
+	public Cor(int idCor) {
+		setIdCor(idCor);
 	}
-	
-	public static ArrayList<Grupo> getArrObjects() {
+		
+	public static ArrayList<Cor> getArrObjects() {
 		
 		PreparedStatement stm = null;
         Connection conn = null;
         ResultSet rs = null;
         
-        ArrayList<Grupo> grupos = new ArrayList<Grupo>();
+        ArrayList<Cor> cores = new ArrayList<Cor>();
         
         try {
-            String sql = "SELECT * FROM grupo"; 
+            String sql = "SELECT * FROM cores"; 
             
             Conn bd = new Conn();
             conn = bd.obtemConexao();
@@ -65,10 +56,10 @@ public class Grupo {
             rs = stm.executeQuery();
                
             while (rs.next()) {    
-            	grupos.add(new Grupo(rs.getInt("id"), rs.getString("nome")));
+            	cores.add(new Cor(rs.getInt("id"), rs.getString("nome")));
             }
             rs.close();
-            return grupos;
+            return cores;
             
         } catch (SQLException e) {
             
@@ -79,7 +70,7 @@ public class Grupo {
             } catch (SQLException e1) {
                 System.out.print(e1.getStackTrace());
             }
-            return grupos;
+            return cores;
         }
         finally{
             if (stm != null) {

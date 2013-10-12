@@ -7,56 +7,47 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class Grupo {
+public class Marca {
 
-	private int idGrupo;
+	private int idMarca;
 	private String nome;
-	private String sigla;
 	
 	
-	public int getIdGrupo() {
-		return idGrupo;
+	public int getIdMarca() {
+		return idMarca;
 	}
 
 	public String getNome() {
 		return nome;
 	}
-
-	public String getSigla() {
-		return sigla;
-	}
-
-	public void setIdGrupo(int idGrupo) {
-		this.idGrupo = idGrupo;
+	
+	public void setIdMarca(int idMarca) {
+		this.idMarca = idMarca;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public void setSigla(String sigla) {
-		this.sigla = sigla;
-	}
-	
-	public Grupo(int idGrupo, String nome) {
-		setIdGrupo(idGrupo);
+	public Marca(int idMarca, String nome) {
+		setIdMarca(idMarca);
 		setNome(nome);
 	}
 	
-	public Grupo(int idGrupo) {
-		setIdGrupo(idGrupo);
+	public Marca(int idMarca) {
+		setIdMarca(idMarca);
 	}
-	
-	public static ArrayList<Grupo> getArrObjects() {
+		
+	public static ArrayList<Marca> getArrObjects() {
 		
 		PreparedStatement stm = null;
         Connection conn = null;
         ResultSet rs = null;
         
-        ArrayList<Grupo> grupos = new ArrayList<Grupo>();
+        ArrayList<Marca> marcas = new ArrayList<Marca>();
         
         try {
-            String sql = "SELECT * FROM grupo"; 
+            String sql = "SELECT * FROM marcas"; 
             
             Conn bd = new Conn();
             conn = bd.obtemConexao();
@@ -65,10 +56,10 @@ public class Grupo {
             rs = stm.executeQuery();
                
             while (rs.next()) {    
-            	grupos.add(new Grupo(rs.getInt("id"), rs.getString("nome")));
+            	marcas.add(new Marca(rs.getInt("id"), rs.getString("nome")));
             }
             rs.close();
-            return grupos;
+            return marcas;
             
         } catch (SQLException e) {
             
@@ -79,7 +70,7 @@ public class Grupo {
             } catch (SQLException e1) {
                 System.out.print(e1.getStackTrace());
             }
-            return grupos;
+            return marcas;
         }
         finally{
             if (stm != null) {

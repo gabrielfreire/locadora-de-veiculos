@@ -22,9 +22,10 @@ public class Veiculo {
 	private String marca         = null;
 	private String cor           = null;
 	private String tarifaAluguel = null;
-	private String kmRodado      = null;
+	private double kmRodado      = 0;
 	private int grupo_id		 = 0;
-	private String acessorios    = null;
+	private int marca_id         = 0;
+	private int cor_id           = 0;
 	
     
 	/**
@@ -75,7 +76,7 @@ public class Veiculo {
 		this.tarifaAluguel = tarifaAluguel;
 	}
 
-	public void setKmRodado(String kmRodado) {
+	public void setKmRodado(double kmRodado) {
 		this.kmRodado = kmRodado;
 	}
 
@@ -83,8 +84,12 @@ public class Veiculo {
 		this.grupo_id = grupo_id;
 	}
 
-	public void setAcessorios(String acessorios) {
-		this.acessorios = acessorios;
+	public void setIdMarca(int marca_id) {
+		this.marca_id = marca_id;
+	}
+
+	public void setIdCor(int cor_id) {
+		this.cor_id = cor_id;
 	}
 	
 	/**
@@ -135,7 +140,7 @@ public class Veiculo {
 		return tarifaAluguel;
 	}
 
-	public String getKmRodado() {
+	public double getKmRodado() {
 		return kmRodado;
 	}
 
@@ -143,8 +148,12 @@ public class Veiculo {
 		return grupo_id;
 	}
 
-	public String getAcessorios() {
-		return acessorios;
+	public int getIdMarca() {
+		return marca_id;
+	}
+	
+	public int getIdCor() {
+		return cor_id;
 	}
 
 
@@ -152,88 +161,73 @@ public class Veiculo {
 	 * 
 	 * @param idVeiculo
 	 */
-	public Veiculo(int idVeiculo) {
-		setIdVeiculo(idVeiculo);
-	}
+//	public Veiculo(int idVeiculo) {
+//		setIdVeiculo(idVeiculo);
+//	}
+//	
+//	public Veiculo () {
+//		
+//	}
 	
-	public Veiculo (String chassi, String placa, String cidade, String estado, String modelo, String fabricante, int ano, String marca, String cor, String tarifa, String km, int grupo_id) {	
-		setChassi(chassi);
-		setPlaca(placa);
-		setCidade(cidade);
-		setEstado(estado);
-		setModelo(modelo);
-		setFabricante(fabricante);
-		setAno(ano);
-		setMarca(marca);
-		setCor(cor);
-		setTarifaAluguel(tarifa);
-		setKmRodado(km);
-		setIdGrupo(grupo_id);
-	}
-	
-	private void carregar() {
-		     
-        PreparedStatement stm = null;
-        Connection conn = null;
-        ResultSet rs = null;
-        
-        try {
-            String sql = "SELECT * FROM veiculo WHERE id = ?"; 
-            
-            Conn bd = new Conn();
-            conn = bd.obtemConexao();
-            
-            stm = conn.prepareStatement(sql);            
-            rs = stm.executeQuery();
-           
-            stm.setInt(1, idVeiculo);
-            
-            if (rs.next()) {            	
-            	setChassi(rs.getString("chassi"));
-            	setPlaca(rs.getString("placa"));
-            	setCidade(rs.getString("cidade"));
-            	setEstado(rs.getString("estado"));
-            	setModelo(rs.getString("modelo"));
-            	setFabricante(rs.getString("fabricante"));
-            	setAno(rs.getInt("ano"));
-            	setMarca(rs.getString("marca"));
-            	setCor(rs.getString("cor"));
-            	setTarifaAluguel(rs.getString("tarifa_aluguel"));
-            	setKmRodado(rs.getString("km_rodado"));
-            	setIdGrupo(rs.getInt("grupo_id"));  
-            }
-            rs.close();
-            
-            
-        } catch (SQLException e) {
-            
-            e.printStackTrace();
-            try {
-                conn.rollback();
-                
-            } catch (SQLException e1) {
-                System.out.print(e1.getStackTrace());
-            }
-        }
-        finally{
-            if (stm != null) {
-                try {
-                    stm.close();
-                }
-                catch (SQLException e1) {
-                    System.out.print(e1.getStackTrace());
-                }
-            }
-        }
-	}
+//	private void carregar() {
+//		     
+//        PreparedStatement stm = null;
+//        Connection conn = null;
+//        ResultSet rs = null;
+//        
+//        try {
+//            String sql = "SELECT * FROM veiculo WHERE id = ?"; 
+//            
+//            Conn bd = new Conn();
+//            conn = bd.obtemConexao();
+//            
+//            stm = conn.prepareStatement(sql);            
+//            rs = stm.executeQuery();
+//           
+//            stm.setInt(1, idVeiculo);
+//            
+//            if (rs.next()) {            	
+//            	setChassi(rs.getString("chassi"));
+//            	setPlaca(rs.getString("placa"));
+//            	setCidade(rs.getString("cidade"));
+//            	setEstado(rs.getString("estado"));
+//            	setModelo(rs.getString("modelo"));
+//            	setFabricante(rs.getString("fabricante"));
+//            	setAno(rs.getInt("ano"));
+//            	setMarca(rs.getString("marca"));
+//            	setCor(rs.getString("cor"));
+//            	setTarifaAluguel(rs.getString("tarifa_aluguel"));
+//            	setKmRodado(rs.getString("km_rodado"));
+//            	setIdGrupo(rs.getInt("grupo_id"));  
+//            }
+//            rs.close();
+//            
+//            
+//        } catch (SQLException e) {
+//            
+//            e.printStackTrace();
+//            try {
+//                conn.rollback();
+//                
+//            } catch (SQLException e1) {
+//                System.out.print(e1.getStackTrace());
+//            }
+//        }
+//        finally{
+//            if (stm != null) {
+//                try {
+//                    stm.close();
+//                }
+//                catch (SQLException e1) {
+//                    System.out.print(e1.getStackTrace());
+//                }
+//            }
+//        }
+//	}
 	
 	
 	
 	public boolean inserir() {
-
-//		String sqlInsert = "INSERT INTO veiculo"
-//        			+ "(chassi) "
-//        			+ "VALUES (?)";
 
         PreparedStatement stm = null;
         Connection conn = null;
@@ -242,15 +236,12 @@ public class Veiculo {
 
         	String sqlInsert = "INSERT INTO veiculo "
         			+ "(chassi, placa, cidade, estado, modelo, fabricante, ano, marca, cor, tarifa_aluguel, "
-        			+ "km_rodado, grupo_id, acessorio_id) "
-        			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        	
+        			+ "km_rodado, grupo_id, marca_id, cor_id) "
+        			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             Conn bd = new Conn();
             conn = bd.obtemConexao();
-            
-            
+           
     		//
     		// Inclusao dos dados na tabela VEICULO
     		//
@@ -266,9 +257,10 @@ public class Veiculo {
     		stm.setString(8, getMarca());
     		stm.setString(9, getCor());
     		stm.setString(10, getTarifaAluguel());
-    		stm.setString(11, getKmRodado());
+    		stm.setDouble(11, getKmRodado());
     		stm.setInt(12, getIdGrupo());
-    		stm.setInt(13, 2);
+    		stm.setInt(13, getIdMarca());
+    		stm.setInt(14, getIdCor());
     		stm.execute();
             
     		return true;

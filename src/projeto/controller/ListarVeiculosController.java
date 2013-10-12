@@ -11,8 +11,8 @@ public class ListarVeiculosController {
 	}
 	
 	public void executar() {	
-		ListarVeiculosView view = new ListarVeiculosView();
-		view.exibirFrame(idioma);
+		ListarVeiculosView view = new ListarVeiculosView(idioma);
+		view.exibirFrame();
 	}
 
 }

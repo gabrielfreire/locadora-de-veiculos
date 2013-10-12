@@ -64,19 +64,22 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     private JButton btnNovaReserva;
     private JButton btnNovoEmprestimo;
     
+    // Internacionalização
     private ResourceBundle bundle = null;
+    private String idioma = null;
 
+    public ListarVeiculosView(String idioma) {
+    	StartLocale locale = new StartLocale(idioma);
+    	
+        this.bundle = locale.getLocale();
+        this.idioma = idioma;
+    }
         
     /**
      * @param args
      */
-    public void exibirFrame(String idioma) {
-
-    	StartLocale locale = new StartLocale(idioma);
-        bundle = locale.getLocale();
-        
+    public void exibirFrame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         
         Container c = this.getContentPane();   
         c.setLayout(new BorderLayout());
@@ -315,7 +318,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         
     	if (e.getSource() == itemVeiculosCadastro) {            
-    		VeiculoController ctlVeiculo = new VeiculoController();
+    		VeiculoController ctlVeiculo = new VeiculoController(idioma);
     		ctlVeiculo.executar();
         }
     	else if (e.getSource() == btnSair) {       
