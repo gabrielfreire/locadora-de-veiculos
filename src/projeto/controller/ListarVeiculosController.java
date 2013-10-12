@@ -15,5 +15,4 @@ public class ListarVeiculosController {
 		ListarVeiculosView view = new ListarVeiculosView(idioma);
 		view.exibirFrame(Veiculo.getArrayObjects());
 	}
-
 }

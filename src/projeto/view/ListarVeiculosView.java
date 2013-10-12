@@ -70,14 +70,15 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     // Internacionalização
     private ResourceBundle bundle = null;
     private String idioma = null;
-
+    
+    
     public ListarVeiculosView(String idioma) {
     	StartLocale locale = new StartLocale(idioma);
     	
         this.bundle = locale.getLocale();
         this.idioma = idioma;
     }
-        
+    
     /**
      * @param args
      */
@@ -87,7 +88,6 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         Container c = this.getContentPane();   
         c.setLayout(new BorderLayout());
         GridBagConstraints gbc = new GridBagConstraints();  
-   
     
         // Define panels
         JPanel panelHeader = new JPanel();
@@ -182,58 +182,11 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         barra.add(menuRelatorios);
         
         
-//        Object[][] data = {
-//        	    {"Kathy", "Smith",
-//        	     "Snowboarding", new Integer(5), new Boolean(false)},
-//        	    {"John", "Doe",
-//        	     "Rowing", new Integer(3), new Boolean(true)},
-//        	    {"Sue", "Black",
-//        	     "Knitting", new Integer(2), new Boolean(false)},
-//        	    {"Jane", "White",
-//        	     "Speed reading", new Integer(20), new Boolean(true)},
-//        	    {"Joe", "Brown",
-//        	     "Pool", new Integer(10), new Boolean(false)},
-//        	     {"Kathy", "Smith",
-//        	     "Snowboarding", new Integer(5), new Boolean(false)},
-//        	    {"John", "Doe",
-//        	     "Rowing", new Integer(3), new Boolean(true)},
-//        	    {"Sue", "Black",
-//        	     "Knitting", new Integer(2), new Boolean(false)},
-//        	    {"Jane", "White",
-//        	     "Speed reading", new Integer(20), new Boolean(true)},
-//        	     {"Kathy", "Smith",
-//            	     "Snowboarding", new Integer(5), new Boolean(false)},
-//        	    {"John", "Doe",
-//        	     "Rowing", new Integer(3), new Boolean(true)},
-//        	    {"Sue", "Black",
-//        	     "Knitting", new Integer(2), new Boolean(false)},
-//        	    {"Jane", "White",
-//        	     "Speed reading", new Integer(20), new Boolean(true)},
-//        	    {"Joe", "Brown",
-//        	     "Pool", new Integer(10), new Boolean(false)},
-//        	     {"Kathy", "Smith",
-//        	     "Snowboarding", new Integer(5), new Boolean(false)},
-//        	    {"John", "Doe",
-//        	     "Rowing", new Integer(3), new Boolean(true)},
-//        	    {"Sue", "Black",
-//        	     "Knitting", new Integer(2), new Boolean(false)},
-//        	    {"Jane", "White",
-//        	     "Speed reading", new Integer(20), new Boolean(true)}
-//        	};
-        
-     
-        
-//        String[] columnNames = {"Grupo",
-//                "Modelo",
-//                "Tarifa",
-//                "Ano",
-//                "Marca"};
           
         /***********tabela***********/
         
         
-        DefaultTableModel model = new DefaultTableModel();
-        
+        DefaultTableModel model = new DefaultTableModel();        
         
         model.addColumn("Grupo");
         model.addColumn("Modelo");
@@ -342,12 +295,13 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         setSize(850, 350);
         setVisible(true);
     }
-
-
+    
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         
-    	if (e.getSource() == itemVeiculosCadastro) {            
+    	if (e.getSource() == itemVeiculosCadastro) { 
+    		setVisible(false);
     		VeiculoController ctlVeiculo = new VeiculoController(idioma);
     		ctlVeiculo.executar();
         }

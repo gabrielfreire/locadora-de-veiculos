@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import projeto.controller.ListarVeiculosController;
 import projeto.controller.VeiculoController;
 import projeto.model.Cor;
 import projeto.model.Grupo;
@@ -88,9 +89,7 @@ public class VeiculoView extends JFrame implements ActionListener {
 	
 	public void exibirFrame(String estados[], int anos[], 
 			                ArrayList<Grupo> grupos, ArrayList<Marca> marcas, ArrayList<Cor> cores) {
-		
-    	StartLocale locale = new StartLocale(idioma);
-        bundle = locale.getLocale();
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 
 		Container c = getContentPane();
 		c.setLayout(new BorderLayout());
@@ -415,6 +414,7 @@ public class VeiculoView extends JFrame implements ActionListener {
 	
 			if (cadastrou) {
 				setVisible(false);
+				
 				JOptionPane.showMessageDialog(null, "Veículo cadastrado com sucesso!");
 			}
 			else {
@@ -425,6 +425,9 @@ public class VeiculoView extends JFrame implements ActionListener {
 		else if (e.getSource() == btnCancelar) {
 			setVisible(false);
 		}
+		
+		ListarVeiculosController ctlVeiculos = new ListarVeiculosController(idioma);
+		ctlVeiculos.executar();
 	}
 
 }

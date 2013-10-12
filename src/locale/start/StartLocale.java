@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
  * 
  * @author gabriel
  */
-public class StartLocale {
+public final class StartLocale {
 
     private ResourceBundle bundle = null;
     
