@@ -91,9 +91,7 @@ public class VeiculoView extends JFrame implements ActionListener {
 		
     	StartLocale locale = new StartLocale(idioma);
         bundle = locale.getLocale();
-        
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+                
 		Container c = getContentPane();
 		c.setLayout(new BorderLayout());
 		
@@ -208,9 +206,15 @@ public class VeiculoView extends JFrame implements ActionListener {
 		
         btnCadastrar = new JButton(bundle.getString("BTN_CADASTRAR"));        
         btnCadastrar.addActionListener(this);
+        
         btnSalvar = new JButton(bundle.getString("BTN_EDITAR"));
+        btnSalvar.addActionListener(this);
+        
         btnExcluir = new JButton(bundle.getString("BTN_EXCLUIR"));
+        btnExcluir.addActionListener(this);
+        
         btnCancelar = new JButton(bundle.getString("BTN_CANCELAR"));
+        btnCancelar.addActionListener(this);
         
     	panelHeader.add(lblTitulo);        
         
@@ -410,9 +414,11 @@ public class VeiculoView extends JFrame implements ActionListener {
 	                                idMarcaSelecionada,                 idCorSelecionada);
 	
 			if (cadastrou) {
+				setVisible(false);
 				JOptionPane.showMessageDialog(null, "Veículo cadastrado com sucesso!");
 			}
 			else {
+				setVisible(false);
 				JOptionPane.showMessageDialog(null, "Falha no cadastro!");
 			}
 		}

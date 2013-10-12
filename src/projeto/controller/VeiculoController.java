@@ -14,11 +14,12 @@ public class VeiculoController {
 		this.idioma = idioma;
 	}
 	
-	public void executar() {
-		
+	public void executar() {		
 		VeiculoView view = new VeiculoView(idioma);
+		
 		view.exibirFrame(Veiculo.getArrEstados(), Veiculo.getArrAnos(), 
-				         Grupo.getArrObjects(), Marca.getArrObjects(), Cor.getArrObjects());
+				         Grupo.getArrObjects(),   Marca.getArrObjects(), 
+				         Cor.getArrObjects());
 	}
 	
 	public static boolean inserir(String chassi, String placa,  String cidade, 
@@ -43,6 +44,7 @@ public class VeiculoController {
 		veiculo.setIdMarca(marca_id);
 		veiculo.setIdCor(cor_id);
 		veiculo.inserir();
+		
 		return true;
 	}
 	

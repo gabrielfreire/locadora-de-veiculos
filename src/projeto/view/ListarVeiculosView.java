@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
@@ -24,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import projeto.controller.VeiculoController;
+import projeto.model.Veiculo;
 import locale.start.StartLocale;
 
 public class ListarVeiculosView extends JFrame implements ActionListener {
@@ -78,7 +81,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     /**
      * @param args
      */
-    public void exibirFrame() {
+    public void exibirFrame(ArrayList<Veiculo> veiculos) {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         Container c = this.getContentPane();   
@@ -179,57 +182,84 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         barra.add(menuRelatorios);
         
         
-        Object[][] data = {
-        	    {"Kathy", "Smith",
-        	     "Snowboarding", new Integer(5), new Boolean(false)},
-        	    {"John", "Doe",
-        	     "Rowing", new Integer(3), new Boolean(true)},
-        	    {"Sue", "Black",
-        	     "Knitting", new Integer(2), new Boolean(false)},
-        	    {"Jane", "White",
-        	     "Speed reading", new Integer(20), new Boolean(true)},
-        	    {"Joe", "Brown",
-        	     "Pool", new Integer(10), new Boolean(false)},
-        	     {"Kathy", "Smith",
-        	     "Snowboarding", new Integer(5), new Boolean(false)},
-        	    {"John", "Doe",
-        	     "Rowing", new Integer(3), new Boolean(true)},
-        	    {"Sue", "Black",
-        	     "Knitting", new Integer(2), new Boolean(false)},
-        	    {"Jane", "White",
-        	     "Speed reading", new Integer(20), new Boolean(true)},
-        	     {"Kathy", "Smith",
-            	     "Snowboarding", new Integer(5), new Boolean(false)},
-        	    {"John", "Doe",
-        	     "Rowing", new Integer(3), new Boolean(true)},
-        	    {"Sue", "Black",
-        	     "Knitting", new Integer(2), new Boolean(false)},
-        	    {"Jane", "White",
-        	     "Speed reading", new Integer(20), new Boolean(true)},
-        	    {"Joe", "Brown",
-        	     "Pool", new Integer(10), new Boolean(false)},
-        	     {"Kathy", "Smith",
-        	     "Snowboarding", new Integer(5), new Boolean(false)},
-        	    {"John", "Doe",
-        	     "Rowing", new Integer(3), new Boolean(true)},
-        	    {"Sue", "Black",
-        	     "Knitting", new Integer(2), new Boolean(false)},
-        	    {"Jane", "White",
-        	     "Speed reading", new Integer(20), new Boolean(true)}
-        	};
+//        Object[][] data = {
+//        	    {"Kathy", "Smith",
+//        	     "Snowboarding", new Integer(5), new Boolean(false)},
+//        	    {"John", "Doe",
+//        	     "Rowing", new Integer(3), new Boolean(true)},
+//        	    {"Sue", "Black",
+//        	     "Knitting", new Integer(2), new Boolean(false)},
+//        	    {"Jane", "White",
+//        	     "Speed reading", new Integer(20), new Boolean(true)},
+//        	    {"Joe", "Brown",
+//        	     "Pool", new Integer(10), new Boolean(false)},
+//        	     {"Kathy", "Smith",
+//        	     "Snowboarding", new Integer(5), new Boolean(false)},
+//        	    {"John", "Doe",
+//        	     "Rowing", new Integer(3), new Boolean(true)},
+//        	    {"Sue", "Black",
+//        	     "Knitting", new Integer(2), new Boolean(false)},
+//        	    {"Jane", "White",
+//        	     "Speed reading", new Integer(20), new Boolean(true)},
+//        	     {"Kathy", "Smith",
+//            	     "Snowboarding", new Integer(5), new Boolean(false)},
+//        	    {"John", "Doe",
+//        	     "Rowing", new Integer(3), new Boolean(true)},
+//        	    {"Sue", "Black",
+//        	     "Knitting", new Integer(2), new Boolean(false)},
+//        	    {"Jane", "White",
+//        	     "Speed reading", new Integer(20), new Boolean(true)},
+//        	    {"Joe", "Brown",
+//        	     "Pool", new Integer(10), new Boolean(false)},
+//        	     {"Kathy", "Smith",
+//        	     "Snowboarding", new Integer(5), new Boolean(false)},
+//        	    {"John", "Doe",
+//        	     "Rowing", new Integer(3), new Boolean(true)},
+//        	    {"Sue", "Black",
+//        	     "Knitting", new Integer(2), new Boolean(false)},
+//        	    {"Jane", "White",
+//        	     "Speed reading", new Integer(20), new Boolean(true)}
+//        	};
         
-        String[] columnNames = {"Grupo",
-                "Modelo",
-                "Tarifa",
-                "Ano",
-                "Marca"};
+     
+        
+//        String[] columnNames = {"Grupo",
+//                "Modelo",
+//                "Tarifa",
+//                "Ano",
+//                "Marca"};
           
         /***********tabela***********/
-        table = new JTable();
         
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-        table.setModel(model);
         
+        DefaultTableModel model = new DefaultTableModel();
+        
+        
+        model.addColumn("Grupo");
+        model.addColumn("Modelo");
+        model.addColumn("Tarifa");
+        model.addColumn("Ano");
+        model.addColumn("Marca");
+        
+        
+        
+        Iterator<Veiculo> it = veiculos.iterator();
+        while (it.hasNext()) {
+        	
+        	Veiculo v = it.next();
+
+        	String[] linha = {
+        			String.valueOf(v.getIdGrupo()), 
+        			v.getModelo(), 
+        			v.getTarifaAluguel(), 
+        			String.valueOf(v.getAno()), 
+        			v.getMarca()
+        			};
+        	
+        	model.addRow(linha);
+        }
+
+        table = new JTable(model);        
         table.setPreferredScrollableViewportSize(new Dimension(775, 150));
         table.setFillsViewportHeight(true);
         

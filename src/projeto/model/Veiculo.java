@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import javax.swing.JOptionPane;
-
+import java.util.ArrayList;
 
 public class Veiculo {
 
@@ -267,7 +265,7 @@ public class Veiculo {
             
             
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+    
             System.out.print(e.getMessage());
             e.printStackTrace();
             try {
@@ -307,16 +305,16 @@ public class Veiculo {
 		
 		String vetor[] = new String[27];
 		
-		vetor[0] = "Acre";
-		vetor[1] = "Alagoas";
-		vetor[2] = "Amapá";
-		vetor[3] = "Amazonas";
-		vetor[4] = "Bahia";
-		vetor[5] = "Ceará";
-		vetor[6] = "Distrito Federal";
-		vetor[7] = "Espírito Santo";
-		vetor[8] = "Goiás";
-		vetor[9] = "Maranhão";
+		vetor[0]  = "Acre";
+		vetor[1]  = "Alagoas";
+		vetor[2]  = "Amapá";
+		vetor[3]  = "Amazonas";
+		vetor[4]  = "Bahia";
+		vetor[5]  = "Ceará";
+		vetor[6]  = "Distrito Federal";
+		vetor[7]  = "Espírito Santo";
+		vetor[8]  = "Goiás";
+		vetor[9]  = "Maranhão";
 		vetor[10] = "Mato Grosso";
 		vetor[11] = "Mato Grosso do Sul";
 		vetor[12] = "Minas Gerais";
@@ -339,35 +337,38 @@ public class Veiculo {
 	}
 	
 	
+	public String toString() {
+		return getChassi();
+	}
 	
-	/*************Métodos de teste**********************/
-	
-	
-	
-	
-	public Veiculo[] getArrayObjects() {
+	public static ArrayList<Veiculo> getArrayObjects() {
 		
 		PreparedStatement stm = null;
         Connection conn = null;
         ResultSet rs = null;
         
-        Veiculo veiculos[] = new Veiculo[Veiculo.getTotalRegistros()];
+        ArrayList<Veiculo> veiculos = new ArrayList<Veiculo>();
     
         try {
             
-        	String sql = "SELECT * FROM veiculo";
+        	String sql = "SELECT * FROM veiculo ORDER BY id DESC";
             Conn bd = new Conn();
             conn = bd.obtemConexao();
             
             stm = conn.prepareStatement(sql);            
             rs = stm.executeQuery();
             
-//            NÃO FUNCIONA AINDA
-//            int i=0;
-//            while (rs.next()) {            	
-//            	veiculos[i] = new Veiculo(rs.getInt("id")); 
-//            	i++;
-//            }            
+            while (rs.next()) {         
+            	Veiculo veiculo = new Veiculo();
+            	veiculo.setIdGrupo(rs.getInt("grupo_id"));
+            	veiculo.setModelo(rs.getString("modelo"));
+            	veiculo.setTarifaAluguel(rs.getString("tarifa_aluguel"));
+            	veiculo.setAno(rs.getInt("ano"));
+            	veiculo.setIdMarca(rs.getInt("marca_id"));
+            	
+            	veiculos.add(veiculo);
+            }            
+
             rs.close();            
             return veiculos;
             
@@ -393,61 +394,5 @@ public class Veiculo {
                 }
             }
         }		
-	}
-	
-	
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public static int getTotalRegistros() {
-		
-        PreparedStatement stm = null;
-        Connection conn = null;
-        ResultSet rs = null;
-        
-        int totalLinhas = 0;
-    
-        try {
-            
-        	String sql = "SELECT * FROM veiculo";
-            Conn bd = new Conn();
-            conn = bd.obtemConexao();
-            
-            stm = conn.prepareStatement(sql);            
-            rs = stm.executeQuery();
-            
-//            outra forma de fazer com count(*)
-//            totalLinhas = rs.getInt("total");
-            
-            rs.last();
-            totalLinhas = rs.getRow();
-            
-            rs.close();            
-            return totalLinhas;
-            
-            
-        } catch (SQLException e) {
-            
-            e.printStackTrace();
-            try {
-                conn.rollback();
-                
-            } catch (SQLException e1) {
-                System.out.print(e1.getStackTrace());
-            }	            
-        	return totalLinhas;
-        }
-        finally{
-            if (stm != null) {
-                try {
-                    stm.close();
-                }
-                catch (SQLException e1) {
-                    System.out.print(e1.getStackTrace());
-                }
-            }
-        }
 	}
 }
