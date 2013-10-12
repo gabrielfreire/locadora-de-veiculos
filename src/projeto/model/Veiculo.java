@@ -18,12 +18,12 @@ public class Veiculo {
 	private String estado        = null;
 	private String modelo        = null;
 	private String fabricante    = null;
-	private int ano		         = 0;
+	private int ano              = 0;
 	private String marca         = null;
 	private String cor           = null;
 	private String tarifaAluguel = null;
 	private double kmRodado      = 0;
-	private int grupo_id		 = 0;
+	private int grupo_id         = 0;
 	private int marca_id         = 0;
 	private int cor_id           = 0;
 	
