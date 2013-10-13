@@ -120,6 +120,7 @@ public class VeiculoView extends JFrame implements ActionListener {
 		GridBagConstraints gbc = new GridBagConstraints();
 						
 		
+		// Criar objeto de elementos
 		lblTitulo = new JLabel(bundle.getString("LABEL_TITULO_VEICULO"));
         lblChassi = new JLabel(bundle.getString("LABEL_CHASSI"));
         lblPlaca = new JLabel(bundle.getString("LABEL_PLACA"));
@@ -135,105 +136,79 @@ public class VeiculoView extends JFrame implements ActionListener {
         lblGrupo = new JLabel(bundle.getString("LABEL_GRUPO"));
         lblAcessorios = new JLabel(bundle.getString("LABEL_ACESSORIOS"));
         
-        textChassi = new JTextField();
-        textChassi.setPreferredSize(new Dimension(200, 25));
-        
+        textChassi = new JTextField();        
         textPlaca = new JTextField();
-        textPlaca.setPreferredSize(new Dimension(200, 25));
-        
-        textCidade = new JTextField();
-        textCidade.setPreferredSize(new Dimension(200, 25));
+        textCidade = new JTextField();        
+        textModelo = new JTextField(); 
+        textFabricante = new JTextField();
+        textTarifaAluguel = new JTextField();
+        textKmRodado = new JTextField();
         
         comboEstado = new JComboBox<String>();
-        comboEstado.setPreferredSize(new Dimension(100, 25));
-        
-        for (int i=0; i<estados.length; i++) {
-        	comboEstado.addItem(estados[i]);        	
-        }
-        
-        textModelo = new JTextField();
-        textModelo.setPreferredSize(new Dimension(200, 25));
-        
-        textFabricante = new JTextField();
-        textFabricante.setPreferredSize(new Dimension(200, 25));
-        
         comboAno = new JComboBox<Integer>();
-        comboAno.setPreferredSize(new Dimension(100, 25));
-
-        // Listar Anos na combo
-        for (int i=0; i<anos.length; i++) {
-        	comboAno.addItem(anos[i]);
-        }
-        
-        
-        comboMarca = new JComboBox<String>();
-        comboMarca.setPreferredSize(new Dimension(100, 25));
-
-        // Listar marcas na combo
-        for (int i=0; i<marcas.size(); i++) {
-        	comboMarca.addItem(marcas.get(i).getNome());
-        }        
-        this.marcas = marcas;
-        
-        
-        comboCor = new JComboBox<String>();
-        comboCor.setPreferredSize(new Dimension(100, 25));
-    
-        // Listar cores na combo
-        for (int i=0; i<cores.size(); i++) {
-        	comboCor.addItem(cores.get(i).getNome());
-        }        
-        this.cores = cores;
-        
-        
-        textTarifaAluguel = new JTextField();
-        textTarifaAluguel.setPreferredSize(new Dimension(200, 25));
-        
-        textKmRodado = new JTextField();
-        textKmRodado.setPreferredSize(new Dimension(200, 25));
-        
         comboGrupo = new JComboBox<String>();
-        comboGrupo.setPreferredSize(new Dimension(200, 25));
-        
-        // Listar grupos na combo
-        for (int i=0; i<grupos.size(); i++) {
-        	comboGrupo.addItem(grupos.get(i).getNome());
-        }        
-        this.grupos = grupos;    
-        
-        
+        comboMarca = new JComboBox<String>();
+        comboCor = new JComboBox<String>();
         
         checkAcessorioGPS = new JCheckBox(bundle.getString("CHECKBOX_ACESSORIO_GPS"));
-        checkAcessorioGPS.setPreferredSize(new Dimension(200, 25));
-        
         checkAcessorioCadeiraBebe = new JCheckBox(bundle.getString("CHECKBOX_ACESSORIO_CADEIRA_BEBE"));
-        checkAcessorioCadeiraBebe.setPreferredSize(new Dimension(200, 25));
-        
-        checkAcessorioMotorista = new JCheckBox(bundle.getString("CHECKBOX_ACESSORIO_MOTORISTA"));
-        checkAcessorioMotorista.setPreferredSize(new Dimension(200, 25));
+        checkAcessorioMotorista = new JCheckBox(bundle.getString("CHECKBOX_ACESSORIO_MOTORISTA"));        
 		
-        btnCadastrar = new JButton(bundle.getString("BTN_CADASTRAR"));        
-        btnCadastrar.addActionListener(this);
-        
+        btnCadastrar = new JButton(bundle.getString("BTN_CADASTRAR"));
         btnSalvar = new JButton(bundle.getString("BTN_EDITAR"));
-        btnSalvar.addActionListener(this);
-        
         btnExcluir = new JButton(bundle.getString("BTN_EXCLUIR"));
-        btnExcluir.addActionListener(this);
-        
         btnCancelar = new JButton(bundle.getString("BTN_CANCELAR"));
+        
+        
+        // Listar combos    
+        for (int i=0; i<estados.length; i++) 
+        	comboEstado.addItem(estados[i]);        	
+        
+        for (int i=0; i<anos.length; i++) 
+        	comboAno.addItem(anos[i]);    
+        
+        for (int i=0; i<marcas.size(); i++)
+        	comboMarca.addItem(marcas.get(i).getNome());               
+        
+        for (int i=0; i<cores.size(); i++) 
+        	comboCor.addItem(cores.get(i).getNome());         
+        
+        for (int i=0; i<grupos.size(); i++)
+        	comboGrupo.addItem(grupos.get(i).getNome());            
+        
+        
+        // Preciso dessas propriedas para pegar o valor selecionado no actionPerformed
+        this.marcas = marcas;
+        this.cores = cores;
+        this.grupos = grupos;  
+                
+        
+        // Add ação nos botões
+        btnCadastrar.addActionListener(this);
+        btnSalvar.addActionListener(this);
+        btnExcluir.addActionListener(this);
         btnCancelar.addActionListener(this);
         
-        
-        
-        
-        
-        
+        // Add tamanho nos elementos
+        textChassi.setPreferredSize(new Dimension(200, 25));
+        textPlaca.setPreferredSize(new Dimension(200, 25));
+        textCidade.setPreferredSize(new Dimension(200, 25));
+        comboEstado.setPreferredSize(new Dimension(100, 25));
+        textModelo.setPreferredSize(new Dimension(200, 25));
+        textFabricante.setPreferredSize(new Dimension(200, 25));
+        comboAno.setPreferredSize(new Dimension(100, 25));
+        comboMarca.setPreferredSize(new Dimension(100, 25));
+        comboCor.setPreferredSize(new Dimension(100, 25));
+        textTarifaAluguel.setPreferredSize(new Dimension(200, 25));
+        textKmRodado.setPreferredSize(new Dimension(200, 25));
+        comboGrupo.setPreferredSize(new Dimension(200, 25));
+        checkAcessorioGPS.setPreferredSize(new Dimension(200, 25));
+        checkAcessorioCadeiraBebe.setPreferredSize(new Dimension(200, 25));
+        checkAcessorioMotorista.setPreferredSize(new Dimension(200, 25));
         
         
 		// Linha do Jtable selecionada, trazer os dados no formulário
-		if (veiculo != null) {
-			
+		if (veiculo != null) {			
 			textChassi.setText(veiculo.getChassi());
 			textPlaca.setText(veiculo.getPlaca());
 			textCidade.setText(veiculo.getCidade());
@@ -275,10 +250,11 @@ public class VeiculoView extends JFrame implements ActionListener {
 			}
 		}
         
-        
+        // Título do formulário
     	panelHeader.add(lblTitulo);        
         
         
+    	// Elementos
         gbc.insets = new Insets(0, 5, 2, 0);
         
         gbc.gridx = 0;
