@@ -254,7 +254,7 @@ public class VeiculoView extends JFrame implements ActionListener {
     	panelHeader.add(lblTitulo);        
         
         
-    	// Elementos
+    	// Posição dos elementos
         gbc.insets = new Insets(0, 5, 2, 0);
         
         gbc.gridx = 0;
@@ -449,6 +449,8 @@ public class VeiculoView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {		
 		
+		setVisible(false);
+		
 		if (e.getSource() == btnCadastrar) {
 			int idGrupoSelecionado = grupos.get(comboGrupo.getSelectedIndex()).getIdGrupo();
 			int idMarcaSelecionada = marcas.get(comboMarca.getSelectedIndex()).getIdMarca();
@@ -457,25 +459,35 @@ public class VeiculoView extends JFrame implements ActionListener {
 			// Caso o usuário deixe o campo em branco, o padrão é zero para evitar erro
 			String kmRodado = textKmRodado.getText().isEmpty() ? "0.0" : textKmRodado.getText();
 			
-			boolean cadastrou = VeiculoController.inserir(
-				      				textChassi.getText(),               textPlaca.getText(), 
-	                                textCidade.getText(),               (String)comboEstado.getSelectedItem(), 
-	                                textModelo.getText(),               textFabricante.getText(), 
-	                                (int)comboAno.getSelectedItem(),    textTarifaAluguel.getText(), 
-	                                Double.parseDouble(kmRodado),       idGrupoSelecionado,
-	                                idMarcaSelecionada,                 idCorSelecionada);
-	
-			if (cadastrou) {
-				setVisible(false);				
-				JOptionPane.showMessageDialog(null, "Veículo cadastrado com sucesso!");
-			}
-			else {
-				setVisible(false);
-				JOptionPane.showMessageDialog(null, "Falha no cadastro!");
-			}
+			Veiculo veiculo = new Veiculo();
+			veiculo.setChassi(textChassi.getText());
+			veiculo.setPlaca(textPlaca.getText());
+			veiculo.setCidade(textCidade.getText());
+			veiculo.setEstado((String)comboEstado.getSelectedItem());
+			veiculo.setModelo(textModelo.getText());
+			veiculo.setFabricante(textFabricante.getText());
+			veiculo.setAno((int)comboAno.getSelectedItem());
+			veiculo.setTarifaAluguel(textTarifaAluguel.getText());
+			veiculo.setKmRodado(Double.parseDouble(kmRodado));
+			veiculo.setIdGrupo(idGrupoSelecionado);
+			veiculo.setIdMarca(idMarcaSelecionada);
+			veiculo.setIdCor(idCorSelecionada);	
+			
+			VeiculoController.inserir(veiculo);			
+			JOptionPane.showMessageDialog(null, "Veículo cadastrado com sucesso!");				
+		}
+		
+		else if (e.getSource() == btnExcluir) {
+			
+//			boolean alterou = VeiculoController.editar();
+			
+		}
+		else if (e.getSource() == btnSalvar) {
+			
+			
 		}
 		else if (e.getSource() == btnCancelar) {
-			setVisible(false);
+			
 		}
 		
 		ListarVeiculosController ctlVeiculos = new ListarVeiculosController(idioma);

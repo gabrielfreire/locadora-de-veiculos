@@ -28,35 +28,18 @@ public class VeiculoController {
 				         Cor.getArrObjects());
 	}
 	
-	public static boolean inserir(String chassi, String placa,  String cidade, 
-						   String estado, String modelo, String fabricante, 
-						   int ano,       String tarifa, double km, 
-						   int grupo_id,  int marca_id,  int cor_id) {
-		
-		Veiculo v = new Veiculo();
-		v.setChassi(chassi);
-		v.setPlaca(placa);
-		v.setCidade(cidade);
-		v.setEstado(estado);
-		v.setModelo(modelo);
-		v.setFabricante(fabricante);
-		v.setAno(ano);
-		v.setTarifaAluguel(tarifa);
-		v.setKmRodado(km);
-		v.setIdGrupo(grupo_id);
-		v.setIdMarca(marca_id);
-		v.setIdCor(cor_id);
-		v.inserir();
+	public static boolean inserir(Veiculo veiculo) {		
+		veiculo.inserir();		
 		
 		return true;
 	}
 	
-	public boolean editar() {
+	public static boolean editar() {
 		
 		return true;
 	}
 	
-	public boolean excluir() {
+	public static boolean excluir() {
 		
 		return true;
 	}
