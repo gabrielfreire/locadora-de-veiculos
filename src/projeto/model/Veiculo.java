@@ -136,74 +136,62 @@ public class Veiculo {
 		return cor_id;
 	}
 
-
-	/**
-	 * 
-	 * @param idVeiculo
-	 */
-//	public Veiculo(int idVeiculo) {
-//		setIdVeiculo(idVeiculo);
-//	}
-//	
-//	public Veiculo () {
-//		
-//	}
 	
-//	private void carregar() {
-//		     
-//        PreparedStatement stm = null;
-//        Connection conn = null;
-//        ResultSet rs = null;
-//        
-//        try {
-//            String sql = "SELECT * FROM veiculo WHERE id = ?"; 
-//            
-//            Conn bd = new Conn();
-//            conn = bd.obtemConexao();
-//            
-//            stm = conn.prepareStatement(sql);            
-//            rs = stm.executeQuery();
-//           
-//            stm.setInt(1, idVeiculo);
-//            
-//            if (rs.next()) {            	
-//            	setChassi(rs.getString("chassi"));
-//            	setPlaca(rs.getString("placa"));
-//            	setCidade(rs.getString("cidade"));
-//            	setEstado(rs.getString("estado"));
-//            	setModelo(rs.getString("modelo"));
-//            	setFabricante(rs.getString("fabricante"));
-//            	setAno(rs.getInt("ano"));
-//            	setMarca(rs.getString("marca"));
-//            	setCor(rs.getString("cor"));
-//            	setTarifaAluguel(rs.getString("tarifa_aluguel"));
-//            	setKmRodado(rs.getString("km_rodado"));
-//            	setIdGrupo(rs.getInt("grupo_id"));  
-//            }
-//            rs.close();
-//            
-//            
-//        } catch (SQLException e) {
-//            
-//            e.printStackTrace();
-//            try {
-//                conn.rollback();
-//                
-//            } catch (SQLException e1) {
-//                System.out.print(e1.getStackTrace());
-//            }
-//        }
-//        finally{
-//            if (stm != null) {
-//                try {
-//                    stm.close();
-//                }
-//                catch (SQLException e1) {
-//                    System.out.print(e1.getStackTrace());
-//                }
-//            }
-//        }
-//	}
+	
+	
+	public boolean editar() {
+						
+		Connection conn = null;
+		PreparedStatement stm = null;
+		
+		try {
+		
+			String sqlUpdate = "UPDATE veiculo SET "
+	    			+ "chassi = ?, placa = ?, cidade = ?, estado = ?, modelo = ?, fabricante = ?, ano = ?, "
+	    			+ "tarifa_aluguel = ?, km_rodado = ?, grupo_id = ?, marca_id = ?, cor_id = ? "
+	    			+ "WHERE id = ?";
+			
+			Conn bd = new Conn();
+            conn = bd.obtemConexao();
+			
+			stm = conn.prepareStatement(sqlUpdate);
+
+			stm.setString(1, getChassi());
+			stm.setString(2, getPlaca());
+			stm.setString(3, getCidade());
+			stm.setString(4, getEstado());
+			stm.setString(5, getModelo());
+			stm.setString(6, getFabricante());
+			stm.setInt(   7, getAno());
+			stm.setString(8, getTarifaAluguel());
+			stm.setDouble(9, getKmRodado());
+			stm.setInt(  10, getIdGrupo());
+			stm.setInt(  11, getIdMarca());
+			stm.setInt(  12, getIdCor());
+			stm.setInt(  13, getIdVeiculo());			
+			stm.execute();
+			
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				System.out.print(e1.getStackTrace());
+			}
+			return false;			
+		} 
+		finally {
+			if (stm != null) {
+				try {
+					stm.close();
+				} catch (SQLException e1) {
+					System.out.print(e1.getStackTrace());
+				}
+			}
+		}
+	}
 	
 	
 	
@@ -222,9 +210,6 @@ public class Veiculo {
             Conn bd = new Conn();
             conn = bd.obtemConexao();
            
-    		//
-    		// Inclusao dos dados na tabela VEICULO
-    		//
     		stm = conn.prepareStatement(sqlInsert);
     		
     		stm.setString(1, getChassi());
@@ -233,12 +218,12 @@ public class Veiculo {
     		stm.setString(4, getEstado());
     		stm.setString(5, getModelo());
     		stm.setString(6, getFabricante());
-    		stm.setInt(7, getAno());
+    		stm.setInt(   7, getAno());
     		stm.setString(8, getTarifaAluguel());
     		stm.setDouble(9, getKmRodado());
-    		stm.setInt(10, getIdGrupo());
-    		stm.setInt(11, getIdMarca());
-    		stm.setInt(12, getIdCor());
+    		stm.setInt(  10, getIdGrupo());
+    		stm.setInt(  11, getIdMarca());
+    		stm.setInt(  12, getIdCor());
     		stm.execute();
             
     		return true;
@@ -317,10 +302,6 @@ public class Veiculo {
 	}
 	
 	
-	public String toString() {
-		return getChassi();
-	}
-	
 	public static ArrayList<Veiculo> getArrayObjects() {
 		
 		PreparedStatement stm = null;
@@ -340,6 +321,7 @@ public class Veiculo {
             
             while (rs.next()) {    
             	Veiculo veiculo = new Veiculo();
+            	veiculo.setIdVeiculo(rs.getInt("id"));
         		veiculo.setChassi(rs.getString("chassi"));
         		veiculo.setPlaca(rs.getString("placa"));
         		veiculo.setCidade(rs.getString("cidade"));

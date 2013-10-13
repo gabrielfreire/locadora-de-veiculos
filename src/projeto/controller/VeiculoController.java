@@ -34,12 +34,13 @@ public class VeiculoController {
 		return true;
 	}
 	
-	public static boolean editar() {
+	public static boolean editar(Veiculo veiculo) {
+		veiculo.editar();
 		
 		return true;
 	}
 	
-	public static boolean excluir() {
+	public static boolean excluir(Veiculo veiculo) {
 		
 		return true;
 	}

@@ -451,7 +451,8 @@ public class VeiculoView extends JFrame implements ActionListener {
 		
 		setVisible(false);
 		
-		if (e.getSource() == btnCadastrar) {
+		if (e.getSource() == btnCadastrar || e.getSource() == btnSalvar) {
+			
 			int idGrupoSelecionado = grupos.get(comboGrupo.getSelectedIndex()).getIdGrupo();
 			int idMarcaSelecionada = marcas.get(comboMarca.getSelectedIndex()).getIdMarca();
 			int idCorSelecionada   = cores.get(comboCor.getSelectedIndex()).getIdCor();
@@ -459,7 +460,9 @@ public class VeiculoView extends JFrame implements ActionListener {
 			// Caso o usuário deixe o campo em branco, o padrão é zero para evitar erro
 			String kmRodado = textKmRodado.getText().isEmpty() ? "0.0" : textKmRodado.getText();
 			
-			Veiculo veiculo = new Veiculo();
+			if (veiculo == null)
+				veiculo = new Veiculo();
+				
 			veiculo.setChassi(textChassi.getText());
 			veiculo.setPlaca(textPlaca.getText());
 			veiculo.setCidade(textCidade.getText());
@@ -473,16 +476,17 @@ public class VeiculoView extends JFrame implements ActionListener {
 			veiculo.setIdMarca(idMarcaSelecionada);
 			veiculo.setIdCor(idCorSelecionada);	
 			
-			VeiculoController.inserir(veiculo);			
-			JOptionPane.showMessageDialog(null, "Veículo cadastrado com sucesso!");				
+			if (e.getSource() == btnCadastrar) {
+				VeiculoController.inserir(veiculo);			
+				JOptionPane.showMessageDialog(null, "Veículo cadastrado com sucesso!");
+			}
+			else {			
+				VeiculoController.editar(veiculo);			
+				JOptionPane.showMessageDialog(null, "Veículo alterado com sucesso!");
+			}
 		}
 		
 		else if (e.getSource() == btnExcluir) {
-			
-//			boolean alterou = VeiculoController.editar();
-			
-		}
-		else if (e.getSource() == btnSalvar) {
 			
 			
 		}
