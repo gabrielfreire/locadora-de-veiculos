@@ -41,6 +41,7 @@ public class VeiculoController {
 	}
 	
 	public static boolean excluir(Veiculo veiculo) {
+		veiculo.excluir();
 		
 		return true;
 	}

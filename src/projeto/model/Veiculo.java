@@ -137,7 +137,42 @@ public class Veiculo {
 	}
 
 	
-	
+	public boolean excluir() {
+				
+		Connection conn = null;
+		PreparedStatement stm = null;
+		
+		try {			
+			String sqlDelete = "DELETE FROM veiculo WHERE id = ?";
+
+			Conn bd = new Conn();
+            conn = bd.obtemConexao();
+			
+			stm = conn.prepareStatement(sqlDelete);
+			stm.setInt(1, getIdVeiculo());
+			stm.execute();
+			
+			return true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				System.out.print(e1.getStackTrace());
+			}
+			return false;
+		} 
+		finally {
+			if (stm != null) {
+				try {
+					stm.close();
+				} catch (SQLException e1) {
+					System.out.print(e1.getStackTrace());
+				}
+			}
+		}
+	}
 	
 	public boolean editar() {
 						

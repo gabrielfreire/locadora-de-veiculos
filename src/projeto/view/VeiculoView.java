@@ -486,12 +486,13 @@ public class VeiculoView extends JFrame implements ActionListener {
 			}
 		}
 		
-		else if (e.getSource() == btnExcluir) {
+		else if (e.getSource() == btnExcluir) {			
+			int resp = JOptionPane.showConfirmDialog(null, "Tem certeza?", "Excluir veículo", JOptionPane.YES_NO_OPTION);
 			
-			
-		}
-		else if (e.getSource() == btnCancelar) {
-			
+			if (resp == JOptionPane.YES_OPTION) {
+				VeiculoController.excluir(veiculo);			
+				JOptionPane.showMessageDialog(null, "Veículo excluído com sucesso!");
+			}			
 		}
 		
 		ListarVeiculosController ctlVeiculos = new ListarVeiculosController(idioma);
