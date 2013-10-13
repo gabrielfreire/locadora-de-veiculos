@@ -8,14 +8,20 @@ import projeto.view.VeiculoView;
 
 public class VeiculoController {
 
-	private String idioma;
+	private String idioma   = null;
+	private Veiculo veiculo = null; 
 	
 	public VeiculoController(String idioma) {
 		this.idioma = idioma;
 	}
 	
+    public void setObject(Veiculo veiculo) {
+    	this.veiculo = veiculo;
+    }
+    
 	public void executar() {		
 		VeiculoView view = new VeiculoView(idioma);
+		view.setObject(veiculo);
 		
 		view.exibirFrame(Veiculo.getArrEstados(), Veiculo.getArrAnos(), 
 				         Grupo.getArrObjects(),   Marca.getArrObjects(), 
@@ -24,26 +30,23 @@ public class VeiculoController {
 	
 	public static boolean inserir(String chassi, String placa,  String cidade, 
 						   String estado, String modelo, String fabricante, 
-						   int ano,       String marca,  String cor, 
-						   String tarifa, double km,     int grupo_id,
-						   int marca_id, int cor_id) {
+						   int ano,       String tarifa, double km, 
+						   int grupo_id,  int marca_id,  int cor_id) {
 		
-		Veiculo veiculo = new Veiculo();
-		veiculo.setChassi(chassi);
-		veiculo.setPlaca(placa);
-		veiculo.setCidade(cidade);
-		veiculo.setEstado(estado);
-		veiculo.setModelo(modelo);
-		veiculo.setFabricante(fabricante);
-		veiculo.setAno(ano);
-		veiculo.setMarca(marca);
-		veiculo.setCor(cor);
-		veiculo.setTarifaAluguel(tarifa);
-		veiculo.setKmRodado(km);
-		veiculo.setIdGrupo(grupo_id);
-		veiculo.setIdMarca(marca_id);
-		veiculo.setIdCor(cor_id);
-		veiculo.inserir();
+		Veiculo v = new Veiculo();
+		v.setChassi(chassi);
+		v.setPlaca(placa);
+		v.setCidade(cidade);
+		v.setEstado(estado);
+		v.setModelo(modelo);
+		v.setFabricante(fabricante);
+		v.setAno(ano);
+		v.setTarifaAluguel(tarifa);
+		v.setKmRodado(km);
+		v.setIdGrupo(grupo_id);
+		v.setIdMarca(marca_id);
+		v.setIdCor(cor_id);
+		v.inserir();
 		
 		return true;
 	}

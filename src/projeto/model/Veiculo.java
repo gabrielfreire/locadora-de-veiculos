@@ -17,8 +17,6 @@ public class Veiculo {
 	private String modelo        = null;
 	private String fabricante    = null;
 	private int ano              = 0;
-	private String marca         = null;
-	private String cor           = null;
 	private String tarifaAluguel = null;
 	private double kmRodado      = 0;
 	private int grupo_id         = 0;
@@ -60,14 +58,6 @@ public class Veiculo {
 
 	public void setAno(int ano) {
 		this.ano = ano;
-	}
-
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
-
-	public void setCor(String cor) {
-		this.cor = cor;
 	}
 
 	public void setTarifaAluguel(String tarifaAluguel) {
@@ -124,14 +114,6 @@ public class Veiculo {
 
 	public int getAno() {
 		return ano;
-	}
-
-	public String getMarca() {
-		return marca;
-	}
-
-	public String getCor() {
-		return cor;
 	}
 
 	public String getTarifaAluguel() {
@@ -233,9 +215,9 @@ public class Veiculo {
         try {
 
         	String sqlInsert = "INSERT INTO veiculo "
-        			+ "(chassi, placa, cidade, estado, modelo, fabricante, ano, marca, cor, tarifa_aluguel, "
+        			+ "(chassi, placa, cidade, estado, modelo, fabricante, ano, tarifa_aluguel, "
         			+ "km_rodado, grupo_id, marca_id, cor_id) "
-        			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             Conn bd = new Conn();
             conn = bd.obtemConexao();
@@ -252,13 +234,11 @@ public class Veiculo {
     		stm.setString(5, getModelo());
     		stm.setString(6, getFabricante());
     		stm.setInt(7, getAno());
-    		stm.setString(8, getMarca());
-    		stm.setString(9, getCor());
-    		stm.setString(10, getTarifaAluguel());
-    		stm.setDouble(11, getKmRodado());
-    		stm.setInt(12, getIdGrupo());
-    		stm.setInt(13, getIdMarca());
-    		stm.setInt(14, getIdCor());
+    		stm.setString(8, getTarifaAluguel());
+    		stm.setDouble(9, getKmRodado());
+    		stm.setInt(10, getIdGrupo());
+    		stm.setInt(11, getIdMarca());
+    		stm.setInt(12, getIdCor());
     		stm.execute();
             
     		return true;
@@ -358,14 +338,21 @@ public class Veiculo {
             stm = conn.prepareStatement(sql);            
             rs = stm.executeQuery();
             
-            while (rs.next()) {         
+            while (rs.next()) {    
             	Veiculo veiculo = new Veiculo();
-            	veiculo.setIdGrupo(rs.getInt("grupo_id"));
-            	veiculo.setModelo(rs.getString("modelo"));
-            	veiculo.setTarifaAluguel(rs.getString("tarifa_aluguel"));
-            	veiculo.setAno(rs.getInt("ano"));
-            	veiculo.setIdMarca(rs.getInt("marca_id"));
-            	
+        		veiculo.setChassi(rs.getString("chassi"));
+        		veiculo.setPlaca(rs.getString("placa"));
+        		veiculo.setCidade(rs.getString("cidade"));
+        		veiculo.setEstado(rs.getString("estado"));
+        		veiculo.setModelo(rs.getString("modelo"));
+        		veiculo.setFabricante(rs.getString("fabricante"));
+        		veiculo.setAno(rs.getInt("ano"));
+        		veiculo.setTarifaAluguel(rs.getString("tarifa_aluguel"));
+        		veiculo.setKmRodado(rs.getDouble("km_rodado"));
+        		veiculo.setIdGrupo(rs.getInt("grupo_id"));
+        		veiculo.setIdMarca(rs.getInt("marca_id"));
+        		veiculo.setIdCor(rs.getInt("cor_id"));
+        		            	
             	veiculos.add(veiculo);
             }            
 

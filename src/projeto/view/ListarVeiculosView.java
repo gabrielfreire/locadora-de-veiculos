@@ -8,8 +8,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
@@ -23,10 +24,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
 import projeto.controller.VeiculoController;
 import projeto.model.Veiculo;
+import tableModel.VeiculoTableModel;
 import locale.start.StartLocale;
 
 public class ListarVeiculosView extends JFrame implements ActionListener {
@@ -82,7 +83,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     /**
      * @param args
      */
-    public void exibirFrame(ArrayList<Veiculo> veiculos) {
+    public void exibirFrame(final ArrayList<Veiculo> veiculos) {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         Container c = this.getContentPane();   
@@ -185,39 +186,50 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
           
         /***********tabela***********/
         
+                
+        VeiculoTableModel model = new VeiculoTableModel(veiculos);
         
-        DefaultTableModel model = new DefaultTableModel();        
-        
-        model.addColumn("Grupo");
-        model.addColumn("Modelo");
-        model.addColumn("Tarifa");
-        model.addColumn("Ano");
-        model.addColumn("Marca");
-        
-        
-        
-        Iterator<Veiculo> it = veiculos.iterator();
-        while (it.hasNext()) {
-        	
-        	Veiculo v = it.next();
-
-        	String[] linha = {
-        			String.valueOf(v.getIdGrupo()), 
-        			v.getModelo(), 
-        			v.getTarifaAluguel(), 
-        			String.valueOf(v.getAno()), 
-        			v.getMarca()
-        			};
-        	
-        	model.addRow(linha);
-        }
-
         table = new JTable(model);        
         table.setPreferredScrollableViewportSize(new Dimension(775, 150));
         table.setFillsViewportHeight(true);
         
         JScrollPane scroll = new JScrollPane(table);
-        scroll.setAutoscrolls(true);      
+        scroll.setAutoscrolls(true);  
+        
+        table.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					setVisible(false);
+		    		
+					Veiculo veiculo = veiculos.get(table.getSelectedRow());
+					
+		    		VeiculoController ctlVeiculo = new VeiculoController(idioma);
+		    		ctlVeiculo.setObject(veiculo);
+		    		ctlVeiculo.executar();
+				}				
+			}
+			
+			public void mouseReleased(MouseEvent arg0) {}
+			public void mousePressed(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {}
+			public void mouseEntered(MouseEvent arg0) {}			
+		});
+        
+//        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {  
+//            public void valueChanged(ListSelectionEvent e) {  
+//            	
+//            	if (table.getSelectedRow() != -1) {
+//
+//        			System.out.println(table.getValueAt(table.getSelectedRow(), 3));
+//        		}
+//        		else {
+//        			System.out.println("Não foi na tabela");
+//        		}
+//            	
+//          }});  
+        
         
         /*****fim da tabela***********/
         
@@ -302,6 +314,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         
     	if (e.getSource() == itemVeiculosCadastro) { 
     		setVisible(false);
+    		
     		VeiculoController ctlVeiculo = new VeiculoController(idioma);
     		ctlVeiculo.executar();
         }

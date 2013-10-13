@@ -14,6 +14,7 @@ import projeto.controller.VeiculoController;
 import projeto.model.Cor;
 import projeto.model.Grupo;
 import projeto.model.Marca;
+import projeto.model.Veiculo;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -75,9 +76,13 @@ public class VeiculoView extends JFrame implements ActionListener {
 	private ArrayList<Marca> marcas;
 	private ArrayList<Cor> cores;
 	
+		
     // Internacionalização
     private ResourceBundle bundle = null;
     private String idioma = null;
+    
+    private Veiculo veiculo = null;
+    
 
     public VeiculoView(String idioma) {
     	StartLocale locale = new StartLocale(idioma);
@@ -85,10 +90,17 @@ public class VeiculoView extends JFrame implements ActionListener {
         this.bundle = locale.getLocale();
         this.idioma = idioma;
     }
+    
+    public void setObject(Veiculo veiculo) {
+    	this.veiculo = veiculo;
+    }
 	
 	
 	public void exibirFrame(String estados[], int anos[], 
-			                ArrayList<Grupo> grupos, ArrayList<Marca> marcas, ArrayList<Cor> cores) {
+			                ArrayList<Grupo> grupos, 
+			                ArrayList<Marca> marcas, 
+			                ArrayList<Cor> cores) {
+		
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 
 		Container c = getContentPane();
@@ -101,14 +113,10 @@ public class VeiculoView extends JFrame implements ActionListener {
 		JPanel panelFooter = new JPanel(new GridBagLayout());
 		
 		GridBagConstraints gbc = new GridBagConstraints();
-	
-        
+				
 		
 		
-		boolean inserir = true;
-		boolean editar = false;
-		
-		if (inserir)
+		if (veiculo == null)
 			lblTitulo = new JLabel(bundle.getString("LABEL_TITULO_CADASTRAR_VEICULO"));
 		else
 			lblTitulo = new JLabel(bundle.getString("LABEL_TITULO_EDITAR_VEICULO"));
@@ -214,6 +222,37 @@ public class VeiculoView extends JFrame implements ActionListener {
         
         btnCancelar = new JButton(bundle.getString("BTN_CANCELAR"));
         btnCancelar.addActionListener(this);
+        
+        
+        
+        
+        
+        
+        
+        
+		// Linha do Jtable selecionada, trazer os dados no formulário
+		if (veiculo != null) {
+			
+			textChassi.setText(veiculo.getChassi());
+			textPlaca.setText(veiculo.getPlaca());
+			textCidade.setText(veiculo.getCidade());
+			//estado
+			textModelo.setText(veiculo.getModelo());
+			textFabricante.setText(veiculo.getFabricante());
+			//ano
+			textTarifaAluguel.setText(veiculo.getTarifaAluguel());
+//			textKmRodado.setText(veiculo.getKmRodado());
+		
+		}
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
     	panelHeader.add(lblTitulo);        
         
@@ -361,8 +400,11 @@ public class VeiculoView extends JFrame implements ActionListener {
         panelBody.add(checkAcessorioMotorista, gbc);
 
         
+        
+        gbc.ipady = 5;
+    	
         // Botões do rodapé
-        if (inserir) {
+        if (veiculo == null) { 
         	gbc.gridx = 0;
         	gbc.gridy = 0;
         	gbc.insets = new Insets(0, 100, 25, 0);
@@ -375,10 +417,24 @@ public class VeiculoView extends JFrame implements ActionListener {
         	gbc.anchor = GridBagConstraints.LINE_END;
         	panelFooter.add(btnCadastrar, gbc);
         }
-        if (editar) {
-        	panelFooter.add(btnCancelar);
-        	panelFooter.add(btnExcluir);
-        	panelFooter.add(btnSalvar);
+        else {
+        	gbc.gridx = 0;
+        	gbc.gridy = 0;
+        	gbc.insets = new Insets(0, 35, 25, 0);
+        	gbc.anchor = GridBagConstraints.LINE_END;
+        	panelFooter.add(btnCancelar, gbc);
+        	
+        	gbc.gridx = 1;
+        	gbc.gridy = 0;
+        	gbc.insets = new Insets(0, 5, 25, 0);
+        	gbc.anchor = GridBagConstraints.LINE_END;
+        	panelFooter.add(btnExcluir, gbc);
+        	
+        	gbc.gridx = 2;
+        	gbc.gridy = 0;
+        	gbc.insets = new Insets(0, 5, 25, 0);
+        	gbc.anchor = GridBagConstraints.LINE_END;
+        	panelFooter.add(btnSalvar, gbc);
         }
         
         // Adicionar panels
@@ -401,20 +457,18 @@ public class VeiculoView extends JFrame implements ActionListener {
 			int idCorSelecionada   = cores.get(comboCor.getSelectedIndex()).getIdCor();
 
 			// Caso o usuário deixe o campo em branco, o padrão é zero para evitar erro
-			String kmRodado = textKmRodado.getText().isEmpty() ? "0" : textKmRodado.getText();
+			String kmRodado = textKmRodado.getText().isEmpty() ? "0.0" : textKmRodado.getText();
 			
 			boolean cadastrou = VeiculoController.inserir(
 				      				textChassi.getText(),               textPlaca.getText(), 
 	                                textCidade.getText(),               (String)comboEstado.getSelectedItem(), 
 	                                textModelo.getText(),               textFabricante.getText(), 
-	                                (int)comboAno.getSelectedItem(),    (String)comboMarca.getSelectedItem(), 
-	                                (String)comboCor.getSelectedItem(), textTarifaAluguel.getText(), 
+	                                (int)comboAno.getSelectedItem(),    textTarifaAluguel.getText(), 
 	                                Double.parseDouble(kmRodado),       idGrupoSelecionado,
 	                                idMarcaSelecionada,                 idCorSelecionada);
 	
 			if (cadastrou) {
-				setVisible(false);
-				
+				setVisible(false);				
 				JOptionPane.showMessageDialog(null, "Veículo cadastrado com sucesso!");
 			}
 			else {
