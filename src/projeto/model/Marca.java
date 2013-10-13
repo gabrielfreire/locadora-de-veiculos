@@ -28,15 +28,6 @@ public class Marca {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public Marca(int idMarca, String nome) {
-		setIdMarca(idMarca);
-		setNome(nome);
-	}
-	
-	public Marca(int idMarca) {
-		setIdMarca(idMarca);
-	}
 		
 	public static ArrayList<Marca> getArrObjects() {
 		
@@ -56,7 +47,11 @@ public class Marca {
             rs = stm.executeQuery();
                
             while (rs.next()) {    
-            	marcas.add(new Marca(rs.getInt("id"), rs.getString("nome")));
+            	Marca marca = new Marca();
+            	marca.setIdMarca(rs.getInt("id"));
+            	marca.setNome(rs.getString("nome"));
+            	
+            	marcas.add(marca);
             }
             rs.close();
             return marcas;

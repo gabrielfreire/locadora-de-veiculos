@@ -25,6 +25,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import locale.start.StartLocale;
@@ -32,9 +33,7 @@ import locale.start.StartLocale;
 
 public class VeiculoView extends JFrame implements ActionListener {
 
-	/**
-	 * 
-	 */
+	// Labels
 	private static final long serialVersionUID = 1358031435910110817L;
 	private JLabel lblTitulo;;
 	private JLabel lblChassi;
@@ -51,6 +50,7 @@ public class VeiculoView extends JFrame implements ActionListener {
 	private JLabel lblGrupo;
 	private JLabel lblAcessorios;
 	
+	// Caixas de texto e combos
 	private JTextField textChassi;
 	private JTextField textPlaca;
 	private JTextField textCidade;
@@ -67,11 +67,13 @@ public class VeiculoView extends JFrame implements ActionListener {
 	private JCheckBox checkAcessorioCadeiraBebe;
 	private JCheckBox checkAcessorioMotorista;
 	
+	// Botões
 	private JButton btnCancelar;
 	private JButton btnCadastrar;	
 	private JButton btnExcluir;
 	private JButton btnSalvar;
 	
+	// ArrayList das combos que chamam a base
 	private ArrayList<Grupo> grupos;
 	private ArrayList<Marca> marcas;
 	private ArrayList<Cor> cores;
@@ -81,15 +83,18 @@ public class VeiculoView extends JFrame implements ActionListener {
     private ResourceBundle bundle = null;
     private String idioma = null;
     
+    // Objeto que receberá para editar veículo
     private Veiculo veiculo = null;
     
 
+    
     public VeiculoView(String idioma) {
     	StartLocale locale = new StartLocale(idioma);
     	
         this.bundle = locale.getLocale();
         this.idioma = idioma;
     }
+    
     
     public void setObject(Veiculo veiculo) {
     	this.veiculo = veiculo;
@@ -113,13 +118,9 @@ public class VeiculoView extends JFrame implements ActionListener {
 		JPanel panelFooter = new JPanel(new GridBagLayout());
 		
 		GridBagConstraints gbc = new GridBagConstraints();
-				
+						
 		
-		
-		if (veiculo == null)
-			lblTitulo = new JLabel(bundle.getString("LABEL_TITULO_CADASTRAR_VEICULO"));
-		else
-			lblTitulo = new JLabel(bundle.getString("LABEL_TITULO_EDITAR_VEICULO"));
+		lblTitulo = new JLabel(bundle.getString("LABEL_TITULO_VEICULO"));
         lblChassi = new JLabel(bundle.getString("LABEL_CHASSI"));
         lblPlaca = new JLabel(bundle.getString("LABEL_PLACA"));
         lblCidade = new JLabel(bundle.getString("LABEL_CIDADE"));
@@ -236,22 +237,43 @@ public class VeiculoView extends JFrame implements ActionListener {
 			textChassi.setText(veiculo.getChassi());
 			textPlaca.setText(veiculo.getPlaca());
 			textCidade.setText(veiculo.getCidade());
-			//estado
+			comboEstado.setSelectedItem(veiculo.getEstado());			
 			textModelo.setText(veiculo.getModelo());
 			textFabricante.setText(veiculo.getFabricante());
-			//ano
+			comboAno.setSelectedItem(veiculo.getAno());
 			textTarifaAluguel.setText(veiculo.getTarifaAluguel());
-//			textKmRodado.setText(veiculo.getKmRodado());
-		
+			textKmRodado.setText(String.valueOf(veiculo.getKmRodado()));
+			
+			Iterator<Grupo> itGrupo = grupos.iterator();
+			while(itGrupo.hasNext()) {
+				Grupo grupo = itGrupo.next();
+				
+				if ( veiculo.getIdGrupo() == grupo.getIdGrupo() ) {
+					comboGrupo.setSelectedItem(grupo.getNome());
+					break;
+				}
+			}	
+			
+			Iterator<Marca> itMarca = marcas.iterator();
+			while(itMarca.hasNext()) {
+				Marca marca = itMarca.next();
+				
+				if ( veiculo.getIdMarca() == marca.getIdMarca() ) {
+					comboMarca.setSelectedItem(marca.getNome());
+					break;
+				}
+			}
+			
+			Iterator<Cor> itCor = cores.iterator();
+			while(itCor.hasNext()) {
+				Cor cor = itCor.next();
+				
+				if ( veiculo.getIdCor() == cor.getIdCor() ) {
+					comboCor.setSelectedItem(cor.getNome());
+					break;
+				}
+			}
 		}
-        
-        
-        
-        
-        
-        
-        
-        
         
         
     	panelHeader.add(lblTitulo);        

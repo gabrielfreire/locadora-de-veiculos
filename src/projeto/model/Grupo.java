@@ -38,15 +38,6 @@ public class Grupo {
 		this.sigla = sigla;
 	}
 	
-	public Grupo(int idGrupo, String nome) {
-		setIdGrupo(idGrupo);
-		setNome(nome);
-	}
-	
-	public Grupo(int idGrupo) {
-		setIdGrupo(idGrupo);
-	}
-	
 	public static ArrayList<Grupo> getArrObjects() {
 		
 		PreparedStatement stm = null;
@@ -64,8 +55,13 @@ public class Grupo {
             stm = conn.prepareStatement(sql);            
             rs = stm.executeQuery();
                
-            while (rs.next()) {    
-            	grupos.add(new Grupo(rs.getInt("id"), rs.getString("nome")));
+            while (rs.next()) {  
+            	Grupo grupo = new Grupo();
+            	grupo.setIdGrupo(rs.getInt("id"));
+            	grupo.setNome(rs.getString("nome"));
+            	grupo.setSigla(rs.getString("sigla"));
+            	
+            	grupos.add(grupo);
             }
             rs.close();
             return grupos;

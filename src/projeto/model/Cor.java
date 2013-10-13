@@ -28,15 +28,6 @@ public class Cor {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public Cor(int idCor, String nome) {
-		setIdCor(idCor);
-		setNome(nome);
-	}
-	
-	public Cor(int idCor) {
-		setIdCor(idCor);
-	}
 		
 	public static ArrayList<Cor> getArrObjects() {
 		
@@ -55,8 +46,12 @@ public class Cor {
             stm = conn.prepareStatement(sql);            
             rs = stm.executeQuery();
                
-            while (rs.next()) {    
-            	cores.add(new Cor(rs.getInt("id"), rs.getString("nome")));
+            while (rs.next()) {
+            	Cor cor = new Cor();
+            	cor.setIdCor(rs.getInt("id"));
+            	cor.setNome(rs.getString("nome"));
+            	
+            	cores.add(cor);
             }
             rs.close();
             return cores;
