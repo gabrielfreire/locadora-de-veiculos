@@ -11,6 +11,7 @@ public class VeiculoController {
 	private String idioma   = null;
 	private Veiculo veiculo = null; 
 	
+	
 	public VeiculoController(String idioma) {
 		this.idioma = idioma;
 	}
@@ -29,20 +30,17 @@ public class VeiculoController {
 	}
 	
 	public static boolean inserir(Veiculo veiculo) {		
-		veiculo.inserir();		
-		
+		veiculo.inserir();			
 		return true;
 	}
 	
 	public static boolean editar(Veiculo veiculo) {
-		veiculo.editar();
-		
+		veiculo.editar();		
 		return true;
 	}
 	
 	public static boolean excluir(Veiculo veiculo) {
-		veiculo.excluir();
-		
+		veiculo.excluir();		
 		return true;
 	}
 

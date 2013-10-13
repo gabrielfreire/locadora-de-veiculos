@@ -76,8 +76,8 @@ public class VeiculoView extends JFrame implements ActionListener {
 	private ArrayList<Grupo> grupos;
 	private ArrayList<Marca> marcas;
 	private ArrayList<Cor> cores;
-	
 		
+			
     // Internacionalização
     private ResourceBundle bundle = null;
     
@@ -96,7 +96,7 @@ public class VeiculoView extends JFrame implements ActionListener {
     public void setObject(Veiculo veiculo) {
     	this.veiculo = veiculo;
     }
-	
+    
 	
 	public void exibirFrame(String estados[], int anos[], 
 			                ArrayList<Grupo> grupos, 
@@ -457,8 +457,9 @@ public class VeiculoView extends JFrame implements ActionListener {
 			// Caso o usuário deixe o campo em branco, o padrão é zero para evitar erro
 			String kmRodado = textKmRodado.getText().isEmpty() ? "0.0" : textKmRodado.getText();
 			
-			if (veiculo == null)
-				veiculo = new Veiculo();
+			
+			// Se objeto for nulo, ele precisa ser instanciado pois estou inserindo
+			if (veiculo == null) veiculo = new Veiculo();
 				
 			veiculo.setChassi(textChassi.getText());
 			veiculo.setPlaca(textPlaca.getText());
@@ -489,6 +490,8 @@ public class VeiculoView extends JFrame implements ActionListener {
 			if (resp == JOptionPane.YES_OPTION) {
 				VeiculoController.excluir(veiculo);			
 				JOptionPane.showMessageDialog(null, "Veículo excluído com sucesso!");
+				
+//				veiculos.remove(index)
 			}			
 		}
 	}

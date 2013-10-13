@@ -2,8 +2,8 @@ package tableModel;
 
 import java.util.ArrayList;
 
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
+//import javax.swing.event.TableModelEvent;
+//import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 import projeto.model.Veiculo;
@@ -29,16 +29,16 @@ public class VeiculoTableModel extends AbstractTableModel {
 	}
 	
 	private void tableChanged() {
-		addTableModelListener(new TableModelListener() {
-			
-			@Override
-			public void tableChanged(TableModelEvent e) {
-				int linha = e.getFirstRow();
-				Veiculo v = veiculos.get(linha);
-				System.out.println(linha);
-//				 aqui você atualiza no banco ou em outro lugar qualquer				
-			}
-		});
+//		addTableModelListener(new TableModelListener() {
+//			
+//			@Override
+//			public void tableChanged(TableModelEvent e) {
+//				int linha = e.getFirstRow();
+//				Veiculo v = veiculos.get(linha);
+//				System.out.println(linha);
+////				 aqui você atualiza no banco ou em outro lugar qualquer				
+//			}
+//		});
 	}
 
 	public void addRow(Veiculo veiculo) {

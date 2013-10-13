@@ -210,16 +210,16 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
 			}
 			
 			@Override
-			public void mouseReleased(MouseEvent arg0) { }
+			public void mouseReleased(MouseEvent arg0) { table.repaint();}
 			
 			@Override
-			public void mousePressed(MouseEvent arg0) { }
+			public void mousePressed(MouseEvent arg0) { table.repaint();}
 			
 			@Override
-			public void mouseExited(MouseEvent arg0) { }
+			public void mouseExited(MouseEvent arg0) { table.repaint();}
 			
 			@Override
-			public void mouseEntered(MouseEvent arg0) { }			
+			public void mouseEntered(MouseEvent arg0) { table.repaint();}			
 		});
         
         /*****fim da tabela***********/
