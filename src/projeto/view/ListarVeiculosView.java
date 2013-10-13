@@ -184,8 +184,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         
         
           
-        /***********tabela***********/
-        
+        /***********tabela***********/        
                 
         VeiculoTableModel model = new VeiculoTableModel(veiculos);
         
@@ -200,9 +199,8 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					setVisible(false);
-		    		
+				
+				if (e.getClickCount() == 2) {		    		
 					Veiculo veiculo = veiculos.get(table.getSelectedRow());
 					
 		    		VeiculoController ctlVeiculo = new VeiculoController(idioma);
@@ -211,25 +209,18 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
 				}				
 			}
 			
-			public void mouseReleased(MouseEvent arg0) {}
-			public void mousePressed(MouseEvent arg0) {}
-			public void mouseExited(MouseEvent arg0) {}
-			public void mouseEntered(MouseEvent arg0) {}			
+			@Override
+			public void mouseReleased(MouseEvent arg0) { }
+			
+			@Override
+			public void mousePressed(MouseEvent arg0) { }
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) { }
+			
+			@Override
+			public void mouseEntered(MouseEvent arg0) { }			
 		});
-        
-//        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {  
-//            public void valueChanged(ListSelectionEvent e) {  
-//            	
-//            	if (table.getSelectedRow() != -1) {
-//
-//        			System.out.println(table.getValueAt(table.getSelectedRow(), 3));
-//        		}
-//        		else {
-//        			System.out.println("Não foi na tabela");
-//        		}
-//            	
-//          }});  
-        
         
         /*****fim da tabela***********/
         
@@ -312,9 +303,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         
-    	if (e.getSource() == itemVeiculosCadastro) { 
-    		setVisible(false);
-    		
+    	if (e.getSource() == itemVeiculosCadastro) {     		
     		VeiculoController ctlVeiculo = new VeiculoController(idioma);
     		ctlVeiculo.executar();
         }

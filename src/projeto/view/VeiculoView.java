@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import projeto.controller.ListarVeiculosController;
 import projeto.controller.VeiculoController;
 import projeto.model.Cor;
 import projeto.model.Grupo;
@@ -81,7 +80,6 @@ public class VeiculoView extends JFrame implements ActionListener {
 		
     // Internacionalização
     private ResourceBundle bundle = null;
-    private String idioma = null;
     
     // Objeto que receberá para editar veículo
     private Veiculo veiculo = null;
@@ -92,7 +90,6 @@ public class VeiculoView extends JFrame implements ActionListener {
     	StartLocale locale = new StartLocale(idioma);
     	
         this.bundle = locale.getLocale();
-        this.idioma = idioma;
     }
     
     
@@ -494,9 +491,5 @@ public class VeiculoView extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Veículo excluído com sucesso!");
 			}			
 		}
-		
-		ListarVeiculosController ctlVeiculos = new ListarVeiculosController(idioma);
-		ctlVeiculos.executar();
 	}
-
 }
