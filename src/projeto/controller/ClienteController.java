@@ -1,6 +1,7 @@
 package projeto.controller;
 
 import projeto.model.Cliente;
+import projeto.view.ClientePFView;
 
 public class ClienteController {
 
@@ -16,7 +17,8 @@ public class ClienteController {
 		this.cliente = cliente;
 	}
 	
-	public void executar() {
-		
+	public void executarPF() {
+		ClientePFView cliente = new ClientePFView(idioma);
+		cliente.exibirFrame();
 	}
 }

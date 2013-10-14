@@ -50,7 +50,8 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     private JMenu menuDevolucoes;
     private JMenuItem itemDevolucoesRegistrar;    
     private JMenu menuClientes;
-    private JMenuItem itemClientesCadastro; 
+    private JMenuItem itemClientePFCadastro; 
+    private JMenuItem itemClientePJCadastro;
     private JMenu menuVeiculos;
     private JMenuItem itemVeiculosCadastro;  
     private JMenu menuPagamentos;    
@@ -150,7 +151,8 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         itemEmprestimosCadastro = new JMenuItem("Cadastro");
         itemReservasCadastro = new JMenuItem("Cadastro");
         itemDevolucoesRegistrar = new JMenuItem("Registrar");
-        itemClientesCadastro = new JMenuItem("Cadastro");
+        itemClientePFCadastro = new JMenuItem("Cadastro PF");
+        itemClientePJCadastro = new JMenuItem("Cadastro PJ");
         itemVeiculosCadastro = new JMenuItem("Cadastro");        
         itemArquivoSair = new JMenuItem("Sair");
         
@@ -158,7 +160,8 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         itemEmprestimosCadastro.addActionListener(this);
         itemReservasCadastro.addActionListener(this);
         itemDevolucoesRegistrar.addActionListener(this);
-        itemClientesCadastro.addActionListener(this);
+        itemClientePFCadastro.addActionListener(this);
+        itemClientePJCadastro.addActionListener(this);
         itemVeiculosCadastro.addActionListener(this);
         
         
@@ -166,7 +169,8 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         menuEmprestimos.add(itemEmprestimosCadastro);
         menuReservas.add(itemReservasCadastro);
         menuDevolucoes.add(itemDevolucoesRegistrar);
-        menuClientes.add(itemClientesCadastro);
+        menuClientes.add(itemClientePFCadastro);
+        menuClientes.add(itemClientePJCadastro);
         menuVeiculos.add(itemVeiculosCadastro);
 //        menuPagamentos.add();
 //        menuRelatorios.add();
@@ -306,9 +310,9 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     		VeiculoController ctlVeiculo = new VeiculoController(idioma);
     		ctlVeiculo.executar();
         }
-    	else if (e.getSource() == itemClientesCadastro) {     		
+    	else if (e.getSource() == itemClientePFCadastro) {     		
     		ClienteController ctlCliente = new ClienteController(idioma);
-    		ctlCliente.executar();
+    		ctlCliente.executarPF();
         }
     	else if (e.getSource() == btnSair) {       
     		System.exit(0);
