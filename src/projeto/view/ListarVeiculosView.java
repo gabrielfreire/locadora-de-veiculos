@@ -101,34 +101,35 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         panelFooter.setLayout(new GridBagLayout());     
         
         
-        // Inicia elementos
+        /**
+         * Inicia elementos
+         */
         lblBuscar = new JLabel(bundle.getString("LABEL_BUSCAR"));
         textBuscar = new JTextField();
         textBuscar.setPreferredSize(new Dimension(200, 25));
         
         comboBuscarMarca = new JComboBox<String>();
-        comboBuscarMarca.setPreferredSize(new Dimension(100, 25));
-        
         comboBuscarModelo = new JComboBox<String>();
-        comboBuscarModelo.setPreferredSize(new Dimension(100, 25));
-        
         comboBuscarAno = new JComboBox<String>();
-        comboBuscarAno.setPreferredSize(new Dimension(100, 25));
-        
         comboBuscarCor = new JComboBox<String>();
-        comboBuscarCor.setPreferredSize(new Dimension(100, 25));
         
         btnBuscar = new JButton(bundle.getString("BTN_BUSCAR"));
-        
-        
         btnSair  = new JButton(bundle.getString("BTN_SAIR"));
-        btnSair.addActionListener(this);
-        
         btnNovaReserva = new JButton(bundle.getString("BTN_NOVA_RESERVA"));
-        btnNovaReserva.addActionListener(this);
-        
         btnNovoEmprestimo  = new JButton(bundle.getString("BTN_NOVO_EMPRESTIMO"));
+        
+        
+        // Tamanho dos elementos
+        comboBuscarMarca.setPreferredSize(new Dimension(100, 25));
+        comboBuscarModelo.setPreferredSize(new Dimension(100, 25));
+        comboBuscarAno.setPreferredSize(new Dimension(100, 25));
+        comboBuscarCor.setPreferredSize(new Dimension(100, 25));
+        
+        btnSair.addActionListener(this);
+        btnNovaReserva.addActionListener(this);
         btnNovoEmprestimo.addActionListener(this);
+        
+       
 
         /**
          * Menu
@@ -144,24 +145,21 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         menuVeiculos = new JMenu("Veículos");
         menuPagamentos = new JMenu("Pagamentos");
         menuRelatorios = new JMenu("Relatórios");
-        
-        itemArquivoSair = new JMenuItem("Sair");
-        itemArquivoSair.addActionListener(this);
-        
+
         itemEmprestimosCadastro = new JMenuItem("Cadastro");
-        itemEmprestimosCadastro.addActionListener(this);
-        
         itemReservasCadastro = new JMenuItem("Cadastro");
-        itemReservasCadastro.addActionListener(this);
-        
         itemDevolucoesRegistrar = new JMenuItem("Registrar");
-        itemDevolucoesRegistrar.addActionListener(this);
-        
         itemClientesCadastro = new JMenuItem("Cadastro");
-        itemClientesCadastro.addActionListener(this);
+        itemVeiculosCadastro = new JMenuItem("Cadastro");        
+        itemArquivoSair = new JMenuItem("Sair");
         
-        itemVeiculosCadastro = new JMenuItem("Cadastro");
+        itemArquivoSair.addActionListener(this);
+        itemEmprestimosCadastro.addActionListener(this);
+        itemReservasCadastro.addActionListener(this);
+        itemDevolucoesRegistrar.addActionListener(this);
+        itemClientesCadastro.addActionListener(this);
         itemVeiculosCadastro.addActionListener(this);
+        
         
         menuArquivo.add(itemArquivoSair);
         menuEmprestimos.add(itemEmprestimosCadastro);
