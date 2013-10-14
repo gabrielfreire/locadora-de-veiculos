@@ -8,13 +8,11 @@ import java.util.ArrayList;
 
 public class Menu {
 	
-	private ArrayList<String> idiomas;
-	private ArrayList<String> agencias;
 	
 	/**
 	 * Combobox para listar idiomas
 	 */
-	public ArrayList<String> getArrIdiomas() {
+	public static ArrayList<String> getArrIdiomas() {
     	
     	String sql = "SELECT * FROM idioma";
         
@@ -22,8 +20,9 @@ public class Menu {
         Connection conn = null;
         ResultSet rs = null;
         
-        
+        ArrayList<String> idiomas = new ArrayList<String>();
     
+        
         try {
             
             Conn bd = new Conn();
@@ -32,7 +31,6 @@ public class Menu {
             stm = conn.prepareStatement(sql);
             rs = stm.executeQuery();
             
-            idiomas = new ArrayList<String>();
             
             while (rs.next()) {            	
             	idiomas.add(rs.getString("nome"));
@@ -67,13 +65,15 @@ public class Menu {
 	/**
 	 * Combobox para listar agências
 	 */
-    public ArrayList<String> getArrAgencias() {
+    public static ArrayList<String> getArrAgencias() {
 
     	String sql = "SELECT * FROM agencia";
         
         PreparedStatement stm = null;
         Connection conn = null;
         ResultSet rs = null;
+        
+        ArrayList<String> agencias = new ArrayList<String>();
         
         
         try {
@@ -84,7 +84,6 @@ public class Menu {
             stm = conn.prepareStatement(sql);
             rs = stm.executeQuery();
             
-            agencias = new ArrayList<String>();
             
             while (rs.next()) {             	
             	agencias.add(rs.getString("nome"));

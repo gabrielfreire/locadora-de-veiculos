@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import projeto.controller.ClienteController;
 import projeto.controller.VeiculoController;
 import projeto.model.Veiculo;
 import tableModel.VeiculoTableModel;
@@ -304,6 +305,10 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     	if (e.getSource() == itemVeiculosCadastro) {     		
     		VeiculoController ctlVeiculo = new VeiculoController(idioma);
     		ctlVeiculo.executar();
+        }
+    	else if (e.getSource() == itemClientesCadastro) {     		
+    		ClienteController ctlCliente = new ClienteController(idioma);
+    		ctlCliente.executar();
         }
     	else if (e.getSource() == btnSair) {       
     		System.exit(0);

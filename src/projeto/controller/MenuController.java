@@ -5,15 +5,9 @@ import projeto.view.MenuView;
 
 
 public class MenuController {
-
 	
-    public void executar() {        
-        
-
-        // Faço conexão com a model para retornar as combos pela base de dados
-        Menu menu = new Menu();
-        
+    public void executar() { 
     	MenuView view = new MenuView();    	       
-        view.exibirFrame(menu.getArrIdiomas(), menu.getArrAgencias());
+        view.exibirFrame(Menu.getArrIdiomas(), Menu.getArrAgencias());
     }
 }
