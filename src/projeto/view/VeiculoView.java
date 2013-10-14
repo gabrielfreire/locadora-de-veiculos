@@ -87,8 +87,7 @@ public class VeiculoView extends JFrame implements ActionListener {
 
     
     public VeiculoView(String idioma) {
-    	StartLocale locale = new StartLocale(idioma);
-    	
+    	StartLocale locale = new StartLocale(idioma);    	
         this.bundle = locale.getLocale();
     }
     
