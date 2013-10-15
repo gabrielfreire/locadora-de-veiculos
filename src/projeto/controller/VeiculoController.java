@@ -1,5 +1,7 @@
 package projeto.controller;
 
+import auxiliar.Data;
+import auxiliar.Estado;
 import projeto.model.Cor;
 import projeto.model.Grupo;
 import projeto.model.Marca;
@@ -24,7 +26,7 @@ public class VeiculoController {
 		VeiculoView view = new VeiculoView(idioma);
 		view.setObject(veiculo);
 		
-		view.exibirFrame(Veiculo.getArrEstados(), Veiculo.getArrAnos(), 
+		view.exibirFrame(Estado.getArrEstados(), Data.getArrAnos(), 
 				         Grupo.getArrObjects(),   Marca.getArrObjects(), 
 				         Cor.getArrObjects());
 	}

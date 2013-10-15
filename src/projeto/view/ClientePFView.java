@@ -1,9 +1,9 @@
 package projeto.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,6 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import auxiliar.Estado;
+import auxiliar.Genero;
 import projeto.model.Cliente;
 import locale.start.StartLocale;
 
@@ -28,6 +31,7 @@ public class ClientePFView extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 3842888543755265416L;
 	
+	private JLabel lblTitulo         = null;
 	private JLabel lblCpf            = null;
 	private JLabel lblNome           = null;
 	private JLabel lblTelefone       = null;
@@ -52,14 +56,14 @@ public class ClientePFView extends JFrame implements ActionListener {
 	private JTextField textRg             = null;
 	private JTextField textPassaporte     = null;
 	private JTextField textDataNascimento = null;
-	private JTextField textGenero         = null;
+	private JComboBox<String> comboGenero = null;
 	private JTextField textHabilitacao    = null;
 	private JTextField textRegistro       = null;
 	private JTextField textEstadoEmissor  = null;
 	private JTextField textValidade       = null;	
 	private JTextField textEndereco       = null;
 	private JTextField textCidade         = null;
-	private JTextField textEstado         = null;
+	private JComboBox<String> comboEstado = null;
 	private JTextField textCep            = null;
 	
 	private JButton btnCancelar  = null;
@@ -68,7 +72,7 @@ public class ClientePFView extends JFrame implements ActionListener {
 	private JButton btnCadastrar = null;
 	
 	
-	private Cliente cliente = null;
+//	private Cliente cliente = null;
 	
 	// Internacionalização
     private ResourceBundle bundle = null;
@@ -80,7 +84,7 @@ public class ClientePFView extends JFrame implements ActionListener {
 	}
 
     public void setObject(Cliente cliente) {
-    	this.cliente = cliente;
+//    	this.cliente = cliente;
     }
 	
     
@@ -90,274 +94,308 @@ public class ClientePFView extends JFrame implements ActionListener {
     	
     	Container c = getContentPane();
     	c.setLayout(new BorderLayout());
+
     	
-    	JPanel panelDadosPessoais = new JPanel(new GridBagLayout());
-    	JPanel panelDadosEndereco = new JPanel(new GridBagLayout());
-    	JPanel panelBotoes        = new JPanel(new GridBagLayout());
+    	JPanel panelTitulo  = new JPanel(new GridBagLayout());
+    	JPanel panelDados   = new JPanel(new GridBagLayout());
+    	JPanel panelBotoes  = new JPanel(new GridBagLayout());
     	
     	GridBagConstraints gbc = new GridBagConstraints();
     	
     	// Iniciar elementos
-//    	instanciarElementos();
-    	JLabel lblCpf            = new JLabel(bundle.getString("LABEL_CPF"));
-    	JLabel lblNome           = new JLabel(bundle.getString("LABEL_NOME"));
-    	JLabel lblTelefone       = new JLabel(bundle.getString("LABEL_TELEFONE"));
-    	JLabel lblEmail          = new JLabel(bundle.getString("LABEL_EMAIL"));
-    	JLabel lblRg             = new JLabel(bundle.getString("LABEL_RG"));
-    	JLabel lblPassaporte     = new JLabel(bundle.getString("LABEL_PASSAPORTE"));
-    	JLabel lblDataNascimento = new JLabel(bundle.getString("LABEL_DATA_NASCIMENTO"));
-    	JLabel lblGenero         = new JLabel(bundle.getString("LABEL_GENERO"));
-    	JLabel lblHabilitacao    = new JLabel(bundle.getString("LABEL_HABILITACAO"));
-    	JLabel lblRegistro       = new JLabel(bundle.getString("LABEL_REGISTRO"));
-    	JLabel lblEstadoEmissor  = new JLabel(bundle.getString("LABEL_ESTADO_EMISSOR"));
-    	JLabel lblValidade       = new JLabel(bundle.getString("LABEL_VALIDADE"));
-    	JLabel lblEndereco       = new JLabel(bundle.getString("LABEL_ENDERECO"));
-    	JLabel lblCidade         = new JLabel(bundle.getString("LABEL_CIDADE"));
-    	JLabel lblEstado         = new JLabel(bundle.getString("LABEL_ESTADO"));
-    	JLabel lblCep            = new JLabel(bundle.getString("LABEL_CEP"));
+    	lblTitulo         = new JLabel(bundle.getString("LABEL_TITULO_CLIENTE"));
+    	lblCpf            = new JLabel(bundle.getString("LABEL_CPF"));
+    	lblNome           = new JLabel(bundle.getString("LABEL_NOME"));
+    	lblTelefone       = new JLabel(bundle.getString("LABEL_TELEFONE"));
+    	lblEmail          = new JLabel(bundle.getString("LABEL_EMAIL"));
+    	lblRg             = new JLabel(bundle.getString("LABEL_RG"));
+    	lblPassaporte     = new JLabel(bundle.getString("LABEL_PASSAPORTE"));
+    	lblDataNascimento = new JLabel(bundle.getString("LABEL_DATA_NASCIMENTO"));
+    	lblGenero         = new JLabel(bundle.getString("LABEL_GENERO"));
+    	lblHabilitacao    = new JLabel(bundle.getString("LABEL_HABILITACAO"));
+    	lblRegistro       = new JLabel(bundle.getString("LABEL_REGISTRO"));
+    	lblEstadoEmissor  = new JLabel(bundle.getString("LABEL_ESTADO_EMISSOR"));
+    	lblValidade       = new JLabel(bundle.getString("LABEL_VALIDADE"));
+    	lblEndereco       = new JLabel(bundle.getString("LABEL_ENDERECO"));
+    	lblCidade         = new JLabel(bundle.getString("LABEL_CIDADE"));
+    	lblEstado         = new JLabel(bundle.getString("LABEL_ESTADO"));
+    	lblCep            = new JLabel(bundle.getString("LABEL_CEP"));
 
-    	JTextField textCpf            = new JTextField();
-    	JTextField textNome           = new JTextField();
-    	JTextField textTelefone       = new JTextField();
-    	JTextField textEmail          = new JTextField();
-    	JTextField textRg             = new JTextField();
-    	JTextField textPassaporte     = new JTextField();
-    	JTextField textDataNascimento = new JTextField();
-    	JTextField textGenero         = new JTextField();
-    	JTextField textHabilitacao    = new JTextField();
-    	JTextField textRegistro       = new JTextField();
-    	JTextField textEstadoEmissor  = new JTextField();
-    	JTextField textValidade       = new JTextField();
-    	JTextField textEndereco       = new JTextField();
-    	JTextField textCidade         = new JTextField();
-    	JTextField textEstado         = new JTextField();
-    	JTextField textCep            = new JTextField();
+    	textCpf            = new JTextField();
+    	textNome           = new JTextField();
+    	textTelefone       = new JTextField();
+    	textEmail          = new JTextField();
+    	textRg             = new JTextField();
+    	textPassaporte     = new JTextField();
+    	textDataNascimento = new JTextField();
+    	comboGenero = new JComboBox<String>();
+    	textHabilitacao    = new JTextField();
+    	textRegistro       = new JTextField();
+    	textEstadoEmissor  = new JTextField();
+    	textValidade       = new JTextField();
+    	textEndereco       = new JTextField();
+    	textCidade         = new JTextField();
+    	comboEstado        = new JComboBox<String>();
+    	textCep            = new JTextField();
     	
-    	JButton btnCancelar  = new JButton(bundle.getString("BTN_CANCELAR"));
-    	JButton btnExcluir   = new JButton(bundle.getString("BTN_EXCLUIR"));
-    	JButton btnSalvar    = new JButton(bundle.getString("BTN_EDITAR"));
-    	JButton btnCadastrar = new JButton(bundle.getString("BTN_CADASTRAR"));
-//    	addActionListener();
-    	
+    	btnCancelar  = new JButton(bundle.getString("BTN_CANCELAR"));
+    	btnExcluir   = new JButton(bundle.getString("BTN_EXCLUIR"));
+    	btnSalvar    = new JButton(bundle.getString("BTN_EDITAR"));
+    	btnCadastrar = new JButton(bundle.getString("BTN_CADASTRAR"));
 
     	
-    	textCpf.setPreferredSize(new Dimension(150, 25));
-    	textNome.setPreferredSize(new Dimension(150, 25));
-    	textTelefone.setPreferredSize(new Dimension(150, 25));
-    	textEmail.setPreferredSize(new Dimension(150, 25));
-    	textRg.setPreferredSize(new Dimension(150, 25));
-    	textPassaporte.setPreferredSize(new Dimension(150, 25));
-    	textDataNascimento.setPreferredSize(new Dimension(150, 25));
-    	textGenero.setPreferredSize(new Dimension(150, 25));
-    	textHabilitacao.setPreferredSize(new Dimension(150, 25));
-    	textRegistro.setPreferredSize(new Dimension(150, 25));
-    	textEstadoEmissor.setPreferredSize(new Dimension(150, 25));
-    	textValidade.setPreferredSize(new Dimension(150, 25));
+    	lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
+    	
+    	textCpf.setPreferredSize(new Dimension(175, 22));
+    	textNome.setPreferredSize(new Dimension(175, 22));
+    	textTelefone.setPreferredSize(new Dimension(175, 22));
+    	textEmail.setPreferredSize(new Dimension(175, 22));
+    	textRg.setPreferredSize(new Dimension(175, 22));
+    	textPassaporte.setPreferredSize(new Dimension(175, 22));
+    	textDataNascimento.setPreferredSize(new Dimension(175, 22));
+    	comboGenero.setPreferredSize(new Dimension(100, 22));
+    	textHabilitacao.setPreferredSize(new Dimension(175, 22));
+    	textRegistro.setPreferredSize(new Dimension(175, 22));
+    	textEstadoEmissor.setPreferredSize(new Dimension(175, 22));
+    	textValidade.setPreferredSize(new Dimension(175, 22));
+    	
+    	textEndereco.setPreferredSize(new Dimension(175, 22));
+    	textCidade.setPreferredSize(new Dimension(175, 22));
+    	comboEstado.setPreferredSize(new Dimension(125, 22));
+    	textCep.setPreferredSize(new Dimension(175, 22));
+    	
+    	String[] generos = Genero.getArrGenero();
+    	for(int i=0; i<generos.length; i++) {
+    		comboGenero.addItem(generos[i]);
+    	}
+    	
+    	String[] estados = Estado.getArrEstados();    	
+    	for(int i=0; i<estados.length; i++) {
+    		comboEstado.addItem(estados[i]);
+    	}
     	
     	
+    	gbc.gridx = 0;
+    	gbc.gridy = 0;
+    	gbc.insets = new Insets(10, 0, 60, 0);
+    	panelTitulo.add(lblTitulo);
     	
+    	gbc.insets = new Insets(0, 0, 4, 5);
+    	
+    	gbc.gridx = 0;
+    	gbc.gridy = 0;
     	gbc.anchor = GridBagConstraints.LINE_END;
-    	gbc.insets = new Insets(0, 0, 2, 5);
-    	
-    	gbc.gridx = 0;
-    	gbc.gridy = 0;
-    	panelDadosPessoais.add(lblCpf, gbc);
+    	panelDados.add(lblCpf, gbc);
     	
     	gbc.gridx = 1;
     	gbc.gridy = 0;
-    	panelDadosPessoais.add(textCpf, gbc);
+    	gbc.anchor = GridBagConstraints.LINE_START;
+    	panelDados.add(textCpf, gbc);
     	
     	gbc.gridx = 0;
     	gbc.gridy = 1;
-    	panelDadosPessoais.add(lblNome, gbc);
+    	gbc.anchor = GridBagConstraints.LINE_END;
+    	panelDados.add(lblNome, gbc);
     	
     	gbc.gridx = 1;
     	gbc.gridy = 1;
-    	panelDadosPessoais.add(textNome, gbc);
+    	gbc.anchor = GridBagConstraints.LINE_START;
+    	panelDados.add(textNome, gbc);
     	
     	gbc.gridx = 0;
     	gbc.gridy = 2;
-    	panelDadosPessoais.add(lblTelefone, gbc);
+    	gbc.anchor = GridBagConstraints.LINE_END;
+    	panelDados.add(lblTelefone, gbc);
     	
     	gbc.gridx = 1;
     	gbc.gridy = 2;
-    	panelDadosPessoais.add(textTelefone, gbc);
+    	gbc.anchor = GridBagConstraints.LINE_START;
+    	panelDados.add(textTelefone, gbc);
     	
     	/*******************/
-    	gbc.gridx = 2;
-    	gbc.gridy = 0;
-    	panelDadosPessoais.add(lblEmail, gbc);
+    	gbc.gridx = 0;
+    	gbc.gridy = 3;
+    	gbc.anchor = GridBagConstraints.LINE_END;
+    	panelDados.add(lblEmail, gbc);
     	
-    	gbc.gridx = 3;
-    	gbc.gridy = 0;
-    	panelDadosPessoais.add(textEmail, gbc);
+    	gbc.gridx = 1;
+    	gbc.gridy = 3;
+    	gbc.anchor = GridBagConstraints.LINE_START;
+    	panelDados.add(textEmail, gbc);
     	
-    	gbc.gridx = 2;
-    	gbc.gridy = 1;
-    	panelDadosPessoais.add(lblRg, gbc);
+    	gbc.gridx = 0;
+    	gbc.gridy = 4;
+    	gbc.anchor = GridBagConstraints.LINE_END;
+    	panelDados.add(lblRg, gbc);
     	
-    	gbc.gridx = 3;
-    	gbc.gridy = 1;
-    	panelDadosPessoais.add(textRg, gbc);
+    	gbc.gridx = 1;
+    	gbc.gridy = 4;
+    	gbc.anchor = GridBagConstraints.LINE_START;
+    	panelDados.add(textRg, gbc);
     	
-    	gbc.gridx = 2;
-    	gbc.gridy = 2;
-    	panelDadosPessoais.add(lblPassaporte, gbc);
+    	gbc.gridx = 0;
+    	gbc.gridy = 5;
+    	gbc.anchor = GridBagConstraints.LINE_END;
+    	panelDados.add(lblPassaporte, gbc);
     	
-    	gbc.gridx = 3;
-    	gbc.gridy = 2;
-    	panelDadosPessoais.add(textPassaporte, gbc);
+    	gbc.gridx = 1;
+    	gbc.gridy = 5;
+    	gbc.anchor = GridBagConstraints.LINE_START;
+    	panelDados.add(textPassaporte, gbc);
     	
     	/*******************/    	
-    	gbc.gridx = 4;
+    	gbc.gridx = 2;
     	gbc.gridy = 0;
-    	panelDadosPessoais.add(lblDataNascimento, gbc);
+    	gbc.anchor = GridBagConstraints.LINE_END;
+    	panelDados.add(lblDataNascimento, gbc);
     	
-    	gbc.gridx = 5;
+    	gbc.gridx = 3;
     	gbc.gridy = 0;
-    	panelDadosPessoais.add(textDataNascimento, gbc);
+    	gbc.anchor = GridBagConstraints.LINE_START;
+    	panelDados.add(textDataNascimento, gbc);
     	
-    	gbc.gridx = 4;
+    	gbc.gridx = 2;
     	gbc.gridy = 1;
-    	panelDadosPessoais.add(lblGenero, gbc);
+    	gbc.anchor = GridBagConstraints.LINE_END;
+    	panelDados.add(lblGenero, gbc);
     	
-    	gbc.gridx = 5;
+    	gbc.gridx = 3;
     	gbc.gridy = 1;
-    	panelDadosPessoais.add(textGenero, gbc);
+    	gbc.anchor = GridBagConstraints.LINE_START;
+    	panelDados.add(comboGenero, gbc);
     	
-    	gbc.gridx = 4;
+    	gbc.gridx = 2;
     	gbc.gridy = 2;
-    	panelDadosPessoais.add(lblHabilitacao, gbc);
+    	gbc.anchor = GridBagConstraints.LINE_END;
+    	panelDados.add(lblHabilitacao, gbc);
     	
-    	gbc.gridx = 5;
+    	gbc.gridx = 3;
     	gbc.gridy = 2;
-    	panelDadosPessoais.add(textHabilitacao, gbc);
+    	gbc.anchor = GridBagConstraints.LINE_START;
+    	panelDados.add(textHabilitacao, gbc);
     	
     	/*******************/
     	
-    	gbc.gridx = 6;
+    	gbc.gridx = 2;
+    	gbc.gridy = 3;
+    	gbc.anchor = GridBagConstraints.LINE_END;
+    	panelDados.add(lblRegistro, gbc);
+    	
+    	gbc.gridx = 3;
+    	gbc.gridy = 3;
+    	gbc.anchor = GridBagConstraints.LINE_START;
+    	panelDados.add(textRegistro, gbc);
+    	
+    	gbc.gridx = 2;
+    	gbc.gridy = 4;
+    	gbc.anchor = GridBagConstraints.LINE_END;
+    	panelDados.add(lblEstadoEmissor, gbc);
+    	
+    	gbc.gridx = 3;
+    	gbc.gridy = 4;
+    	gbc.anchor = GridBagConstraints.LINE_START;
+    	panelDados.add(textEstadoEmissor, gbc);
+    	
+    	gbc.gridx = 2;
+    	gbc.gridy = 5;
+    	gbc.anchor = GridBagConstraints.LINE_END;
+		panelDados.add(lblValidade, gbc);
+		
+    	gbc.gridx = 3;
+    	gbc.gridy = 5;
+    	gbc.anchor = GridBagConstraints.LINE_START;
+		panelDados.add(textValidade, gbc);
+		
+		
+		/********Endereço********/
+    	gbc.gridx = 0;
+    	gbc.gridy = 6;
+    	gbc.anchor = GridBagConstraints.LINE_END;
+		panelDados.add(lblEndereco, gbc);
+		
+    	gbc.gridx = 1;
+    	gbc.gridy = 6;
+    	gbc.anchor = GridBagConstraints.LINE_START;
+		panelDados.add(textEndereco, gbc);
+		
+    	gbc.gridx = 0;
+    	gbc.gridy = 7;
+    	gbc.anchor = GridBagConstraints.LINE_END;
+		panelDados.add(lblCidade, gbc);
+		
+    	gbc.gridx = 1;
+    	gbc.gridy = 7;
+    	gbc.anchor = GridBagConstraints.LINE_START;
+		panelDados.add(textCidade, gbc);
+		
+		/***********/
+		
+    	gbc.gridx = 2;
+    	gbc.gridy = 6;
+    	gbc.anchor = GridBagConstraints.LINE_END;
+		panelDados.add(lblEstado, gbc);
+		
+    	gbc.gridx = 3;
+    	gbc.gridy = 6;
+    	gbc.anchor = GridBagConstraints.LINE_START;
+		panelDados.add(comboEstado, gbc);
+		
+    	gbc.gridx = 2;
+    	gbc.gridy = 7;
+    	gbc.anchor = GridBagConstraints.LINE_END;
+		panelDados.add(lblCep, gbc);
+		
+    	gbc.gridx = 3;
+    	gbc.gridy = 7;
+    	gbc.anchor = GridBagConstraints.LINE_START;
+		panelDados.add(textCep, gbc);
+
+	
+		/******Panel de botões******/
+		
+		gbc.insets = new Insets(2, 5, 20, 0);
+		gbc.ipady = 7;
+		
+    	gbc.gridx = 0;
+    	gbc.gridy = 0;    	
+		panelBotoes.add(btnCancelar, gbc);
+		
+    	gbc.gridx = 1;
     	gbc.gridy = 0;
-    	panelDadosPessoais.add(lblRegistro, gbc);
-    	
-    	gbc.gridx = 7;
+		panelBotoes.add(btnExcluir, gbc);
+		
+    	gbc.gridx = 2;
     	gbc.gridy = 0;
-    	panelDadosPessoais.add(textRegistro, gbc);
-    	
-    	gbc.gridx = 6;
-    	gbc.gridy = 1;
-    	panelDadosPessoais.add(lblEstadoEmissor, gbc);
-    	
-    	gbc.gridx = 7;
-    	gbc.gridy = 1;
-    	panelDadosPessoais.add(textEstadoEmissor, gbc);
-    	
-    	gbc.gridx = 6;
-    	gbc.gridy = 2;
-		panelDadosPessoais.add(lblValidade, gbc);
+		panelBotoes.add(btnSalvar, gbc);
 		
-    	gbc.gridx = 7;
-    	gbc.gridy = 2;
-		panelDadosPessoais.add(textValidade, gbc);
-		
-		
-		
-//		panelDadosEndereco.add(lblEndereco, gbc);
-//		panelDadosEndereco.add(textEndereco, gbc);
-//		
-//		panelDadosEndereco.add(lblCidade, gbc);
-//		panelDadosEndereco.add(textCidade, gbc);
-//		
-//		panelDadosEndereco.add(lblEstado, gbc);
-//		panelDadosEndereco.add(textEstado, gbc);
-//		
-//		panelDadosEndereco.add(lblCep, gbc);
-//		panelDadosEndereco.add(textCep, gbc);
-//		
-//		
-//		panelBotoes.add(btnCancelar, gbc);
-//		panelBotoes.add(btnExcluir, gbc);
-//		panelBotoes.add(btnSalvar, gbc);
-//		panelBotoes.add(btnCadastrar, gbc);
+    	gbc.gridx = 3;
+    	gbc.gridy = 0;
+		panelBotoes.add(btnCadastrar, gbc);
     	
     	
-		Border margin = BorderFactory.createEmptyBorder(25, 10, 5, 10);
-    	Border title = BorderFactory.createTitledBorder("Dados Pessoais");
+		
+		Border empty, compound;
+		TitledBorder title;		
+		
+		empty = BorderFactory.createEmptyBorder(40, 0, 0, 0);
+    	title = BorderFactory.createTitledBorder("Favor preencher todos os campos");
+    	title.setTitleJustification(TitledBorder.CENTER);
     	
-    	Border compound = BorderFactory.createCompoundBorder(title, margin);    	
-    	panelDadosPessoais.setBorder(compound);
+    	compound = BorderFactory.createCompoundBorder(empty, title);    	
+    	panelDados.setBorder(compound);
+    	
     	
     	// Add panels na tela
-    	c.add(panelDadosPessoais, BorderLayout.NORTH);
-//    	c.add(panelDadosEndereco, BorderLayout.NORTH);
-//    	c.add(panelBotoes,        BorderLayout.SOUTH);    	
+    	c.add(panelTitulo, BorderLayout.PAGE_START);
+    	c.add(panelDados,  BorderLayout.CENTER);
+    	c.add(panelBotoes, BorderLayout.PAGE_END);    	
     	
     	// Define frame
     	setResizable(false);
-    	setSize(1100, 300);
-    	setLocation(150, 150);
+    	setSize(700, 450);
+    	setLocation(375, 175);
     	setVisible(true);
     }
-    
-	
-    private void instanciarElementos() {
-    	
-    	JLabel lblCpf            = new JLabel(bundle.getString("LABEL_CPF"));
-    	JLabel lblNome           = new JLabel(bundle.getString("LABEL_NOME"));
-    	JLabel lblTelefone       = new JLabel(bundle.getString("LABEL_TELEFONE"));
-    	JLabel lblEmail          = new JLabel(bundle.getString("LABEL_EMAIL"));
-    	JLabel lblRg             = new JLabel(bundle.getString("LABEL_RG"));
-    	JLabel lblPassaporte     = new JLabel(bundle.getString("LABEL_PASSAPORTE"));
-    	JLabel lblDataNascimento = new JLabel(bundle.getString("LABEL_DATA_NASCIMENTO"));
-    	JLabel lblGenero         = new JLabel(bundle.getString("LABEL_GENERO"));
-    	JLabel lblHabilitacao    = new JLabel(bundle.getString("LABEL_HABILITACAO"));
-    	JLabel lblRegistro       = new JLabel(bundle.getString("LABEL_REGISTRO"));
-    	JLabel lblEstadoEmissor  = new JLabel(bundle.getString("LABEL_ESTADO_EMISSOR"));
-    	JLabel lblValidade       = new JLabel(bundle.getString("LABEL_VALIDADE"));
-    	JLabel lblEndereco       = new JLabel(bundle.getString("LABEL_ENDERECO"));
-    	JLabel lblCidade         = new JLabel(bundle.getString("LABEL_CIDADE"));
-    	JLabel lblEstado         = new JLabel(bundle.getString("LABEL_ESTADO"));
-    	JLabel lblCep            = new JLabel(bundle.getString("LABEL_CEP"));
-
-    	JTextField textCpf            = new JTextField();
-    	JTextField textNome           = new JTextField();
-    	JTextField textTelefone       = new JTextField();
-    	JTextField textEmail          = new JTextField();
-    	JTextField textRg             = new JTextField();
-    	JTextField textPassaporte     = new JTextField();
-    	JTextField textDataNascimento = new JTextField();
-    	JTextField textGenero         = new JTextField();
-    	JTextField textHabilitacao    = new JTextField();
-    	JTextField textRegistro       = new JTextField();
-    	JTextField textEstadoEmissor  = new JTextField();
-    	JTextField textValidade       = new JTextField();
-    	JTextField textEndereco       = new JTextField();
-    	JTextField textCidade         = new JTextField();
-    	JTextField textEstado         = new JTextField();
-    	JTextField textCep            = new JTextField();
-    	
-    	JButton btnCancelar  = new JButton(bundle.getString("BTN_CANCELAR"));
-    	JButton btnExcluir   = new JButton(bundle.getString("BTN_EXCLUIR"));
-    	JButton btnSalvar    = new JButton(bundle.getString("BTN_EDITAR"));
-    	JButton btnCadastrar = new JButton(bundle.getString("BTN_CADASTRAR"));
-    }
-    
-    public void addElementosNoJPanel(JPanel panelDadosPessoais, JPanel panelDadosEndereco, JPanel panelBotoes) {
-    
-    }
-    
-    
-    public void addActionListener() {
-    	btnCancelar.addActionListener(this);
-    	btnExcluir.addActionListener(this);
-    	btnSalvar.addActionListener(this);
-    	btnCadastrar.addActionListener(this);
-    }
-    
-    
-    public void ordenarLayout(GridBagConstraints gbc) {
-    	
-    }
-    
     
     
     
