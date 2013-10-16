@@ -67,7 +67,6 @@ public class ClientePFView extends JFrame implements ActionListener {
 	private JTextField textCep            = null;
 	
 	private JButton btnCancelar  = null;
-	private JButton btnExcluir   = null;
 	private JButton btnSalvar    = null;
 	private JButton btnCadastrar = null;
 	
@@ -128,7 +127,7 @@ public class ClientePFView extends JFrame implements ActionListener {
     	textRg             = new JTextField();
     	textPassaporte     = new JTextField();
     	textDataNascimento = new JTextField();
-    	comboGenero = new JComboBox<String>();
+    	comboGenero        = new JComboBox<String>();
     	textHabilitacao    = new JTextField();
     	textRegistro       = new JTextField();
     	textEstadoEmissor  = new JTextField();
@@ -139,10 +138,13 @@ public class ClientePFView extends JFrame implements ActionListener {
     	textCep            = new JTextField();
     	
     	btnCancelar  = new JButton(bundle.getString("BTN_CANCELAR"));
-    	btnExcluir   = new JButton(bundle.getString("BTN_EXCLUIR"));
     	btnSalvar    = new JButton(bundle.getString("BTN_EDITAR"));
     	btnCadastrar = new JButton(bundle.getString("BTN_CADASTRAR"));
 
+    	btnCancelar.addActionListener(this);
+    	btnSalvar.addActionListener(this);
+    	btnCadastrar.addActionListener(this);
+    	
     	
     	lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
     	
@@ -362,13 +364,9 @@ public class ClientePFView extends JFrame implements ActionListener {
 		
     	gbc.gridx = 1;
     	gbc.gridy = 0;
-		panelBotoes.add(btnExcluir, gbc);
-		
-    	gbc.gridx = 2;
-    	gbc.gridy = 0;
 		panelBotoes.add(btnSalvar, gbc);
 		
-    	gbc.gridx = 3;
+    	gbc.gridx = 2;
     	gbc.gridy = 0;
 		panelBotoes.add(btnCadastrar, gbc);
     	
@@ -402,7 +400,9 @@ public class ClientePFView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		
+		if (e.getSource() == btnCancelar) {
+			setVisible(false);
+		}
 	}
 
 }

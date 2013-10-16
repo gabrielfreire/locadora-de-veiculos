@@ -26,6 +26,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import projeto.controller.ClienteController;
+import projeto.controller.ListarClientesController;
 import projeto.controller.VeiculoController;
 import projeto.model.Veiculo;
 import tableModel.VeiculoTableModel;
@@ -52,6 +53,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     private JMenu menuClientes;
     private JMenuItem itemClientePFCadastro; 
     private JMenuItem itemClientePJCadastro;
+    private JMenuItem itemClientesLista;
     private JMenu menuVeiculos;
     private JMenuItem itemVeiculosCadastro;  
     private JMenu menuPagamentos;    
@@ -110,14 +112,14 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         textBuscar = new JTextField();
         textBuscar.setPreferredSize(new Dimension(200, 25));
         
-        comboBuscarMarca = new JComboBox<String>();
-        comboBuscarModelo = new JComboBox<String>();
-        comboBuscarAno = new JComboBox<String>();
-        comboBuscarCor = new JComboBox<String>();
+        comboBuscarMarca   = new JComboBox<String>();
+        comboBuscarModelo  = new JComboBox<String>();
+        comboBuscarAno     = new JComboBox<String>();
+        comboBuscarCor     = new JComboBox<String>();
         
-        btnBuscar = new JButton(bundle.getString("BTN_BUSCAR"));
-        btnSair  = new JButton(bundle.getString("BTN_SAIR"));
-        btnNovaReserva = new JButton(bundle.getString("BTN_NOVA_RESERVA"));
+        btnBuscar          = new JButton(bundle.getString("BTN_BUSCAR"));
+        btnSair            = new JButton(bundle.getString("BTN_SAIR"));
+        btnNovaReserva     = new JButton(bundle.getString("BTN_NOVA_RESERVA"));
         btnNovoEmprestimo  = new JButton(bundle.getString("BTN_NOVO_EMPRESTIMO"));
         
         
@@ -139,22 +141,23 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         barra = new JMenuBar();
         setJMenuBar(barra);
         
-        menuArquivo = new JMenu("Arquivo");
+        menuArquivo     = new JMenu("Arquivo");
         menuEmprestimos = new JMenu("Empréstimos");
-        menuReservas = new JMenu("Reservas");
-        menuDevolucoes = new JMenu("Devoluções");
-        menuClientes = new JMenu("Clientes");
-        menuVeiculos = new JMenu("Veículos");
-        menuPagamentos = new JMenu("Pagamentos");
-        menuRelatorios = new JMenu("Relatórios");
+        menuReservas    = new JMenu("Reservas");
+        menuDevolucoes  = new JMenu("Devoluções");
+        menuClientes    = new JMenu("Clientes");
+        menuVeiculos    = new JMenu("Veículos");
+        menuPagamentos  = new JMenu("Pagamentos");
+        menuRelatorios  = new JMenu("Relatórios");
 
         itemEmprestimosCadastro = new JMenuItem("Cadastro");
-        itemReservasCadastro = new JMenuItem("Cadastro");
+        itemReservasCadastro    = new JMenuItem("Cadastro");
         itemDevolucoesRegistrar = new JMenuItem("Registrar");
-        itemClientePFCadastro = new JMenuItem("Cadastro PF");
-        itemClientePJCadastro = new JMenuItem("Cadastro PJ");
-        itemVeiculosCadastro = new JMenuItem("Cadastro");        
-        itemArquivoSair = new JMenuItem("Sair");
+        itemClientePFCadastro   = new JMenuItem("Cadastro PF");
+        itemClientePJCadastro   = new JMenuItem("Cadastro PJ");
+        itemClientesLista       = new JMenuItem("Listar clientes");
+        itemVeiculosCadastro    = new JMenuItem("Cadastro");       
+        itemArquivoSair         = new JMenuItem("Sair");
         
         itemArquivoSair.addActionListener(this);
         itemEmprestimosCadastro.addActionListener(this);
@@ -162,6 +165,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         itemDevolucoesRegistrar.addActionListener(this);
         itemClientePFCadastro.addActionListener(this);
         itemClientePJCadastro.addActionListener(this);
+        itemClientesLista.addActionListener(this);
         itemVeiculosCadastro.addActionListener(this);
         
         
@@ -171,6 +175,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         menuDevolucoes.add(itemDevolucoesRegistrar);
         menuClientes.add(itemClientePFCadastro);
         menuClientes.add(itemClientePJCadastro);
+        menuClientes.add(itemClientesLista);
         menuVeiculos.add(itemVeiculosCadastro);
 //        menuPagamentos.add();
 //        menuRelatorios.add();
@@ -314,6 +319,11 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     		ClienteController ctlCliente = new ClienteController(idioma);
     		ctlCliente.executarPF();
         }
+    	else if (e.getSource() == itemClientesLista) {  
+    		ListarClientesController ctlListarClientes = new ListarClientesController(idioma);
+    		ctlListarClientes.executar();
+    		
+    	}
     	else if (e.getSource() == btnSair) {       
     		System.exit(0);
     	}

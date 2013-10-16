@@ -1,5 +1,11 @@
 package projeto.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class ClientePF extends Cliente {
 
 	private String rg              = null;
@@ -78,6 +84,72 @@ public class ClientePF extends Cliente {
 	}
 
 	
+	public static ArrayList<ClientePF> getArrayObjects() {
+		
+		PreparedStatement stm = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        
+        ArrayList<ClientePF> clientes = new ArrayList<ClientePF>();
+    
+        try {
+            
+        	String sql = "SELECT * FROM cliente ORDER BY nome ASC";
+            Conn bd = new Conn();
+            conn = bd.obtemConexao();
+            
+            stm = conn.prepareStatement(sql);            
+            rs = stm.executeQuery();
+            
+            while (rs.next()) {    
+            	ClientePF cliente = new ClientePF();
+            	cliente.setCpf(rs.getInt("cpf"));
+            	cliente.setNome(rs.getString("nome"));
+            	cliente.setTelefone(rs.getString("telefone"));
+            	cliente.setEmail(rs.getString("email"));
+            	cliente.setEndereco(rs.getString("endereco"));
+            	cliente.setCidade(rs.getString("cidade"));
+            	cliente.setEstado(rs.getString("estado"));
+            	cliente.setCep(rs.getString("cep"));
+        		            	
+            	cliente.setRg(rs.getString("rg"));
+            	cliente.setPassaporte(rs.getString("passaporte"));
+            	cliente.setData_nascimento(rs.getString("data_nascimento"));
+            	cliente.setGenero(rs.getString("genero"));
+            	cliente.setHabilitacao(rs.getString("habilitacao"));
+            	cliente.setRegistro(rs.getString("registro"));
+            	cliente.setEstado_emissor(rs.getString("estado_emissor"));
+            	cliente.setValidade(rs.getString("validade"));
+            	
+            	clientes.add(cliente);
+            }            
+
+            rs.close();            
+            return clientes;
+            
+            
+        } catch (SQLException e) {
+            
+            e.printStackTrace();
+            try {
+                conn.rollback();
+                
+            } catch (SQLException e1) {
+                System.out.print(e1.getStackTrace());
+            }	            
+            return clientes;
+        }
+        finally{
+            if (stm != null) {
+                try {
+                    stm.close();
+                }
+                catch (SQLException e1) {
+                    System.out.print(e1.getStackTrace());
+                }
+            }
+        }		
+	}
 	
 	
 	@Override
