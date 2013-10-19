@@ -14,10 +14,4 @@ public class ListarVeiculosController {
 		ListarVeiculosView view = new ListarVeiculosView(idioma);
 		view.exibirFrame();
 	}
-	
-	public static boolean buscar(String busca) {
-		
-		
-		return true;
-	}
 }

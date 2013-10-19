@@ -26,7 +26,6 @@ import javax.swing.JTextField;
 
 import projeto.controller.ClienteController;
 import projeto.controller.ListarClientesController;
-import projeto.controller.ListarVeiculosController;
 import projeto.controller.VeiculoController;
 import projeto.model.Veiculo;
 import tableModel.VeiculoTableModel;
@@ -117,6 +116,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
         btnNovoEmprestimo  = new JButton(bundle.getString("BTN_NOVO_EMPRESTIMO"));
         
         
+        btnBuscar.addActionListener(this);
         btnSair.addActionListener(this);
         btnNovaReserva.addActionListener(this);
         btnNovoEmprestimo.addActionListener(this);
@@ -275,7 +275,10 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
     		
     	}
     	else if(e.getSource() == btnBuscar) {
-    		ListarVeiculosController.buscar(textBuscar.getText());
+    		veiculos = Veiculo.buscar(textBuscar.getText());
+    		VeiculoTableModel novaModel = new VeiculoTableModel(veiculos);
+    		
+    		table.setModel(novaModel);
     	}
     	else if (e.getSource() == btnSair) {       
     		System.exit(0);

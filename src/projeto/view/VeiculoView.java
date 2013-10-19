@@ -455,10 +455,12 @@ public class VeiculoView extends JFrame implements ActionListener {
 			// Caso o usuário deixe o campo em branco, o padrão é zero para evitar erro
 			String kmRodado = textKmRodado.getText().isEmpty() ? "0.0" : textKmRodado.getText();
 			
+			// Se for editar vou resgatar o id do veículo
+			int id = veiculo == null ? 0 : veiculo.getIdVeiculo();
 			
-			// Se objeto for nulo, ele precisa ser instanciado pois estou inserindo
-			if (veiculo == null) veiculo = new Veiculo();
-				
+			veiculo = new Veiculo();			
+			
+			veiculo.setIdVeiculo(id);
 			veiculo.setChassi(textChassi.getText());
 			veiculo.setPlaca(textPlaca.getText());
 			veiculo.setCidade(textCidade.getText());

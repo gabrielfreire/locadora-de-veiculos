@@ -205,7 +205,7 @@ public class Veiculo {
 			stm.setInt(  12, getIdCor());
 			stm.setInt(  13, getIdVeiculo());			
 			stm.execute();
-			
+
 			return true;
 
 		} catch (Exception e) {
@@ -289,7 +289,7 @@ public class Veiculo {
 	}
 	
 	
-	public ArrayList<Veiculo> buscar() {
+	public static ArrayList<Veiculo> buscar(String busca) {
 		
 		PreparedStatement stm = null;
         Connection conn = null;
@@ -299,11 +299,13 @@ public class Veiculo {
     
         try {
             
-        	String sql = "SELECT * FROM veiculo LIKE ?";
+        	String sql = "SELECT * FROM veiculo WHERE ano LIKE ? ORDER BY id DESC";
             Conn bd = new Conn();
             conn = bd.obtemConexao();
             
-            stm = conn.prepareStatement(sql);            
+            stm = conn.prepareStatement(sql);
+            stm.setString(1, "%"+busca+"%");
+            
             rs = stm.executeQuery();
             
             while (rs.next()) {    
