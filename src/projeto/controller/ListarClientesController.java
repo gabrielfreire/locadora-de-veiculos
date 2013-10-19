@@ -12,6 +12,6 @@ public class ListarClientesController {
 	
 	public void executar() {
 		ListarClientesView view = new ListarClientesView(idioma);
-		view.exibirFrame(true);
+		view.exibirFrame();
 	}
 }

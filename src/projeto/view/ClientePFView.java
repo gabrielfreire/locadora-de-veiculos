@@ -180,6 +180,30 @@ public class ClientePFView extends JFrame implements ActionListener {
     	}
     	
     	
+    	
+    	// Trazer dados de Cliente PF
+    	if (cliente != null) {
+    		textCpf.setText(String.valueOf(cliente.getCpf()));
+    		textNome.setText(cliente.getNome());
+    		textTelefone.setText(cliente.getTelefone());
+    		textEmail.setText(cliente.getEmail());
+    		textRg.setText(cliente.getRg());
+    		textPassaporte.setText(cliente.getPassaporte());
+    		textDataNascimento.setText(cliente.getData_nascimento()); 
+    		comboGenero.setSelectedItem(cliente.getGenero());
+    		textHabilitacao.setText(cliente.getHabilitacao());
+    		textRegistro.setText(cliente.getRegistro());       
+    		textEstadoEmissor.setText(cliente.getEstado_emissor()); 
+    		textValidade.setText(cliente.getValidade());
+    		textEndereco.setText(cliente.getEndereco());       
+    		textCidade.setText(cliente.getCidade());         
+    		comboEstado.setSelectedItem(cliente.getEstado());
+    		textCep.setText(cliente.getCep());
+    	}
+    	
+    	
+    	
+    	
     	gbc.gridx = 0;
     	gbc.gridy = 0;
     	gbc.insets = new Insets(10, 0, 60, 0);
@@ -420,7 +444,7 @@ public class ClientePFView extends JFrame implements ActionListener {
     			return;
     		
     		
-			if (cliente == null) cliente = new ClientePF();
+			cliente = new ClientePF();
 								
         	cliente.setCpf(Long.parseLong(textCpf.getText()));
         	cliente.setNome(textNome.getText());
@@ -444,16 +468,18 @@ public class ClientePFView extends JFrame implements ActionListener {
     	
         	if (e.getSource() == btnCadastrar) {
         		ClienteController.inserirPF(cliente);
-        		JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+        		JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");        		
+        		setVisible(false);
+	        	
+            	ListarClientesView ctlListarClientes = new ListarClientesView(idioma);
+            	ctlListarClientes.exibirFrame();
         	}
         	else {
 				ClienteController.editarPF(cliente);
-				JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+				JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!");				
+				setVisible(false);
         	}
-        	setVisible(false);
-        		        	
-        	ListarClientesView ctlListarClientes = new ListarClientesView(idioma);
-        	ctlListarClientes.exibirFrame(true);
+        	
 
 		}
 		else if (e.getSource() == btnCancelar) {

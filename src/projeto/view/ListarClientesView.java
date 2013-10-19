@@ -1,28 +1,28 @@
 package projeto.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ResourceBundle;
+import java.util.ArrayList;
+//import java.util.ResourceBundle;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import projeto.controller.ClienteController;
 import projeto.model.ClientePF;
 import projeto.model.ClientePJ;
 import tableModel.ClientePFTableModel;
 import tableModel.ClientePJTableModel;
-import locale.start.StartLocale;
+//import locale.start.StartLocale;
 
 public class ListarClientesView extends JFrame implements ActionListener, MouseListener {
 
@@ -37,19 +37,21 @@ public class ListarClientesView extends JFrame implements ActionListener, MouseL
 	JRadioButton radioPJ = null;
 	
     // Internacionalização
-    private ResourceBundle bundle = null;
+//    private ResourceBundle bundle = null;
     private String idioma = null;
     
+    private ArrayList<ClientePF> clientesPF = null;
+    private ArrayList<ClientePJ> clientesPJ = null;
     
     public ListarClientesView(String idioma) {
-    	StartLocale locale = new StartLocale(idioma);
-    	
-        this.bundle = locale.getLocale();
+    	// Vou deixar comentado pois essa tela não precisa ser internacionalizada
+//    	StartLocale locale = new StartLocale(idioma);
+//      this.bundle = locale.getLocale();
         this.idioma = idioma;
     }
 	
     
-	public void exibirFrame(boolean loadTablePF) {
+	public void exibirFrame() {
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
 		Container c = getContentPane();
@@ -64,7 +66,10 @@ public class ListarClientesView extends JFrame implements ActionListener, MouseL
 		radioPF = new JRadioButton("Pessoa física", true);
 		radioPJ = new JRadioButton("Pessoa jurídica");
 		
-		ClientePFTableModel model = new ClientePFTableModel(ClientePF.getArrayObjects());		
+		clientesPF = ClientePF.getArrayObjects();
+		clientesPJ = ClientePJ.getArrayObjects();
+		
+		ClientePFTableModel model = new ClientePFTableModel(clientesPF);		
 		table = new JTable(model);
 		
 
@@ -74,6 +79,7 @@ public class ListarClientesView extends JFrame implements ActionListener, MouseL
 		group.add(radioPF);
 		group.add(radioPJ);
 		
+		table.addMouseListener(this);
 		radioPF.addMouseListener(this);
 		radioPJ.addMouseListener(this);
 		
@@ -110,6 +116,23 @@ public class ListarClientesView extends JFrame implements ActionListener, MouseL
 		else if (e.getSource() == radioPJ) {
 			ClientePJTableModel novaModel = new ClientePJTableModel(ClientePJ.getArrayObjects());
 			table.setModel(novaModel);
+		}
+		else if (e.getClickCount() == 2 && e.getSource() == table) {
+			
+			if (radioPF.isSelected()) {
+				ClientePF cliente = clientesPF.get(table.getSelectedRow());
+				
+				ClienteController ctlController = new ClienteController(idioma);
+				ctlController.setObject(cliente);
+				ctlController.executarPF();
+			}
+			else {
+				ClientePJ cliente = clientesPJ.get(table.getSelectedRow());
+				
+				ClienteController ctlController = new ClienteController(idioma);
+				ctlController.setObject(cliente);
+				ctlController.executarPJ();
+			}
 		}
 	}
 

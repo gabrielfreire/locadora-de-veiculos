@@ -166,6 +166,27 @@ public class ClientePJView extends JFrame implements ActionListener {
     	}
     	
     	
+    	
+    	// Cliente PF
+    	if (cliente != null) {
+    		textCpf.setText(String.valueOf(cliente.getCpf()));
+    		textNome.setText(cliente.getNome());
+    		textTelefone.setText(cliente.getTelefone());
+    		textEmail.setText(cliente.getEmail());
+    		textRazaoSocial.setText(cliente.getRazao_social());
+    		textNomeComercial.setText(cliente.getNome_comercial());
+    		textCnpj.setText(String.valueOf(cliente.getCnpj())); 
+    		textInscricaoEstadual.setText(cliente.getInscricao_estadual());
+    		textDataFundacao.setText(cliente.getData_fundacao());
+    		textNumeroFuncionarios.setText(String.valueOf(cliente.getNumero_funcionarios()));
+    		textEndereco.setText(cliente.getEndereco());       
+    		textCidade.setText(cliente.getCidade());         
+    		comboEstado.setSelectedItem(cliente.getEstado());
+    		textCep.setText(cliente.getCep());
+    	}
+    	
+    	
+    	
     	gbc.gridx = 0;
     	gbc.gridy = 0;
     	gbc.insets = new Insets(10, 0, 60, 0);
@@ -385,7 +406,7 @@ public class ClientePJView extends JFrame implements ActionListener {
     			return;
     		
         		
-			if (cliente == null) cliente = new ClientePJ();
+			cliente = new ClientePJ();
 	
 			String cnpj = textCnpj.getText().isEmpty() ? "0" : textCnpj.getText(); 
 			String numFunc = textNumeroFuncionarios.getText().isEmpty() ? "0" : textNumeroFuncionarios.getText();
@@ -401,25 +422,27 @@ public class ClientePJView extends JFrame implements ActionListener {
     		            	
         	cliente.setRazao_social(textRazaoSocial.getText());
         	cliente.setNome_comercial(textNomeComercial.getText());
-        	cliente.setCnpj(Integer.parseInt(cnpj));
+        	cliente.setCnpj(Long.parseLong(cnpj));
         	cliente.setInscricao_estadual(textInscricaoEstadual.getText());
         	cliente.setData_fundacao(textDataFundacao.getText());
         	cliente.setNumero_funcionarios(Integer.parseInt(numFunc));
         	cliente.setTipo("PJ");
 			
-    	
+        	
         	if (e.getSource() == btnCadastrar) {
         		ClienteController.inserirPJ(cliente);
         		JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+        		setVisible(false);
+	        	
+            	ListarClientesView ctlListarClientes = new ListarClientesView(idioma);
+            	ctlListarClientes.exibirFrame();
         	}
         	else {
 				ClienteController.editarPJ(cliente);
-				JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+				JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!");
+				setVisible(false);
         	}
-        	setVisible(false);
-        		        	
-        	ListarClientesView ctlListarClientes = new ListarClientesView(idioma);
-        	ctlListarClientes.exibirFrame(false);
+        	
 
 		}
 		else if (e.getSource() == btnCancelar) {

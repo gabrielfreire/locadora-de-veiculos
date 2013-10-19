@@ -207,7 +207,7 @@ public class ClientePJ extends Cliente {
 		try {
 		
 			String sqlUpdate = "UPDATE cliente SET "
-        			+ "cpf = ?, nome = ?, telefone = ?, email = ?, endereco = ?, cidade = ?, estado = ?, cep = ?, "
+        			+ "nome = ?, telefone = ?, email = ?, endereco = ?, cidade = ?, estado = ?, cep = ?, "
         			+ "razao_social = ?, nome_comercial = ?, cnpj = ?, inscricao_estadual = ?, data_fundacao = ?, "
         			+ "numero_funcionarios = ?, tipo = ? "
         			+ "WHERE cpf = ?";
@@ -216,7 +216,7 @@ public class ClientePJ extends Cliente {
             conn = bd.obtemConexao();
 			
 			stm = conn.prepareStatement(sqlUpdate);
-
+		
     		stm.setString(1, getNome());
     		stm.setString(2, getTelefone());
     		stm.setString(3, getEmail());

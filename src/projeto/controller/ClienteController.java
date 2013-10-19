@@ -1,6 +1,5 @@
 package projeto.controller;
 
-import projeto.model.Cliente;
 import projeto.model.ClientePF;
 import projeto.model.ClientePJ;
 import projeto.model.Serasa;
@@ -10,25 +9,32 @@ import projeto.view.ClientePJView;
 public class ClienteController {
 
 	private String idioma   = null;
-	private Cliente cliente = null; 
+	private ClientePF clientePF = null; 
+	private ClientePJ clientePJ = null;
 	
 	
 	public ClienteController(String idioma) {
 		this.idioma = idioma;
 	}
 
-	public void setObject(Cliente cliente) {
-		this.cliente = cliente;
+	public void setObject(ClientePF cliente) {
+		this.clientePF = cliente;
+	}
+
+	public void setObject(ClientePJ cliente) {
+		this.clientePJ = cliente;
 	}
 	
 	public void executarPF() {
-		ClientePFView cliente = new ClientePFView(idioma);
-		cliente.exibirFrame();
+		ClientePFView view = new ClientePFView(idioma);
+		view.setObject(clientePF);
+		view.exibirFrame();
 	}
 	
 	public void executarPJ() {
-		ClientePJView cliente = new ClientePJView(idioma);
-		cliente.exibirFrame();
+		ClientePJView view = new ClientePJView(idioma);
+		view.setObject(clientePJ);
+		view.exibirFrame();
 	}
 	
 	
