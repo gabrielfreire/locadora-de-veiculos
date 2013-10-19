@@ -95,11 +95,13 @@ public class ClientePF extends Cliente {
     
         try {
             
-        	String sql = "SELECT * FROM cliente ORDER BY nome ASC";
+        	String sql = "SELECT * FROM cliente WHERE tipo = ? ORDER BY nome ASC";
             Conn bd = new Conn();
             conn = bd.obtemConexao();
             
-            stm = conn.prepareStatement(sql);            
+            stm = conn.prepareStatement(sql);
+            stm.setString(1, "PF");
+            
             rs = stm.executeQuery();
             
             while (rs.next()) {    

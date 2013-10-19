@@ -1,6 +1,7 @@
 package projeto.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -10,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.util.ResourceBundle;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -17,7 +19,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import projeto.model.ClientePF;
+import projeto.model.ClientePJ;
 import tableModel.ClientePFTableModel;
+import tableModel.ClientePJTableModel;
 import locale.start.StartLocale;
 
 public class ListarClientesView extends JFrame implements ActionListener, MouseListener {
@@ -27,6 +31,8 @@ public class ListarClientesView extends JFrame implements ActionListener, MouseL
 	 * 
 	 */
 	private static final long serialVersionUID = 5974609381578763063L;
+	
+	JTable table = null;
 	JRadioButton radioPF = null;
 	JRadioButton radioPJ = null;
 	
@@ -42,8 +48,8 @@ public class ListarClientesView extends JFrame implements ActionListener, MouseL
         this.idioma = idioma;
     }
 	
-	
-	public void exibirFrame() {
+    
+	public void exibirFrame(boolean loadTablePF) {
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
 		Container c = getContentPane();
@@ -54,11 +60,16 @@ public class ListarClientesView extends JFrame implements ActionListener, MouseL
 		
 		
 		
-		ButtonGroup group = new ButtonGroup();
-		
+		/****Tabela***/		
 		radioPF = new JRadioButton("Pessoa física", true);
 		radioPJ = new JRadioButton("Pessoa jurídica");
 		
+		ClientePFTableModel model = new ClientePFTableModel(ClientePF.getArrayObjects());		
+		table = new JTable(model);
+		
+
+		
+		ButtonGroup group = new ButtonGroup();
 		
 		group.add(radioPF);
 		group.add(radioPJ);
@@ -67,16 +78,11 @@ public class ListarClientesView extends JFrame implements ActionListener, MouseL
 		radioPJ.addMouseListener(this);
 		
 		
-		/****Tabela***/
-		ClientePFTableModel model = new ClientePFTableModel(ClientePF.getArrayObjects());		
-		
-		JTable table = new JTable(model);
 		table.setPreferredScrollableViewportSize(new Dimension(430, 200));
         table.setFillsViewportHeight(true);
         
         JScrollPane scroll = new JScrollPane(table);
-        scroll.setAutoscrolls(true);  
-        
+        scroll.setAutoscrolls(true);          
 		/******Fim da tabela****/
 		
         
@@ -86,7 +92,7 @@ public class ListarClientesView extends JFrame implements ActionListener, MouseL
 		
 		c.add(panelRadios, BorderLayout.NORTH);
 		c.add(panelTabela, BorderLayout.CENTER);
-		
+
     	setResizable(false);
     	setSize(450, 300);
     	setLocation(375, 175);
@@ -95,22 +101,23 @@ public class ListarClientesView extends JFrame implements ActionListener, MouseL
 
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void mouseClicked(MouseEvent e) {
 		
-		
+		if (e.getSource() == radioPF) {
+			ClientePFTableModel novaModel = new ClientePFTableModel(ClientePF.getArrayObjects());
+			table.setModel(novaModel);
+		}
+		else if (e.getSource() == radioPJ) {
+			ClientePJTableModel novaModel = new ClientePJTableModel(ClientePJ.getArrayObjects());
+			table.setModel(novaModel);
+		}
 	}
 
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Stub de método gerado automaticamente
+	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == radioPF) {
-			System.out.println("Selecionei PF");
-		}
-		else if (e.getSource() == radioPJ) {
-			System.out.println("Selecionei PJ");
-		}
+		
 	}
 
 

@@ -453,7 +453,7 @@ public class ClientePFView extends JFrame implements ActionListener {
         	setVisible(false);
         		        	
         	ListarClientesView ctlListarClientes = new ListarClientesView(idioma);
-        	ctlListarClientes.exibirFrame();
+        	ctlListarClientes.exibirFrame(true);
 
 		}
 		else if (e.getSource() == btnCancelar) {

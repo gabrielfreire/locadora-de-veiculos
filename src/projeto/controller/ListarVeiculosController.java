@@ -1,6 +1,5 @@
 package projeto.controller;
 
-import projeto.model.Veiculo;
 import projeto.view.ListarVeiculosView;
 
 public class ListarVeiculosController {
