@@ -377,45 +377,50 @@ public class ClientePJView extends JFrame implements ActionListener {
 			
 			if (textCpf.getText().isEmpty()) {
         		JOptionPane.showMessageDialog(null, "Campo CPF é obrigatório!");
+        		return;
+        	}
+			
+    		boolean cpf_valido = ClienteController.validarCPF(Long.parseLong(textCpf.getText()));    		
+    		if (cpf_valido != true)
+    			return;
+    		
+        		
+			if (cliente == null) cliente = new ClientePJ();
+	
+			String cnpj = textCnpj.getText().isEmpty() ? "0" : textCnpj.getText(); 
+			String numFunc = textNumeroFuncionarios.getText().isEmpty() ? "0" : textNumeroFuncionarios.getText();
+						
+        	cliente.setCpf(Long.parseLong(textCpf.getText()));
+        	cliente.setNome(textNome.getText());
+        	cliente.setTelefone(textTelefone.getText());
+        	cliente.setEmail(textEmail.getText());
+        	cliente.setEndereco(textEndereco.getText());
+        	cliente.setCidade(textCidade.getText());
+        	cliente.setEstado((String)comboEstado.getSelectedItem());
+        	cliente.setCep(textCep.getText());
+    		            	
+        	cliente.setRazao_social(textRazaoSocial.getText());
+        	cliente.setNome_comercial(textNomeComercial.getText());
+        	cliente.setCnpj(Integer.parseInt(cnpj));
+        	cliente.setInscricao_estadual(textInscricaoEstadual.getText());
+        	cliente.setData_fundacao(textDataFundacao.getText());
+        	cliente.setNumero_funcionarios(Integer.parseInt(numFunc));
+        	cliente.setTipo("PJ");
+			
+    	
+        	if (e.getSource() == btnCadastrar) {
+        		ClienteController.inserirPJ(cliente);
+        		JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
         	}
         	else {
-        		
-				if (cliente == null) cliente = new ClientePJ();
-		
-				String cnpj = textCnpj.getText().isEmpty() ? "0" : textCnpj.getText(); 
-				String numFunc = textNumeroFuncionarios.getText().isEmpty() ? "0" : textNumeroFuncionarios.getText();
-							
-	        	cliente.setCpf(Integer.parseInt(textCpf.getText()));
-	        	cliente.setNome(textNome.getText());
-	        	cliente.setTelefone(textTelefone.getText());
-	        	cliente.setEmail(textEmail.getText());
-	        	cliente.setEndereco(textEndereco.getText());
-	        	cliente.setCidade(textCidade.getText());
-	        	cliente.setEstado((String)comboEstado.getSelectedItem());
-	        	cliente.setCep(textCep.getText());
-	    		            	
-	        	cliente.setRazao_social(textRazaoSocial.getText());
-	        	cliente.setNome_comercial(textNomeComercial.getText());
-	        	cliente.setCnpj(Integer.parseInt(cnpj));
-	        	cliente.setInscricao_estadual(textInscricaoEstadual.getText());
-	        	cliente.setData_fundacao(textDataFundacao.getText());
-	        	cliente.setNumero_funcionarios(Integer.parseInt(numFunc));
-	        	cliente.setTipo("PJ");
-				
-        	
-	        	if (e.getSource() == btnCadastrar) {
-	        		ClienteController.inserirPJ(cliente);
-	        		JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
-	        	}
-	        	else {
-					ClienteController.editarPJ(cliente);
-					JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
-	        	}
-	        	setVisible(false);
-	        		        	
-	        	ListarClientesView ctlListarClientes = new ListarClientesView(idioma);
-	        	ctlListarClientes.exibirFrame();
+				ClienteController.editarPJ(cliente);
+				JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
         	}
+        	setVisible(false);
+        		        	
+        	ListarClientesView ctlListarClientes = new ListarClientesView(idioma);
+        	ctlListarClientes.exibirFrame();
+
 		}
 		else if (e.getSource() == btnCancelar) {
 			setVisible(false);

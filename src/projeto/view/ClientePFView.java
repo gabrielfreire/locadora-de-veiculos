@@ -409,46 +409,52 @@ public class ClientePFView extends JFrame implements ActionListener {
 		
 		if (e.getSource() == btnCadastrar || e.getSource() == btnSalvar) {
 			
+			
 			if (textCpf.getText().isEmpty()) {
         		JOptionPane.showMessageDialog(null, "Campo CPF é obrigatório!");
+        		return;
+        	}
+			
+    		boolean cpf_valido = ClienteController.validarCPF(Long.parseLong(textCpf.getText()));    		
+    		if (cpf_valido != true)
+    			return;
+    		
+    		
+			if (cliente == null) cliente = new ClientePF();
+								
+        	cliente.setCpf(Long.parseLong(textCpf.getText()));
+        	cliente.setNome(textNome.getText());
+        	cliente.setTelefone(textTelefone.getText());
+        	cliente.setEmail(textEmail.getText());
+        	cliente.setEndereco(textEndereco.getText());
+        	cliente.setCidade(textCidade.getText());
+        	cliente.setEstado((String)comboEstado.getSelectedItem());
+        	cliente.setCep(textCep.getText());
+    		            	
+        	cliente.setRg(textRg.getText());
+        	cliente.setPassaporte(textPassaporte.getText());
+        	cliente.setData_nascimento(textDataNascimento.getText());
+        	cliente.setGenero((String)comboGenero.getSelectedItem());
+        	cliente.setHabilitacao(textHabilitacao.getText());
+        	cliente.setRegistro(textRegistro.getText());
+        	cliente.setEstado_emissor(textEstadoEmissor.getText());
+        	cliente.setValidade(textValidade.getText());
+        	cliente.setTipo("PF");
+			
+    	
+        	if (e.getSource() == btnCadastrar) {
+        		ClienteController.inserirPF(cliente);
+        		JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
         	}
         	else {
-        		
-				if (cliente == null) cliente = new ClientePF();
-									
-	        	cliente.setCpf(Integer.parseInt(textCpf.getText()));
-	        	cliente.setNome(textNome.getText());
-	        	cliente.setTelefone(textTelefone.getText());
-	        	cliente.setEmail(textEmail.getText());
-	        	cliente.setEndereco(textEndereco.getText());
-	        	cliente.setCidade(textCidade.getText());
-	        	cliente.setEstado((String)comboEstado.getSelectedItem());
-	        	cliente.setCep(textCep.getText());
-	    		            	
-	        	cliente.setRg(textRg.getText());
-	        	cliente.setPassaporte(textPassaporte.getText());
-	        	cliente.setData_nascimento(textDataNascimento.getText());
-	        	cliente.setGenero((String)comboGenero.getSelectedItem());
-	        	cliente.setHabilitacao(textHabilitacao.getText());
-	        	cliente.setRegistro(textRegistro.getText());
-	        	cliente.setEstado_emissor(textEstadoEmissor.getText());
-	        	cliente.setValidade(textValidade.getText());
-	        	cliente.setTipo("PF");
-				
-        	
-	        	if (e.getSource() == btnCadastrar) {
-	        		ClienteController.inserirPF(cliente);
-	        		JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
-	        	}
-	        	else {
-					ClienteController.editarPF(cliente);
-					JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
-	        	}
-	        	setVisible(false);
-	        		        	
-	        	ListarClientesView ctlListarClientes = new ListarClientesView(idioma);
-	        	ctlListarClientes.exibirFrame();
+				ClienteController.editarPF(cliente);
+				JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
         	}
+        	setVisible(false);
+        		        	
+        	ListarClientesView ctlListarClientes = new ListarClientesView(idioma);
+        	ctlListarClientes.exibirFrame();
+
 		}
 		else if (e.getSource() == btnCancelar) {
 			setVisible(false);

@@ -2,7 +2,7 @@ package projeto.model;
 
 abstract public class Cliente {
 
-	private int cpf          = 0;
+	private long cpf         = 0;
 	private String nome      = null;
 	private String telefone  = null;
 	private String email     = null;
@@ -13,10 +13,10 @@ abstract public class Cliente {
 	private String tipo      = null;
 
 	
-	public int getCpf() {
+	public long getCpf() {
 		return cpf;
 	}
-	public void setCpf(int cpf) {
+	public void setCpf(long cpf) {
 		this.cpf = cpf;
 	}
 	public String getNome() {

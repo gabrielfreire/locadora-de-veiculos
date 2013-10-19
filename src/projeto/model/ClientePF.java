@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
 public class ClientePF extends Cliente {
 
 	private String rg              = null;
@@ -103,7 +104,7 @@ public class ClientePF extends Cliente {
             
             while (rs.next()) {    
             	ClientePF cliente = new ClientePF();
-            	cliente.setCpf(rs.getInt("cpf"));
+            	cliente.setCpf(rs.getLong("cpf"));
             	cliente.setNome(rs.getString("nome"));
             	cliente.setTelefone(rs.getString("telefone"));
             	cliente.setEmail(rs.getString("email"));
@@ -170,7 +171,7 @@ public class ClientePF extends Cliente {
            
     		stm = conn.prepareStatement(sqlInsert);
     		
-    		stm.setInt(   1, getCpf());
+    		stm.setLong(  1, getCpf());
     		stm.setString(2, getNome());
     		stm.setString(3, getTelefone());
     		stm.setString(4, getEmail());
@@ -193,7 +194,7 @@ public class ClientePF extends Cliente {
             
             
         } catch (SQLException e) {
-    
+        	
             System.out.print(e.getMessage());
             e.printStackTrace();
             try {
@@ -251,12 +252,13 @@ public class ClientePF extends Cliente {
     		stm.setString(14, getEstado_emissor());
     		stm.setString(15, getValidade());
     		stm.setString(16, getTipo());
-    		stm.setInt(   17, getCpf());
+    		stm.setLong(  17, getCpf());
     		stm.execute();
             			
 			return true;
 
 		} catch (Exception e) {
+			
 			e.printStackTrace();
 			try {
 				conn.rollback();

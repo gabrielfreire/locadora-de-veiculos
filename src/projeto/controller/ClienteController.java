@@ -3,6 +3,7 @@ package projeto.controller;
 import projeto.model.Cliente;
 import projeto.model.ClientePF;
 import projeto.model.ClientePJ;
+import projeto.model.Serasa;
 import projeto.view.ClientePFView;
 import projeto.view.ClientePJView;
 
@@ -51,5 +52,9 @@ public class ClienteController {
 		return true;
 	}
 	
+	public static boolean validarCPF(long cpf) {		
+		Serasa.validarCPF(cpf);
+		return true;
+	}
 	
 }

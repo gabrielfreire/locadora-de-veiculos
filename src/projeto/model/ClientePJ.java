@@ -10,7 +10,7 @@ public class ClientePJ extends Cliente {
 	
 	private String razao_social        = null;
 	private String nome_comercial      = null;
-	private int    cnpj                = 0;
+	private long   cnpj                = 0;
 	private String inscricao_estadual  = null;
 	private String data_fundacao       = null;
 	private int    numero_funcionarios = 0;
@@ -32,11 +32,11 @@ public class ClientePJ extends Cliente {
 		this.nome_comercial = nome_comercial;
 	}
 
-	public int getCnpj() {
+	public long getCnpj() {
 		return cnpj;
 	}
 
-	public void setCnpj(int cnpj) {
+	public void setCnpj(long cnpj) {
 		this.cnpj = cnpj;
 	}
 
@@ -86,7 +86,7 @@ public class ClientePJ extends Cliente {
             
             while (rs.next()) {    
             	ClientePJ cliente = new ClientePJ();
-            	cliente.setCpf(rs.getInt("cpf"));
+            	cliente.setCpf(rs.getLong("cpf"));
             	cliente.setNome(rs.getString("nome"));
             	cliente.setTelefone(rs.getString("telefone"));
             	cliente.setEmail(rs.getString("email"));
@@ -95,9 +95,9 @@ public class ClientePJ extends Cliente {
             	cliente.setEstado(rs.getString("estado"));
             	cliente.setCep(rs.getString("cep"));
         		            	
-            	cliente.setRazao_social(rs.getString("cnpj"));
+            	cliente.setRazao_social(rs.getString("razao_social"));
             	cliente.setNome_comercial(rs.getString("nome_comercial"));
-            	cliente.setCnpj(rs.getInt("cnpj"));
+            	cliente.setCnpj(rs.getLong("cnpj"));
             	cliente.setInscricao_estadual(rs.getString("inscricao_estadual"));
             	cliente.setData_fundacao(rs.getString("data_fundacao"));
             	cliente.setNumero_funcionarios(rs.getInt("numero_funcionarios"));
@@ -152,7 +152,7 @@ public class ClientePJ extends Cliente {
            
     		stm = conn.prepareStatement(sqlInsert);
     		
-    		stm.setInt(   1, getCpf());
+    		stm.setLong(  1, getCpf());
     		stm.setString(2, getNome());
     		stm.setString(3, getTelefone());
     		stm.setString(4, getEmail());
@@ -162,7 +162,7 @@ public class ClientePJ extends Cliente {
     		stm.setString(8, getCep());
     		stm.setString(9, getRazao_social());
     		stm.setString(10, getNome_comercial());
-    		stm.setInt(   11, getCnpj());
+    		stm.setLong(  11, getCnpj());
     		stm.setString(12, getInscricao_estadual());
     		stm.setString(13, getData_fundacao());
     		stm.setInt(   14, getNumero_funcionarios());
@@ -224,12 +224,12 @@ public class ClientePJ extends Cliente {
     		stm.setString(7, getCep());
     		stm.setString(8, getRazao_social());
     		stm.setString(9, getNome_comercial());
-    		stm.setInt(   10, getCnpj());
+    		stm.setLong(  10, getCnpj());
     		stm.setString(11, getInscricao_estadual());
     		stm.setString(12, getData_fundacao());
     		stm.setInt(   13, getNumero_funcionarios());
     		stm.setString(14, getTipo());
-    		stm.setInt(   15, getCpf());
+    		stm.setLong(  15, getCpf());
     		stm.execute();
             			
 			return true;
