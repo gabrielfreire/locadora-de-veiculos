@@ -13,6 +13,12 @@ public class ListarVeiculosController {
 	
 	public void executar() {	
 		ListarVeiculosView view = new ListarVeiculosView(idioma);
-		view.exibirFrame(Veiculo.getArrayObjects());
+		view.exibirFrame();
+	}
+	
+	public static boolean buscar(String busca) {
+		
+		
+		return true;
 	}
 }

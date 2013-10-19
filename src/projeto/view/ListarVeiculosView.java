@@ -27,12 +27,13 @@ import javax.swing.JTextField;
 
 import projeto.controller.ClienteController;
 import projeto.controller.ListarClientesController;
+import projeto.controller.ListarVeiculosController;
 import projeto.controller.VeiculoController;
 import projeto.model.Veiculo;
 import tableModel.VeiculoTableModel;
 import locale.start.StartLocale;
 
-public class ListarVeiculosView extends JFrame implements ActionListener {
+public class ListarVeiculosView extends JFrame implements ActionListener, MouseListener {
 
 	
     /**
@@ -61,10 +62,6 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     
     private JLabel lblBuscar;
     private JTextField textBuscar;
-    private JComboBox<String> comboBuscarMarca;
-    private JComboBox<String> comboBuscarModelo;
-    private JComboBox<String> comboBuscarAno;
-    private JComboBox<String> comboBuscarCor;
     private JButton btnBuscar;
     
     private JTable table;
@@ -75,6 +72,8 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     // Internacionalização
     private ResourceBundle bundle = null;
     private String idioma = null;
+    
+    private ArrayList<Veiculo> veiculos = null;
     
     
     public ListarVeiculosView(String idioma) {
@@ -87,7 +86,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     /**
      * @param args
      */
-    public void exibirFrame(final ArrayList<Veiculo> veiculos) {
+    public void exibirFrame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         Container c = this.getContentPane();   
@@ -112,22 +111,12 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         textBuscar = new JTextField();
         textBuscar.setPreferredSize(new Dimension(200, 25));
         
-        comboBuscarMarca   = new JComboBox<String>();
-        comboBuscarModelo  = new JComboBox<String>();
-        comboBuscarAno     = new JComboBox<String>();
-        comboBuscarCor     = new JComboBox<String>();
         
         btnBuscar          = new JButton(bundle.getString("BTN_BUSCAR"));
         btnSair            = new JButton(bundle.getString("BTN_SAIR"));
         btnNovaReserva     = new JButton(bundle.getString("BTN_NOVA_RESERVA"));
         btnNovoEmprestimo  = new JButton(bundle.getString("BTN_NOVO_EMPRESTIMO"));
         
-        
-        // Tamanho dos elementos
-        comboBuscarMarca.setPreferredSize(new Dimension(100, 25));
-        comboBuscarModelo.setPreferredSize(new Dimension(100, 25));
-        comboBuscarAno.setPreferredSize(new Dimension(100, 25));
-        comboBuscarCor.setPreferredSize(new Dimension(100, 25));
         
         btnSair.addActionListener(this);
         btnNovaReserva.addActionListener(this);
@@ -193,7 +182,8 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         
           
         /***********tabela***********/        
-                
+
+        veiculos = Veiculo.getArrayObjects();
         VeiculoTableModel model = new VeiculoTableModel(veiculos);
         
         table = new JTable(model);        
@@ -202,33 +192,8 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         
         JScrollPane scroll = new JScrollPane(table);
         scroll.setAutoscrolls(true);  
-        
-        table.addMouseListener(new MouseListener() {
 
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				if (e.getClickCount() == 2) {		    		
-					Veiculo veiculo = veiculos.get(table.getSelectedRow());
-					
-		    		VeiculoController ctlVeiculo = new VeiculoController(idioma);
-		    		ctlVeiculo.setObject(veiculo);
-		    		ctlVeiculo.executar();
-				}				
-			}
-			
-			@Override
-			public void mouseReleased(MouseEvent arg0) { }
-			
-			@Override
-			public void mousePressed(MouseEvent arg0) { }
-			
-			@Override
-			public void mouseExited(MouseEvent arg0) { }
-			
-			@Override
-			public void mouseEntered(MouseEvent arg0) { }			
-		});
+        table.addMouseListener(this);
         
         /*****fim da tabela***********/
         
@@ -245,22 +210,6 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         gbc.gridx = 1;
         gbc.gridy = 0;
         panelHeader.add(textBuscar, gbc);
-        
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        panelHeader.add(comboBuscarMarca, gbc);
-        
-        gbc.gridx = 3;
-        gbc.gridy = 0;
-        panelHeader.add(comboBuscarModelo, gbc);
-        
-        gbc.gridx = 4;
-        gbc.gridy = 0;
-        panelHeader.add(comboBuscarAno, gbc);
-        
-        gbc.gridx = 5;
-        gbc.gridy = 0;
-        panelHeader.add(comboBuscarCor, gbc);
         
         gbc.gridx = 6;
         gbc.gridy = 0;
@@ -295,8 +244,6 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
         gbc.anchor = GridBagConstraints.LINE_END;
         gbc.insets = new Insets(0, 0, 15, 25);
         panelFooter.add(btnNovoEmprestimo, gbc);
-
-
         
         c.add(panelHeader, BorderLayout.NORTH);
         c.add(panelBody, BorderLayout.CENTER);
@@ -319,13 +266,56 @@ public class ListarVeiculosView extends JFrame implements ActionListener {
     		ClienteController ctlCliente = new ClienteController(idioma);
     		ctlCliente.executarPF();
         }
+    	else if (e.getSource() == itemClientePJCadastro) {     		
+    		ClienteController ctlCliente = new ClienteController(idioma);
+    		ctlCliente.executarPJ();
+        }
     	else if (e.getSource() == itemClientesLista) {  
     		ListarClientesController ctlListarClientes = new ListarClientesController(idioma);
     		ctlListarClientes.executar();
     		
     	}
+    	else if(e.getSource() == btnBuscar) {
+    		ListarVeiculosController.buscar(textBuscar.getText());
+    	}
     	else if (e.getSource() == btnSair) {       
     		System.exit(0);
     	}
     }
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+		if (e.getClickCount() == 2 && e.getSource() == table) {		    		
+			Veiculo veiculo = veiculos.get(table.getSelectedRow());
+			
+    		VeiculoController ctlVeiculo = new VeiculoController(idioma);
+    		ctlVeiculo.setObject(veiculo);
+    		ctlVeiculo.executar();
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Stub de método gerado automaticamente
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Stub de método gerado automaticamente
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Stub de método gerado automaticamente
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Stub de método gerado automaticamente
+		
+	}
 }

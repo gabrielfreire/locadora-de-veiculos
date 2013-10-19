@@ -23,69 +23,64 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import auxiliar.Estado;
-import auxiliar.Genero;
 import projeto.controller.ClienteController;
-import projeto.model.ClientePF;
+import projeto.model.ClientePJ;
 import locale.start.StartLocale;
 
-public class ClientePFView extends JFrame implements ActionListener {
+public class ClientePJView extends JFrame implements ActionListener {
 
 
 	private static final long serialVersionUID = 3842888543755265416L;
 	
-	private JLabel lblTitulo         = null;
-	private JLabel lblCpf            = null;
-	private JLabel lblNome           = null;
-	private JLabel lblTelefone       = null;
-	private JLabel lblEmail          = null;	
-	private JLabel lblRg             = null;
-	private JLabel lblPassaporte     = null;
-	private JLabel lblDataNascimento = null;
-	private JLabel lblGenero         = null;
-	private JLabel lblHabilitacao    = null;
-	private JLabel lblRegistro       = null;
-	private JLabel lblEstadoEmissor  = null;
-	private JLabel lblValidade       = null;
-	private JLabel lblEndereco       = null;
-	private JLabel lblCidade         = null;
-	private JLabel lblEstado         = null;
-	private JLabel lblCep            = null;
+	private JLabel lblTitulo             = null;
+	private JLabel lblCpf                = null;
+	private JLabel lblNome               = null;
+	private JLabel lblTelefone           = null;
+	private JLabel lblEmail              = null;	
+	private JLabel lblRazaoSocial        = null;
+	private JLabel lblNomeComercial      = null;
+	private JLabel lblCnpj               = null;
+	private JLabel lblInscricaoEstadual  = null;
+	private JLabel lblDataFundacao       = null;
+	private JLabel lblNumeroFuncionarios = null;
+	
+	private JLabel lblEndereco = null;
+	private JLabel lblCidade   = null;
+	private JLabel lblEstado   = null;
+	private JLabel lblCep      = null;
 
-	private JTextField textCpf            = null;
-	private JTextField textNome           = null;
-	private JTextField textTelefone       = null;
-	private JTextField textEmail          = null;
-	private JTextField textRg             = null;
-	private JTextField textPassaporte     = null;
-	private JTextField textDataNascimento = null;
-	private JComboBox<String> comboGenero = null;
-	private JTextField textHabilitacao    = null;
-	private JTextField textRegistro       = null;
-	private JTextField textEstadoEmissor  = null;
-	private JTextField textValidade       = null;	
-	private JTextField textEndereco       = null;
-	private JTextField textCidade         = null;
-	private JComboBox<String> comboEstado = null;
-	private JTextField textCep            = null;
+	private JTextField textCpf                = null;
+	private JTextField textNome               = null;
+	private JTextField textTelefone           = null;
+	private JTextField textEmail              = null;
+	private JTextField textRazaoSocial        = null;
+	private JTextField textNomeComercial      = null;
+	private JTextField textCnpj               = null;
+	private JTextField textInscricaoEstadual  = null;
+	private JTextField textDataFundacao       = null;
+	private JTextField textNumeroFuncionarios = null;
+	private JTextField textEndereco           = null;
+	private JTextField textCidade             = null;
+	private JComboBox<String> comboEstado     = null;
+	private JTextField textCep                = null;
 	
 	private JButton btnCancelar  = null;
 	private JButton btnSalvar    = null;
 	private JButton btnCadastrar = null;
-	
-	
-	private ClientePF cliente = null;
+		
+	private ClientePJ cliente = null;
+	private String idioma  = null;
 	
 	// Internacionalização
-    private ResourceBundle bundle = null;
-    private String idioma  = null;
+    private ResourceBundle bundle = null;    
 	
-	public ClientePFView(String idioma) {
-		StartLocale locale = new StartLocale(idioma);    	
+	public ClientePJView(String idioma) {
+		StartLocale locale = new StartLocale(idioma);		
         this.bundle = locale.getLocale();
         this.idioma = idioma;
 	}
 
-    public void setObject(ClientePF cliente) {
+    public void setObject(ClientePJ cliente) {
     	this.cliente = cliente;
     }
 	
@@ -105,40 +100,38 @@ public class ClientePFView extends JFrame implements ActionListener {
     	GridBagConstraints gbc = new GridBagConstraints();
     	
     	// Iniciar elementos
-    	lblTitulo         = new JLabel(bundle.getString("LABEL_TITULO_CLIENTE_PF"));
+    	lblTitulo         = new JLabel(bundle.getString("LABEL_TITULO_CLIENTE_PJ"));
     	lblCpf            = new JLabel(bundle.getString("LABEL_CPF"));
     	lblNome           = new JLabel(bundle.getString("LABEL_NOME"));
     	lblTelefone       = new JLabel(bundle.getString("LABEL_TELEFONE"));
     	lblEmail          = new JLabel(bundle.getString("LABEL_EMAIL"));
-    	lblRg             = new JLabel(bundle.getString("LABEL_RG"));
-    	lblPassaporte     = new JLabel(bundle.getString("LABEL_PASSAPORTE"));
-    	lblDataNascimento = new JLabel(bundle.getString("LABEL_DATA_NASCIMENTO"));
-    	lblGenero         = new JLabel(bundle.getString("LABEL_GENERO"));
-    	lblHabilitacao    = new JLabel(bundle.getString("LABEL_HABILITACAO"));
-    	lblRegistro       = new JLabel(bundle.getString("LABEL_REGISTRO"));
-    	lblEstadoEmissor  = new JLabel(bundle.getString("LABEL_ESTADO_EMISSOR"));
-    	lblValidade       = new JLabel(bundle.getString("LABEL_VALIDADE"));
+    	
+    	lblRazaoSocial        = new JLabel(bundle.getString("LABEL_RAZAO_SOCIAL"));
+    	lblNomeComercial      = new JLabel(bundle.getString("LABEL_NOME_COMERCIAL"));
+    	lblCnpj               = new JLabel(bundle.getString("LABEL_CNPJ"));
+    	lblInscricaoEstadual  = new JLabel(bundle.getString("LABEL_INSC_ESTADUAL"));
+    	lblDataFundacao       = new JLabel(bundle.getString("LABEL_DATA_FUNDACAO"));
+    	lblNumeroFuncionarios = new JLabel(bundle.getString("LABEL_NUM_FUNCIONARIOS"));
+    	
     	lblEndereco       = new JLabel(bundle.getString("LABEL_ENDERECO"));
     	lblCidade         = new JLabel(bundle.getString("LABEL_CIDADE"));
     	lblEstado         = new JLabel(bundle.getString("LABEL_ESTADO"));
     	lblCep            = new JLabel(bundle.getString("LABEL_CEP"));
 
-    	textCpf            = new JTextField();
-    	textNome           = new JTextField();
-    	textTelefone       = new JTextField();
-    	textEmail          = new JTextField();
-    	textRg             = new JTextField();
-    	textPassaporte     = new JTextField();
-    	textDataNascimento = new JTextField();
-    	comboGenero        = new JComboBox<String>();
-    	textHabilitacao    = new JTextField();
-    	textRegistro       = new JTextField();
-    	textEstadoEmissor  = new JTextField();
-    	textValidade       = new JTextField();
-    	textEndereco       = new JTextField();
-    	textCidade         = new JTextField();
-    	comboEstado        = new JComboBox<String>();
-    	textCep            = new JTextField();
+    	textCpf                = new JTextField();
+    	textNome               = new JTextField();
+    	textTelefone           = new JTextField();
+    	textEmail              = new JTextField();
+    	textRazaoSocial        = new JTextField();
+    	textNomeComercial      = new JTextField();
+    	textCnpj               = new JTextField();
+    	textInscricaoEstadual  = new JTextField();
+    	textDataFundacao       = new JTextField();
+    	textNumeroFuncionarios = new JTextField();
+       	textEndereco           = new JTextField();
+    	textCidade             = new JTextField();
+    	comboEstado            = new JComboBox<String>();
+    	textCep                = new JTextField();
     	
     	btnCancelar  = new JButton(bundle.getString("BTN_CANCELAR"));
     	btnSalvar    = new JButton(bundle.getString("BTN_EDITAR"));
@@ -155,24 +148,17 @@ public class ClientePFView extends JFrame implements ActionListener {
     	textNome.setPreferredSize(new Dimension(175, 22));
     	textTelefone.setPreferredSize(new Dimension(175, 22));
     	textEmail.setPreferredSize(new Dimension(175, 22));
-    	textRg.setPreferredSize(new Dimension(175, 22));
-    	textPassaporte.setPreferredSize(new Dimension(175, 22));
-    	textDataNascimento.setPreferredSize(new Dimension(175, 22));
-    	comboGenero.setPreferredSize(new Dimension(100, 22));
-    	textHabilitacao.setPreferredSize(new Dimension(175, 22));
-    	textRegistro.setPreferredSize(new Dimension(175, 22));
-    	textEstadoEmissor.setPreferredSize(new Dimension(175, 22));
-    	textValidade.setPreferredSize(new Dimension(175, 22));
+    	textRazaoSocial.setPreferredSize(new Dimension(175, 22));
+    	textNomeComercial.setPreferredSize(new Dimension(175, 22));
+    	textCnpj.setPreferredSize(new Dimension(175, 22));
+    	textInscricaoEstadual.setPreferredSize(new Dimension(175, 22));
+    	textDataFundacao.setPreferredSize(new Dimension(175, 22));
+    	textNumeroFuncionarios.setPreferredSize(new Dimension(175, 22));
     	
     	textEndereco.setPreferredSize(new Dimension(175, 22));
     	textCidade.setPreferredSize(new Dimension(175, 22));
     	comboEstado.setPreferredSize(new Dimension(125, 22));
     	textCep.setPreferredSize(new Dimension(175, 22));
-    	
-    	String[] generos = Genero.getArrGenero();
-    	for(int i=0; i<generos.length; i++) {
-    		comboGenero.addItem(generos[i]);
-    	}
     	
     	String[] estados = Estado.getArrEstados();    	
     	for(int i=0; i<estados.length; i++) {
@@ -228,92 +214,73 @@ public class ClientePFView extends JFrame implements ActionListener {
     	gbc.anchor = GridBagConstraints.LINE_START;
     	panelDados.add(textEmail, gbc);
     	
+    	
+    	
     	gbc.gridx = 0;
     	gbc.gridy = 4;
     	gbc.anchor = GridBagConstraints.LINE_END;
-    	panelDados.add(lblRg, gbc);
+    	panelDados.add(lblRazaoSocial, gbc);
     	
     	gbc.gridx = 1;
     	gbc.gridy = 4;
     	gbc.anchor = GridBagConstraints.LINE_START;
-    	panelDados.add(textRg, gbc);
+    	panelDados.add(textRazaoSocial, gbc);
     	
-    	gbc.gridx = 0;
-    	gbc.gridy = 5;
+    	gbc.gridx = 2;
+    	gbc.gridy = 0;
     	gbc.anchor = GridBagConstraints.LINE_END;
-    	panelDados.add(lblPassaporte, gbc);
+    	panelDados.add(lblNomeComercial, gbc);
     	
-    	gbc.gridx = 1;
-    	gbc.gridy = 5;
+    	gbc.gridx = 3;
+    	gbc.gridy = 0;
     	gbc.anchor = GridBagConstraints.LINE_START;
-    	panelDados.add(textPassaporte, gbc);
+    	panelDados.add(textNomeComercial, gbc);
     	
     	/*******************/    	
     	gbc.gridx = 2;
-    	gbc.gridy = 0;
-    	gbc.anchor = GridBagConstraints.LINE_END;
-    	panelDados.add(lblDataNascimento, gbc);
-    	
-    	gbc.gridx = 3;
-    	gbc.gridy = 0;
-    	gbc.anchor = GridBagConstraints.LINE_START;
-    	panelDados.add(textDataNascimento, gbc);
-    	
-    	gbc.gridx = 2;
     	gbc.gridy = 1;
     	gbc.anchor = GridBagConstraints.LINE_END;
-    	panelDados.add(lblGenero, gbc);
+    	panelDados.add(lblCnpj, gbc);
     	
     	gbc.gridx = 3;
     	gbc.gridy = 1;
     	gbc.anchor = GridBagConstraints.LINE_START;
-    	panelDados.add(comboGenero, gbc);
+    	panelDados.add(textCnpj, gbc);
     	
     	gbc.gridx = 2;
     	gbc.gridy = 2;
     	gbc.anchor = GridBagConstraints.LINE_END;
-    	panelDados.add(lblHabilitacao, gbc);
+    	panelDados.add(lblInscricaoEstadual, gbc);
     	
     	gbc.gridx = 3;
     	gbc.gridy = 2;
     	gbc.anchor = GridBagConstraints.LINE_START;
-    	panelDados.add(textHabilitacao, gbc);
+    	panelDados.add(textInscricaoEstadual, gbc);
+    	
+    	gbc.gridx = 2;
+    	gbc.gridy = 3;
+    	gbc.anchor = GridBagConstraints.LINE_END;
+    	panelDados.add(lblDataFundacao, gbc);
+    	
+    	gbc.gridx = 3;
+    	gbc.gridy = 3;
+    	gbc.anchor = GridBagConstraints.LINE_START;
+    	panelDados.add(textDataFundacao, gbc);
     	
     	/*******************/
     	
     	gbc.gridx = 2;
-    	gbc.gridy = 3;
-    	gbc.anchor = GridBagConstraints.LINE_END;
-    	panelDados.add(lblRegistro, gbc);
-    	
-    	gbc.gridx = 3;
-    	gbc.gridy = 3;
-    	gbc.anchor = GridBagConstraints.LINE_START;
-    	panelDados.add(textRegistro, gbc);
-    	
-    	gbc.gridx = 2;
     	gbc.gridy = 4;
     	gbc.anchor = GridBagConstraints.LINE_END;
-    	panelDados.add(lblEstadoEmissor, gbc);
+    	panelDados.add(lblNumeroFuncionarios, gbc);
     	
     	gbc.gridx = 3;
     	gbc.gridy = 4;
     	gbc.anchor = GridBagConstraints.LINE_START;
-    	panelDados.add(textEstadoEmissor, gbc);
+    	panelDados.add(textNumeroFuncionarios, gbc);
     	
-    	gbc.gridx = 2;
-    	gbc.gridy = 5;
-    	gbc.anchor = GridBagConstraints.LINE_END;
-		panelDados.add(lblValidade, gbc);
-		
-    	gbc.gridx = 3;
-    	gbc.gridy = 5;
-    	gbc.anchor = GridBagConstraints.LINE_START;
-		panelDados.add(textValidade, gbc);
-		
-		
 		/********Endereço********/
-		gbc.insets = new Insets(15, 0, 4, 5);
+    	gbc.insets = new Insets(15, 0, 4, 5);    	
     	gbc.gridx = 0;
     	gbc.gridy = 6;
     	gbc.anchor = GridBagConstraints.LINE_END;
@@ -336,8 +303,7 @@ public class ClientePFView extends JFrame implements ActionListener {
 		panelDados.add(textCidade, gbc);
 		
 		/***********/
-		
-		gbc.insets = new Insets(15, 0, 4, 5);
+		gbc.insets = new Insets(15, 0, 4, 5);		
     	gbc.gridx = 2;
     	gbc.gridy = 6;
     	gbc.anchor = GridBagConstraints.LINE_END;
@@ -383,7 +349,7 @@ public class ClientePFView extends JFrame implements ActionListener {
 		TitledBorder title;		
 		
 		empty = BorderFactory.createEmptyBorder(40, 0, 0, 0);
-    	title = BorderFactory.createTitledBorder(bundle.getString("LABEL_SUBTITULO_CLIENTE_PF"));
+    	title = BorderFactory.createTitledBorder(bundle.getString("LABEL_SUBTITULO_CLIENTE_PJ"));
     	title.setTitleJustification(TitledBorder.CENTER);
     	
     	compound = BorderFactory.createCompoundBorder(empty, title);    	
@@ -414,8 +380,11 @@ public class ClientePFView extends JFrame implements ActionListener {
         	}
         	else {
         		
-				if (cliente == null) cliente = new ClientePF();
-									
+				if (cliente == null) cliente = new ClientePJ();
+		
+				String cnpj = textCnpj.getText().isEmpty() ? "0" : textCnpj.getText(); 
+				String numFunc = textNumeroFuncionarios.getText().isEmpty() ? "0" : textNumeroFuncionarios.getText();
+							
 	        	cliente.setCpf(Integer.parseInt(textCpf.getText()));
 	        	cliente.setNome(textNome.getText());
 	        	cliente.setTelefone(textTelefone.getText());
@@ -425,23 +394,21 @@ public class ClientePFView extends JFrame implements ActionListener {
 	        	cliente.setEstado((String)comboEstado.getSelectedItem());
 	        	cliente.setCep(textCep.getText());
 	    		            	
-	        	cliente.setRg(textRg.getText());
-	        	cliente.setPassaporte(textPassaporte.getText());
-	        	cliente.setData_nascimento(textDataNascimento.getText());
-	        	cliente.setGenero((String)comboGenero.getSelectedItem());
-	        	cliente.setHabilitacao(textHabilitacao.getText());
-	        	cliente.setRegistro(textRegistro.getText());
-	        	cliente.setEstado_emissor(textEstadoEmissor.getText());
-	        	cliente.setValidade(textValidade.getText());
-	        	cliente.setTipo("PF");
+	        	cliente.setRazao_social(textRazaoSocial.getText());
+	        	cliente.setNome_comercial(textNomeComercial.getText());
+	        	cliente.setCnpj(Integer.parseInt(cnpj));
+	        	cliente.setInscricao_estadual(textInscricaoEstadual.getText());
+	        	cliente.setData_fundacao(textDataFundacao.getText());
+	        	cliente.setNumero_funcionarios(Integer.parseInt(numFunc));
+	        	cliente.setTipo("PJ");
 				
         	
 	        	if (e.getSource() == btnCadastrar) {
-	        		ClienteController.inserirPF(cliente);
+	        		ClienteController.inserirPJ(cliente);
 	        		JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
 	        	}
 	        	else {
-					ClienteController.editarPF(cliente);
+					ClienteController.editarPJ(cliente);
 					JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
 	        	}
 	        	setVisible(false);
@@ -454,5 +421,4 @@ public class ClientePFView extends JFrame implements ActionListener {
 			setVisible(false);
 		}
 	}
-
 }

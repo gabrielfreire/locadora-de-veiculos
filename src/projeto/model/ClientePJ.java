@@ -1,5 +1,11 @@
 package projeto.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class ClientePJ extends Cliente {
 	
 	private String razao_social        = null;
@@ -60,16 +66,192 @@ public class ClientePJ extends Cliente {
 
 	
 	
+
+	public static ArrayList<ClientePJ> getArrayObjects() {
+		
+		PreparedStatement stm = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        
+        ArrayList<ClientePJ> clientes = new ArrayList<ClientePJ>();
+    
+        try {
+            
+        	String sql = "SELECT * FROM cliente ORDER BY nome ASC";
+            Conn bd = new Conn();
+            conn = bd.obtemConexao();
+            
+            stm = conn.prepareStatement(sql);            
+            rs = stm.executeQuery();
+            
+            while (rs.next()) {    
+            	ClientePJ cliente = new ClientePJ();
+            	cliente.setCpf(rs.getInt("cpf"));
+            	cliente.setNome(rs.getString("nome"));
+            	cliente.setTelefone(rs.getString("telefone"));
+            	cliente.setEmail(rs.getString("email"));
+            	cliente.setEndereco(rs.getString("endereco"));
+            	cliente.setCidade(rs.getString("cidade"));
+            	cliente.setEstado(rs.getString("estado"));
+            	cliente.setCep(rs.getString("cep"));
+        		            	
+            	cliente.setRazao_social(rs.getString("cnpj"));
+            	cliente.setNome_comercial(rs.getString("nome_comercial"));
+            	cliente.setCnpj(rs.getInt("cnpj"));
+            	cliente.setInscricao_estadual(rs.getString("inscricao_estadual"));
+            	cliente.setData_fundacao(rs.getString("data_fundacao"));
+            	cliente.setNumero_funcionarios(rs.getInt("numero_funcionarios"));
+            	cliente.setTipo("PJ");
+            	
+            	clientes.add(cliente);
+            }            
+
+            rs.close();            
+            return clientes;
+            
+            
+        } catch (SQLException e) {
+            
+            e.printStackTrace();
+            try {
+                conn.rollback();
+                
+            } catch (SQLException e1) {
+                System.out.print(e1.getStackTrace());
+            }	            
+            return clientes;
+        }
+        finally{
+            if (stm != null) {
+                try {
+                    stm.close();
+                }
+                catch (SQLException e1) {
+                    System.out.print(e1.getStackTrace());
+                }
+            }
+        }		
+	}
+	
+	
 	@Override
-	protected boolean inserir() {
-		// TODO Stub de método gerado automaticamente
-		return false;
+	public boolean inserir() {		
+		
+		PreparedStatement stm = null;
+        Connection conn = null;
+        
+        try {
+
+        	String sqlInsert = "INSERT INTO cliente "
+        			+ "(cpf, nome, telefone, email, endereco, cidade, estado, cep, "
+        			+ "razao_social, nome_comercial, cnpj, inscricao_estadual, data_fundacao, numero_funcionarios, tipo) "
+        			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            Conn bd = new Conn();
+            conn = bd.obtemConexao();
+           
+    		stm = conn.prepareStatement(sqlInsert);
+    		
+    		stm.setInt(   1, getCpf());
+    		stm.setString(2, getNome());
+    		stm.setString(3, getTelefone());
+    		stm.setString(4, getEmail());
+    		stm.setString(5, getEndereco());
+    		stm.setString(6, getCidade());
+    		stm.setString(7, getEstado());
+    		stm.setString(8, getCep());
+    		stm.setString(9, getRazao_social());
+    		stm.setString(10, getNome_comercial());
+    		stm.setInt(   11, getCnpj());
+    		stm.setString(12, getInscricao_estadual());
+    		stm.setString(13, getData_fundacao());
+    		stm.setInt(   14, getNumero_funcionarios());
+    		stm.setString(15, getTipo());
+    		stm.execute();
+            
+    		return true;
+            
+            
+        } catch (SQLException e) {
+    
+            System.out.print(e.getMessage());
+            e.printStackTrace();
+            try {
+                conn.rollback();
+                
+            } catch (SQLException e1) {
+                System.out.print(e1.getStackTrace());
+            }
+            return false;
+        }
+        finally{
+            if (stm != null) {
+                try {
+                    stm.close();
+                }
+                catch (SQLException e1) {
+                    System.out.print(e1.getStackTrace());
+                }
+            }
+        }	
 	}
 
 	@Override
-	protected boolean editar() {
-		// TODO Stub de método gerado automaticamente
-		return false;
+	public boolean editar() {
+
+		Connection conn = null;
+		PreparedStatement stm = null;
+		
+		try {
+		
+			String sqlUpdate = "UPDATE cliente SET "
+        			+ "cpf = ?, nome = ?, telefone = ?, email = ?, endereco = ?, cidade = ?, estado = ?, cep = ?, "
+        			+ "razao_social = ?, nome_comercial = ?, cnpj = ?, inscricao_estadual = ?, data_fundacao = ?, "
+        			+ "numero_funcionarios = ?, tipo = ? "
+        			+ "WHERE cpf = ?";
+			
+			Conn bd = new Conn();
+            conn = bd.obtemConexao();
+			
+			stm = conn.prepareStatement(sqlUpdate);
+
+    		stm.setString(1, getNome());
+    		stm.setString(2, getTelefone());
+    		stm.setString(3, getEmail());
+    		stm.setString(4, getEndereco());
+    		stm.setString(5, getCidade());
+    		stm.setString(6, getEstado());
+    		stm.setString(7, getCep());
+    		stm.setString(8, getRazao_social());
+    		stm.setString(9, getNome_comercial());
+    		stm.setInt(   10, getCnpj());
+    		stm.setString(11, getInscricao_estadual());
+    		stm.setString(12, getData_fundacao());
+    		stm.setInt(   13, getNumero_funcionarios());
+    		stm.setString(14, getTipo());
+    		stm.setInt(   15, getCpf());
+    		stm.execute();
+            			
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				System.out.print(e1.getStackTrace());
+			}
+			return false;			
+		} 
+		finally {
+			if (stm != null) {
+				try {
+					stm.close();
+				} catch (SQLException e1) {
+					System.out.print(e1.getStackTrace());
+				}
+			}
+		}
 	}
 
 	@Override

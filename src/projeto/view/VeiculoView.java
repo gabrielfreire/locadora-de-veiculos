@@ -445,8 +445,7 @@ public class VeiculoView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {		
 		
-		setVisible(false);
-		
+				
 		if (e.getSource() == btnCadastrar || e.getSource() == btnSalvar) {
 			
 			int idGrupoSelecionado = grupos.get(comboGrupo.getSelectedIndex()).getIdGrupo();
@@ -489,9 +488,8 @@ public class VeiculoView extends JFrame implements ActionListener {
 			if (resp == JOptionPane.YES_OPTION) {
 				VeiculoController.excluir(veiculo);			
 				JOptionPane.showMessageDialog(null, "Veículo excluído com sucesso!");
-				
-//				veiculos.remove(index)
 			}			
 		}
+		setVisible(false);
 	}
 }

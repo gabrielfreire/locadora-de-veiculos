@@ -1,14 +1,8 @@
 package projeto.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 abstract public class Cliente {
 
-	private int    cpf       = 0;
+	private int cpf          = 0;
 	private String nome      = null;
 	private String telefone  = null;
 	private String email     = null;
@@ -16,6 +10,7 @@ abstract public class Cliente {
 	private String cidade    = null;
 	private String estado    = null;
 	private String cep       = null;
+	private String tipo      = null;
 
 	
 	public int getCpf() {
@@ -66,6 +61,12 @@ abstract public class Cliente {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}	
+	public String getTipo() {
+		return this.tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 	
 	
 	

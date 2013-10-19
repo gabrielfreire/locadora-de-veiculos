@@ -153,19 +153,131 @@ public class ClientePF extends Cliente {
 	
 	
 	@Override
-	protected boolean inserir() {
-		// TODO Stub de método gerado automaticamente
-		return false;
+	public boolean inserir() {		
+		
+		PreparedStatement stm = null;
+        Connection conn = null;
+        
+        try {
+
+        	String sqlInsert = "INSERT INTO cliente"
+        			+ "(cpf, nome, telefone, email, endereco, cidade, estado, cep, "
+        			+ "rg, passaporte, data_nascimento, genero, habilitacao, registro, estado_emissor, validade, tipo) "
+        			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            Conn bd = new Conn();
+            conn = bd.obtemConexao();
+           
+    		stm = conn.prepareStatement(sqlInsert);
+    		
+    		stm.setInt(   1, getCpf());
+    		stm.setString(2, getNome());
+    		stm.setString(3, getTelefone());
+    		stm.setString(4, getEmail());
+    		stm.setString(5, getEndereco());
+    		stm.setString(6, getCidade());
+    		stm.setString(7, getEstado());
+    		stm.setString(8, getCep());
+    		stm.setString(9, getRg());
+    		stm.setString(10, getPassaporte());
+    		stm.setString(11, getData_nascimento());
+    		stm.setString(12, getGenero());
+    		stm.setString(13, getHabilitacao());
+    		stm.setString(14, getRegistro());
+    		stm.setString(15, getEstado_emissor());
+    		stm.setString(16, getValidade());
+    		stm.setString(17, getTipo());
+    		stm.execute();
+            
+    		return true;
+            
+            
+        } catch (SQLException e) {
+    
+            System.out.print(e.getMessage());
+            e.printStackTrace();
+            try {
+                conn.rollback();
+                
+            } catch (SQLException e1) {
+                System.out.print(e1.getStackTrace());
+            }
+            return false;
+        }
+        finally{
+            if (stm != null) {
+                try {
+                    stm.close();
+                }
+                catch (SQLException e1) {
+                    System.out.print(e1.getStackTrace());
+                }
+            }
+        }
 	}
 
 	@Override
-	protected boolean editar() {
-		// TODO Stub de método gerado automaticamente
-		return false;
+	public boolean editar() {
+		
+		Connection conn = null;
+		PreparedStatement stm = null;
+		
+		try {
+		
+			String sqlUpdate = "UPDATE cliente SET "
+        			+ "nome = ?, telefone = ?, email = ?, endereco = ?, cidade = ?, estado = ?, cep = ?, "
+        			+ "rg = ?, passaporte = ?, data_nascimento = ?, genero = ?, habilitacao = ?, registro = ?, "
+        			+ "estado_emissor = ?, validade = ?, tipo = ? "
+        			+ "WHERE cpf = ?";
+			
+			Conn bd = new Conn();
+            conn = bd.obtemConexao();
+			
+			stm = conn.prepareStatement(sqlUpdate);
+
+    		stm.setString(1, getNome());
+    		stm.setString(2, getTelefone());
+    		stm.setString(3, getEmail());
+    		stm.setString(4, getEndereco());
+    		stm.setString(5, getCidade());
+    		stm.setString(6, getEstado());
+    		stm.setString(7, getCep());
+    		stm.setString(8, getRg());
+    		stm.setString(9, getPassaporte());
+    		stm.setString(10, getData_nascimento());
+    		stm.setString(11, getGenero());
+    		stm.setString(12, getHabilitacao());
+    		stm.setString(13, getRegistro());
+    		stm.setString(14, getEstado_emissor());
+    		stm.setString(15, getValidade());
+    		stm.setString(16, getTipo());
+    		stm.setInt(   17, getCpf());
+    		stm.execute();
+            			
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				System.out.print(e1.getStackTrace());
+			}
+			return false;			
+		} 
+		finally {
+			if (stm != null) {
+				try {
+					stm.close();
+				} catch (SQLException e1) {
+					System.out.print(e1.getStackTrace());
+				}
+			}
+		}
 	}
 
 	@Override
-	protected boolean excluir() {
+	public boolean excluir() {
 		// TODO Stub de método gerado automaticamente
 		return false;
 	}

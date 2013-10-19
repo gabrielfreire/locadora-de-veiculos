@@ -289,6 +289,70 @@ public class Veiculo {
 	}
 	
 	
+	public ArrayList<Veiculo> buscar() {
+		
+		PreparedStatement stm = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        
+        ArrayList<Veiculo> veiculos = new ArrayList<Veiculo>();
+    
+        try {
+            
+        	String sql = "SELECT * FROM veiculo LIKE ?";
+            Conn bd = new Conn();
+            conn = bd.obtemConexao();
+            
+            stm = conn.prepareStatement(sql);            
+            rs = stm.executeQuery();
+            
+            while (rs.next()) {    
+            	Veiculo veiculo = new Veiculo();
+            	veiculo.setIdVeiculo(rs.getInt("id"));
+        		veiculo.setChassi(rs.getString("chassi"));
+        		veiculo.setPlaca(rs.getString("placa"));
+        		veiculo.setCidade(rs.getString("cidade"));
+        		veiculo.setEstado(rs.getString("estado"));
+        		veiculo.setModelo(rs.getString("modelo"));
+        		veiculo.setFabricante(rs.getString("fabricante"));
+        		veiculo.setAno(rs.getInt("ano"));
+        		veiculo.setTarifaAluguel(rs.getString("tarifa_aluguel"));
+        		veiculo.setKmRodado(rs.getDouble("km_rodado"));
+        		veiculo.setIdGrupo(rs.getInt("grupo_id"));
+        		veiculo.setIdMarca(rs.getInt("marca_id"));
+        		veiculo.setIdCor(rs.getInt("cor_id"));
+        		            	
+            	veiculos.add(veiculo);
+            }            
+
+            rs.close();            
+            return veiculos;
+            
+            
+        } catch (SQLException e) {
+            
+            e.printStackTrace();
+            try {
+                conn.rollback();
+                
+            } catch (SQLException e1) {
+                System.out.print(e1.getStackTrace());
+            }	            
+            return veiculos;
+        }
+        finally{
+            if (stm != null) {
+                try {
+                    stm.close();
+                }
+                catch (SQLException e1) {
+                    System.out.print(e1.getStackTrace());
+                }
+            }
+        }
+	}
+	
+	
 	public static ArrayList<Veiculo> getArrayObjects() {
 		
 		PreparedStatement stm = null;
