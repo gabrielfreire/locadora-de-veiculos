@@ -66,7 +66,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
     private JButton btnSair;
     private JButton btnNovaReserva;
     private JButton btnNovoEmprestimo;
-    
+
     // Internacionalização
     private ResourceBundle bundle = null;
     private String idioma = null;
@@ -184,16 +184,15 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
 
         veiculos = Veiculo.getArrayObjects();
         VeiculoTableModel model = new VeiculoTableModel(veiculos);
-        
+                
         table = new JTable(model);        
         table.setPreferredScrollableViewportSize(new Dimension(775, 150));
         table.setFillsViewportHeight(true);
         
         JScrollPane scroll = new JScrollPane(table);
         scroll.setAutoscrolls(true);  
-
-        table.addMouseListener(this);
         
+        table.addMouseListener(this);
         /*****fim da tabela***********/
         
 
@@ -257,6 +256,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
     @Override
     public void actionPerformed(ActionEvent e) {
         
+    	    	
     	if (e.getSource() == itemVeiculosCadastro) {     		
     		VeiculoController ctlVeiculo = new VeiculoController(idioma);
     		ctlVeiculo.executar();
@@ -274,15 +274,19 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
     		ctlListarClientes.executar();
     		
     	}
-    	else if(e.getSource() == btnBuscar) {
+    	else if (e.getSource() == btnBuscar) {
     		veiculos = Veiculo.buscar(textBuscar.getText());
     		VeiculoTableModel novaModel = new VeiculoTableModel(veiculos);
     		
     		table.setModel(novaModel);
     	}
+    	else if (e.getSource() == btnNovoEmprestimo) {
+    		
+    	}
     	else if (e.getSource() == btnSair) {       
     		System.exit(0);
     	}
+ 
     }
 
 	@Override
@@ -320,4 +324,5 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
 		// TODO Stub de método gerado automaticamente
 		
 	}
+
 }

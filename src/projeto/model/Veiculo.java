@@ -23,11 +23,18 @@ public class Veiculo {
 	private int marca_id         = 0;
 	private int cor_id           = 0;
 	
+	private boolean selecionado = false;
     
-	/**
-	 * 
-	 * @param idVeiculo
-	 */
+
+	public void setSelecionado(boolean sel) {
+		this.selecionado = sel;
+	}
+
+	public boolean getSelecionado() {
+		return this.selecionado;
+	}
+
+	
 	public void setIdVeiculo(int idVeiculo) {
 		this.idVeiculo = idVeiculo;
 	}
@@ -387,7 +394,8 @@ public class Veiculo {
         		veiculo.setIdGrupo(rs.getInt("grupo_id"));
         		veiculo.setIdMarca(rs.getInt("marca_id"));
         		veiculo.setIdCor(rs.getInt("cor_id"));
-        		            	
+        		veiculo.setSelecionado(false);
+        		
             	veiculos.add(veiculo);
             }            
 
