@@ -186,7 +186,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
         VeiculoTableModel model = new VeiculoTableModel(veiculos);
                 
         table = new JTable(model);        
-        table.setPreferredScrollableViewportSize(new Dimension(775, 150));
+        table.setPreferredScrollableViewportSize(new Dimension(980, 175));
         table.setFillsViewportHeight(true);
         
         JScrollPane scroll = new JScrollPane(table);
@@ -198,7 +198,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
 
         
         // Barra de pesquisa
-        gbc.insets = new Insets(35, 0, 0, 5);
+        gbc.insets = new Insets(10, 0, 0, 5);
         gbc.anchor = GridBagConstraints.LINE_START;
         
         gbc.gridx = 0;
@@ -217,6 +217,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
         // Sem layout
         panelBody.add(scroll);        
         
+        gbc.ipady = 7;
         
         // Botões no rodapé
         gbc.gridx = 0;
@@ -224,7 +225,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
         gbc.gridwidth = 1;
         gbc.weightx = 350;
         gbc.anchor = GridBagConstraints.LINE_START;
-        gbc.insets = new Insets(0, 25, 15, 0);
+        gbc.insets = new Insets(0, 8, 15, 0);
         panelFooter.add(btnSair, gbc);        
         
         gbc.gridx = 1;
@@ -240,15 +241,15 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
         gbc.gridwidth = 1;
         gbc.weightx = 1;
         gbc.anchor = GridBagConstraints.LINE_END;
-        gbc.insets = new Insets(0, 0, 15, 25);
+        gbc.insets = new Insets(0, 0, 15, 10);
         panelFooter.add(btnNovoEmprestimo, gbc);
         
         c.add(panelHeader, BorderLayout.NORTH);
         c.add(panelBody, BorderLayout.CENTER);
         c.add(panelFooter, BorderLayout.SOUTH);
 
-        setLocation(300, 225);
-        setSize(850, 350);
+        setLocation(200, 225);
+        setSize(1000, 350);
         setVisible(true);
     }
     
