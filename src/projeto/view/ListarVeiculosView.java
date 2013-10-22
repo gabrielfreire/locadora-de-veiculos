@@ -28,6 +28,7 @@ import projeto.controller.ClienteController;
 import projeto.controller.DevolucaoController;
 import projeto.controller.ListarClientesController;
 import projeto.controller.LocacaoController;
+import projeto.controller.ReservaController;
 import projeto.controller.VeiculoController;
 import projeto.model.Veiculo;
 import tableModel.VeiculoTableModel;
@@ -287,6 +288,10 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
     	else if (e.getSource() == itemDevolucoesRegistrar) {
     		DevolucaoController ctlDevolucao = new DevolucaoController(idioma);
     		ctlDevolucao.executar();
+    	}
+    	else if (e.getSource() == btnReservas) {
+    		ReservaController ctlReserva = new ReservaController(idioma);
+    		ctlReserva.executar();
     	}
     	else if (e.getSource() == btnLocacoes) {
     		LocacaoController ctlLocacao = new LocacaoController(idioma);

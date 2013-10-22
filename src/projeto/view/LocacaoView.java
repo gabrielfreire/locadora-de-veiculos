@@ -59,7 +59,7 @@ public class LocacaoView extends JFrame implements ActionListener, MouseListener
 	
 	private JButton btnCancelar  = null;
 	private JButton btnSalvar    = null;
-	private JButton btnCadastrar = null;
+	private JButton btnFinalizar = null;
 	
 	
 	private JTable table = null;
@@ -136,11 +136,11 @@ public class LocacaoView extends JFrame implements ActionListener, MouseListener
         
     	btnCancelar  = new JButton(bundle.getString("BTN_CANCELAR"));
     	btnSalvar    = new JButton(bundle.getString("BTN_EDITAR"));
-    	btnCadastrar = new JButton(bundle.getString("BTN_CADASTRAR"));
+    	btnFinalizar = new JButton(bundle.getString("BTN_FINALIZAR"));
 
     	btnCancelar.addActionListener(this);
     	btnSalvar.addActionListener(this);
-    	btnCadastrar.addActionListener(this);
+    	btnFinalizar.addActionListener(this);
         
         textDataRetirada.setPreferredSize(new Dimension(200, 22));
         textDataDevolucao.setPreferredSize(new Dimension(200, 22));
@@ -286,7 +286,7 @@ public class LocacaoView extends JFrame implements ActionListener, MouseListener
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.LINE_START;
         gbc.insets = new Insets(15, 7, 5, 0);
-        panelBotoes.add(btnCadastrar, gbc);
+        panelBotoes.add(btnFinalizar, gbc);
         
 
         gbc.gridx = 2;

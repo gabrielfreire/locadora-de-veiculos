@@ -11,7 +11,7 @@ public class LocacaoTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = -2136004293965767274L;
 	private ArrayList<Locacao> locacoes;	
-	private String[] colunas = {"CPF do cliente", "Data/retirada", "Data/devolução", "Cod/Agência"};
+	private String[] colunas = {"CPF do cliente", "Data retirada", "Data devolução", "Cod. Agência"};
 	
 	public LocacaoTableModel(ArrayList<Locacao> locacoes) {		
 		this.locacoes = locacoes;
@@ -36,7 +36,7 @@ public class LocacaoTableModel extends AbstractTableModel {
 	}
 	
 	public boolean isCellEditable(int linha, int coluna) {
-		return coluna == 5;
+		return false;
 	}
 
 	public void setValueAt(Object valor, int linha, int coluna){
