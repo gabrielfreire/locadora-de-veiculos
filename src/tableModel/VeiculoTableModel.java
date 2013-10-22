@@ -13,7 +13,7 @@ public class VeiculoTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = -2136004293965767274L;
 	private ArrayList<Veiculo> veiculos;	
-	private String[] colunas = {"Grupo", "Modelo", "Tarifa", "Ano", "Marca", ""};
+	private String[] colunas = {"Código", "Grupo", "Modelo", "Tarifa", "Ano", "Marca", "Reservado/locado"};
 	
 	public VeiculoTableModel(ArrayList<Veiculo> veiculos) {		
 		this.veiculos = veiculos;
@@ -58,12 +58,13 @@ public class VeiculoTableModel extends AbstractTableModel {
       if( valor == null) return;
        
       switch(coluna){
-          case 0:  veiculos.get(linha).setIdGrupo( (Integer)valor );       break;
-          case 1:  veiculos.get(linha).setModelo( (String) valor);         break;
-          case 2:  veiculos.get(linha).setTarifaAluguel( (String) valor ); break;
-          case 3:  veiculos.get(linha).setAno( (Integer) valor );          break;
-          case 4:  veiculos.get(linha).setIdMarca( (Integer) valor );      break;
-          case 5:  veiculos.get(linha).setSelecionado( (Boolean) valor);   break;
+          case 0:  veiculos.get(linha).setIdVeiculo( (Integer)valor );     break;
+          case 1:  veiculos.get(linha).setIdGrupo( (Integer)valor );       break;
+          case 2:  veiculos.get(linha).setModelo( (String) valor);         break;
+          case 3:  veiculos.get(linha).setTarifaAluguel( (String) valor ); break;
+          case 4:  veiculos.get(linha).setAno( (Integer) valor );          break;
+          case 5:  veiculos.get(linha).setIdMarca( (Integer) valor );      break;
+          case 6:  veiculos.get(linha).setReservadoLocado((Boolean) valor);   break;
       }
       fireTableRowsUpdated(linha, coluna);
   }
@@ -83,12 +84,13 @@ public class VeiculoTableModel extends AbstractTableModel {
 	public Object getValueAt(int linha, int coluna) {
 		
       switch(coluna){
-	        case 0: return veiculos.get(linha).getIdGrupo();
-	        case 1: return veiculos.get(linha).getModelo();
-	        case 2: return veiculos.get(linha).getTarifaAluguel();
-	        case 3: return veiculos.get(linha).getAno();
-	        case 4: return veiculos.get(linha).getIdMarca();
-	        case 5: return veiculos.get(linha).getSelecionado();
+      		case 0: return veiculos.get(linha).getIdVeiculo();
+	        case 1: return veiculos.get(linha).getIdGrupo();
+	        case 2: return veiculos.get(linha).getModelo();
+	        case 3: return veiculos.get(linha).getTarifaAluguel();
+	        case 4: return veiculos.get(linha).getAno();
+	        case 5: return veiculos.get(linha).getIdMarca();
+	        case 6: return veiculos.get(linha).getReservadoLocado();
       }  
       return null;
 	}

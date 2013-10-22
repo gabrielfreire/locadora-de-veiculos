@@ -25,7 +25,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import projeto.controller.ClienteController;
+import projeto.controller.DevolucaoController;
 import projeto.controller.ListarClientesController;
+import projeto.controller.LocacaoController;
 import projeto.controller.VeiculoController;
 import projeto.model.Veiculo;
 import tableModel.VeiculoTableModel;
@@ -64,8 +66,8 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
     
     private JTable table;
     private JButton btnSair;
-    private JButton btnNovaReserva;
-    private JButton btnNovoEmprestimo;
+    private JButton btnReservas;
+    private JButton btnLocacoes;
 
     // Internacionalização
     private ResourceBundle bundle = null;
@@ -110,16 +112,16 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
         textBuscar.setPreferredSize(new Dimension(200, 25));
         
         
-        btnBuscar          = new JButton(bundle.getString("BTN_BUSCAR"));
-        btnSair            = new JButton(bundle.getString("BTN_SAIR"));
-        btnNovaReserva     = new JButton(bundle.getString("BTN_NOVA_RESERVA"));
-        btnNovoEmprestimo  = new JButton(bundle.getString("BTN_NOVO_EMPRESTIMO"));
+        btnBuscar       = new JButton(bundle.getString("BTN_BUSCAR"));
+        btnSair         = new JButton(bundle.getString("BTN_SAIR"));
+        btnReservas     = new JButton(bundle.getString("BTN_RESERVAS"));
+        btnLocacoes     = new JButton(bundle.getString("BTN_LOCACOES"));
         
         
         btnBuscar.addActionListener(this);
         btnSair.addActionListener(this);
-        btnNovaReserva.addActionListener(this);
-        btnNovoEmprestimo.addActionListener(this);
+        btnReservas.addActionListener(this);
+        btnLocacoes.addActionListener(this);
         
        
 
@@ -129,23 +131,23 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
         barra = new JMenuBar();
         setJMenuBar(barra);
         
-        menuArquivo     = new JMenu("Arquivo");
-        menuEmprestimos = new JMenu("Empréstimos");
-        menuReservas    = new JMenu("Reservas");
-        menuDevolucoes  = new JMenu("Devoluções");
-        menuClientes    = new JMenu("Clientes");
-        menuVeiculos    = new JMenu("Veículos");
-        menuPagamentos  = new JMenu("Pagamentos");
-        menuRelatorios  = new JMenu("Relatórios");
+        menuArquivo     = new JMenu(bundle.getString("MENU_ARQUIVO"));
+        menuEmprestimos = new JMenu(bundle.getString("MENU_EMPRESTIMOS"));
+        menuReservas    = new JMenu(bundle.getString("MENU_RESERVAS"));
+        menuDevolucoes  = new JMenu(bundle.getString("MENU_DEVOLUCOES"));
+        menuClientes    = new JMenu(bundle.getString("MENU_CLIENTES"));
+        menuVeiculos    = new JMenu(bundle.getString("MENU_VEICULOS"));
+        menuPagamentos  = new JMenu(bundle.getString("MENU_PAGAMENTOS"));
+        menuRelatorios  = new JMenu(bundle.getString("MENU_RELATORIOS"));
 
-        itemEmprestimosCadastro = new JMenuItem("Cadastro");
-        itemReservasCadastro    = new JMenuItem("Cadastro");
-        itemDevolucoesRegistrar = new JMenuItem("Registrar");
-        itemClientePFCadastro   = new JMenuItem("Cadastro PF");
-        itemClientePJCadastro   = new JMenuItem("Cadastro PJ");
-        itemClientesLista       = new JMenuItem("Listar clientes");
-        itemVeiculosCadastro    = new JMenuItem("Cadastro");       
-        itemArquivoSair         = new JMenuItem("Sair");
+        itemEmprestimosCadastro = new JMenuItem(bundle.getString("ITEM_CADASTRO"));
+        itemReservasCadastro    = new JMenuItem(bundle.getString("ITEM_CADASTRO"));
+        itemDevolucoesRegistrar = new JMenuItem(bundle.getString("ITEM_REGISTRAR"));
+        itemClientePFCadastro   = new JMenuItem(bundle.getString("ITEM_CADASTRO_PF"));
+        itemClientePJCadastro   = new JMenuItem(bundle.getString("ITEM_CADASTRO_PJ"));
+        itemClientesLista       = new JMenuItem(bundle.getString("ITEM_LISTAR_CLIENTES"));
+        itemVeiculosCadastro    = new JMenuItem(bundle.getString("ITEM_CADASTRO"));       
+        itemArquivoSair         = new JMenuItem(bundle.getString("ITEM_SAIR"));
         
         itemArquivoSair.addActionListener(this);
         itemEmprestimosCadastro.addActionListener(this);
@@ -234,7 +236,7 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
         gbc.weightx = 1;
         gbc.anchor = GridBagConstraints.LINE_END;
         gbc.insets = new Insets(0, 0, 15, 5);
-        panelFooter.add(btnNovaReserva, gbc);
+        panelFooter.add(btnReservas, gbc);
         
         gbc.gridx = 2;
         gbc.gridy = 0;
@@ -242,12 +244,13 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
         gbc.weightx = 1;
         gbc.anchor = GridBagConstraints.LINE_END;
         gbc.insets = new Insets(0, 0, 15, 10);
-        panelFooter.add(btnNovoEmprestimo, gbc);
+        panelFooter.add(btnLocacoes, gbc);
         
         c.add(panelHeader, BorderLayout.NORTH);
         c.add(panelBody, BorderLayout.CENTER);
         c.add(panelFooter, BorderLayout.SOUTH);
 
+        setResizable(false);
         setLocation(200, 225);
         setSize(1000, 350);
         setVisible(true);
@@ -281,8 +284,13 @@ public class ListarVeiculosView extends JFrame implements ActionListener, MouseL
     		
     		table.setModel(novaModel);
     	}
-    	else if (e.getSource() == btnNovoEmprestimo) {
-    		
+    	else if (e.getSource() == itemDevolucoesRegistrar) {
+    		DevolucaoController ctlDevolucao = new DevolucaoController(idioma);
+    		ctlDevolucao.executar();
+    	}
+    	else if (e.getSource() == btnLocacoes) {
+    		LocacaoController ctlLocacao = new LocacaoController(idioma);
+    		ctlLocacao.executar();
     	}
     	else if (e.getSource() == btnSair) {       
     		System.exit(0);

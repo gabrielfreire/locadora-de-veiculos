@@ -23,15 +23,15 @@ public class Veiculo {
 	private int marca_id         = 0;
 	private int cor_id           = 0;
 	
-	private boolean selecionado = false;
+	private boolean reservado_locado = false;
     
 
-	public void setSelecionado(boolean sel) {
-		this.selecionado = sel;
+	public void setReservadoLocado(boolean reservado_locado) {
+		this.reservado_locado = reservado_locado;
 	}
 
-	public boolean getSelecionado() {
-		return this.selecionado;
+	public boolean getReservadoLocado() {
+		return this.reservado_locado;
 	}
 
 	
@@ -189,8 +189,8 @@ public class Veiculo {
 		try {
 		
 			String sqlUpdate = "UPDATE veiculo SET "
-	    			+ "chassi = ?, placa = ?, cidade = ?, estado = ?, modelo = ?, fabricante = ?, ano = ?, "
-	    			+ "tarifa_aluguel = ?, km_rodado = ?, grupo_id = ?, marca_id = ?, cor_id = ? "
+	    			+ "chassi = ?, placa = ?, cidade = ?, estado = ?, modelo = ?, fabricante = ?, "
+	    			+ "ano = ?, tarifa_aluguel = ?, km_rodado = ?, grupo_id = ?, marca_id = ?, cor_id = ? "
 	    			+ "WHERE id = ?";
 			
 			Conn bd = new Conn();
@@ -246,8 +246,8 @@ public class Veiculo {
 
         	String sqlInsert = "INSERT INTO veiculo "
         			+ "(chassi, placa, cidade, estado, modelo, fabricante, ano, tarifa_aluguel, "
-        			+ "km_rodado, grupo_id, marca_id, cor_id) "
-        			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        			+ "km_rodado, grupo_id, marca_id, cor_id, reservado_locado) "
+        			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             Conn bd = new Conn();
             conn = bd.obtemConexao();
@@ -266,6 +266,7 @@ public class Veiculo {
     		stm.setInt(  10, getIdGrupo());
     		stm.setInt(  11, getIdMarca());
     		stm.setInt(  12, getIdCor());
+    		stm.setBoolean(13, getReservadoLocado());
     		stm.execute();
             
     		return true;
@@ -394,7 +395,7 @@ public class Veiculo {
         		veiculo.setIdGrupo(rs.getInt("grupo_id"));
         		veiculo.setIdMarca(rs.getInt("marca_id"));
         		veiculo.setIdCor(rs.getInt("cor_id"));
-        		veiculo.setSelecionado(false);
+        		veiculo.setReservadoLocado(false);
         		
             	veiculos.add(veiculo);
             }            
