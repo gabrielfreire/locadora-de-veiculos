@@ -4,43 +4,28 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-abstract public class Cliente {
+public class Agencia {
 
-	private long cpf         = 0;
-	private String nome      = null;
-	private String telefone  = null;
-	private String email     = null;
-	private String endereco  = null;
-	private String cidade    = null;
-	private String estado    = null;
-	private String cep       = null;
-	private String tipo      = null;
-
-	
-	public long getCpf() {
-		return cpf;
+	private int codigo      = 0;
+	private String nome     = null;
+	private String endereco = null;
+	private String cidade   = null;
+	private String estado   = null;
+	private String pais     = null;
+	private int idioma_id   = 0;
+	public int getCodigo() {
+		return codigo;
 	}
-	public void setCpf(long cpf) {
-		this.cpf = cpf;
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 	public String getNome() {
 		return nome;
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-	public String getTelefone() {
-		return telefone;
-	}
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	public String getEndereco() {
 		return endereco;
@@ -60,46 +45,51 @@ abstract public class Cliente {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	public String getCep() {
-		return cep;
+	public String getPais() {
+		return pais;
 	}
-	public void setCep(String cep) {
-		this.cep = cep;
-	}	
-	public String getTipo() {
-		return this.tipo;
+	public void setPais(String pais) {
+		this.pais = pais;
 	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public int getIdioma_id() {
+		return idioma_id;
+	}
+	public void setIdioma_id(int idioma_id) {
+		this.idioma_id = idioma_id;
 	}
 	
-	
-	public static boolean consultar(long cpf) {
-	
+	public static ArrayList<Agencia> getArrayObjects() {
+		
 		PreparedStatement stm = null;
         Connection conn = null;
         ResultSet rs = null;
         
+        ArrayList<Agencia> agencias = new ArrayList<Agencia>();
     
         try {
             
-        	String sql = "SELECT * FROM cliente WHERE cpf = ?";
+        	String sql = "SELECT * FROM agencia ORDER BY codigo DESC";
             Conn bd = new Conn();
             conn = bd.obtemConexao();
             
             stm = conn.prepareStatement(sql);            
-            stm.setLong(1, cpf);
-            
             rs = stm.executeQuery();
             
-            
-            if (rs.next()) {
-            	rs.close();
-            	return true;
+            while (rs.next()) {    
+            	Agencia agencia = new Agencia();
+            	agencia.setCodigo(rs.getInt("codigo"));
+            	agencia.setNome(rs.getString("nome"));
+            	agencia.setEndereco(rs.getString("endereco"));
+            	agencia.setCidade(rs.getString("cidade"));
+            	agencia.setEstado(rs.getString("estado"));
+            	agencia.setPais(rs.getString("pais"));
+            	agencia.setIdioma_id(rs.getInt("idioma_id"));
+            	
+            	agencias.add(agencia);
             }            
 
             rs.close();            
-            return false;
+            return agencias;
             
             
         } catch (SQLException e) {
@@ -111,7 +101,7 @@ abstract public class Cliente {
             } catch (SQLException e1) {
                 System.out.print(e1.getStackTrace());
             }	            
-            return false;
+            return agencias;
         }
         finally{
             if (stm != null) {
@@ -123,16 +113,6 @@ abstract public class Cliente {
                 }
             }
         }		
-
 	}
 	
-	
-	/**
-	 * Métodos para serem implementados em classes filhas
-	 */
-	abstract protected boolean inserir(); 
-	
-	abstract protected boolean editar();
-	
-	abstract protected boolean excluir(); 
 }

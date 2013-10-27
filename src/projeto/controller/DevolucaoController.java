@@ -1,5 +1,6 @@
 package projeto.controller;
 
+import projeto.model.Devolucao;
 import projeto.view.DevolucaoView;
 
 
@@ -17,5 +18,10 @@ public class DevolucaoController {
 	public void executar() {
 		DevolucaoView view = new DevolucaoView(idioma);
 		view.exibirFrame();
+	}
+	
+	public static boolean inserir(Devolucao d) {
+		d.inserir();
+		return true;
 	}
 }

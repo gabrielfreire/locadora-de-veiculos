@@ -1,6 +1,7 @@
 package projeto.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -16,8 +17,14 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import projeto.controller.DevolucaoController;
+import projeto.controller.LocacaoController;
+import projeto.model.Devolucao;
+import projeto.model.Locacao;
 import locale.start.StartLocale;
 
 public class DevolucaoView extends JFrame implements ActionListener, MouseListener {
@@ -27,13 +34,11 @@ public class DevolucaoView extends JFrame implements ActionListener, MouseListen
 	 */
 	private static final long serialVersionUID = -8617045944801765155L;
 	private JLabel lblTitulo     = null;
-	private JLabel lblNumLocacao = null;
 	private JLabel lblCpf        = null;
 	private JLabel lblData       = null;
 	private JLabel lblMulta      = null;
 
 	private JTextField textCpf        = null;
-	private JTextField textNumLocacao = null;
 	private JTextField textData       = null;
 	private JTextField textMulta      = null;
 		
@@ -69,12 +74,10 @@ public class DevolucaoView extends JFrame implements ActionListener, MouseListen
 		        
         lblTitulo      = new JLabel(bundle.getString("LABEL_TITULO_DEVOLUCAO"));
         lblCpf         = new JLabel(bundle.getString("LABEL_CPF"));
-        lblNumLocacao  = new JLabel(bundle.getString("LABEL_NUM_LOCACAO"));
         lblData        = new JLabel(bundle.getString("LABEL_DATA_DEVOLUCAO"));
         lblMulta       = new JLabel(bundle.getString("LABEL_MULTA"));
         
         textCpf        = new JTextField();
-        textNumLocacao = new JTextField();
         textData       = new JTextField();
         textMulta      = new JTextField();
         
@@ -82,11 +85,11 @@ public class DevolucaoView extends JFrame implements ActionListener, MouseListen
     	btnConfirmarDevolucao = new JButton(bundle.getString("BTN_CONFIRMAR_DEVOLUCAO"));
     	btnCancelar           = new JButton(bundle.getString("BTN_CANCELAR"));
 
+    	btnLocalizar.addActionListener(this);
     	btnConfirmarDevolucao.addActionListener(this);
     	btnCancelar.addActionListener(this);
     	    	
     	textCpf.setPreferredSize(new Dimension(200, 22));
-        textNumLocacao.setPreferredSize(new Dimension(200, 22));
         textData.setPreferredSize(new Dimension(200, 22));
         textMulta.setPreferredSize(new Dimension(200, 22));
                 
@@ -102,12 +105,12 @@ public class DevolucaoView extends JFrame implements ActionListener, MouseListen
         gbc.insets = new Insets(0, 0, 5, 0);
         
         gbc.gridx = 0;
-        gbc.gridy = 0;        
-        panelFormulario.add(lblNumLocacao, gbc);
-        
+        gbc.gridy = 0;
+        panelFormulario.add(lblCpf, gbc);
+                
         gbc.gridx = 0;
         gbc.gridy = 1;
-        panelFormulario.add(textNumLocacao, gbc);
+        panelFormulario.add(textCpf, gbc);
         
 
         gbc.gridx = 0;
@@ -116,34 +119,23 @@ public class DevolucaoView extends JFrame implements ActionListener, MouseListen
         
         
         gbc.insets = new Insets(20, 0, 5, 0);
-        
+
         gbc.gridx = 0;
         gbc.gridy = 3;
-        panelFormulario.add(lblCpf, gbc);
-        
-        
+        panelFormulario.add(lblData, gbc);
+                
         gbc.insets = new Insets(0, 0, 5, 0);
-        
         gbc.gridx = 0;
         gbc.gridy = 4;
-        panelFormulario.add(textCpf, gbc);
-        
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        panelFormulario.add(lblData, gbc);
-        
-        
-        gbc.gridx = 0;
-        gbc.gridy = 6;
         panelFormulario.add(textData, gbc);
         
         
         gbc.gridx = 0;
-        gbc.gridy = 7;
+        gbc.gridy = 5;
         panelFormulario.add(lblMulta, gbc);
                 
         gbc.gridx = 0;
-        gbc.gridy = 8;
+        gbc.gridy = 6;
         panelFormulario.add(textMulta, gbc);
         
         
@@ -174,7 +166,58 @@ public class DevolucaoView extends JFrame implements ActionListener, MouseListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == btnCancelar) {
+		if (e.getSource() == btnLocalizar) {
+			
+			if (textCpf.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "CPF é obrigatório", "Erro", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			long cpf = Long.parseLong(textCpf.getText());			
+			
+			if (Locacao.checar(cpf)) {				
+				textCpf.setBackground(Color.green);
+				
+				
+//				Date dt = new Date();
+//				String data_atual = dt.ge
+//				
+//				textData.setText();
+			}
+			else {				
+				JOptionPane.showMessageDialog(null, "Cliente não possui locação em andamento!");
+				textCpf.setBackground(Color.RED);
+				return;
+			}			
+			
+		}
+		else if (e.getSource() == btnConfirmarDevolucao) {
+			
+			long cpf = Long.parseLong(textCpf.getText());
+			
+			if (Locacao.checar(cpf)) {
+				Devolucao d = new Devolucao();
+				d.setCpf(Long.parseLong(textCpf.getText()));
+				d.setData(textData.getText());
+				d.setValor_multa(textMulta.getText());
+				
+				// Alterar status do pagamento
+				DevolucaoController.inserir(d);
+				
+				Locacao l = new Locacao();
+				l.setCpf(Long.parseLong(textCpf.getText()));
+				l.setStatus("finalizado");
+				
+				LocacaoController.editarStatus(l);
+				
+				setVisible(false);
+				JOptionPane.showMessageDialog(null, "Devolução efetuada com sucesso!");
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Este cliente não tem locação em andamento!", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		else if (e.getSource() == btnCancelar) {
 			setVisible(false);
 		}
 		
